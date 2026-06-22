@@ -1,0 +1,55 @@
+(*1#NaOH池*)
+(*高液位报警*)
+if NaOH_tank_level_8LT05>=NaOH_level_high_setting then
+	NaOH_level_high_alarm_1:=1;
+else
+	NaOH_level_high_alarm_1:=0;
+end_if;
+(*低液位报警*)
+if NaOH_tank_level_8LT05<=NaOH_level_low_setting then
+	NaOH_level_low_alarm_1:=1;
+else
+	NaOH_level_low_alarm_1:=0;
+end_if;
+
+(*2#NaOH池*)
+(*高液位报警*)
+if NaOH_tank_level_8LT06>=NaOH_level_high_setting then
+	NaOH_level_high_alarm_2:=1;
+else
+	NaOH_level_high_alarm_2:=0;
+end_if;
+(*低液位报警*)
+if NaOH_tank_level_8LT06<=NaOH_level_low_setting then
+	NaOH_level_low_alarm_2:=1;
+else
+	NaOH_level_low_alarm_2:=0;
+end_if;
+
+(*3#NaOH池*)
+(*高液位报警*)
+if NaOH_tank_level_8LT07>=NaOH_level_high_setting then
+	NaOH_level_high_alarm_3:=1;
+else
+	NaOH_level_high_alarm_3:=0;
+end_if;
+(*低液位报警*)
+if NaOH_tank_level_8LT07<=NaOH_level_low_setting then
+	NaOH_level_low_alarm_3:=1;
+else
+	NaOH_level_low_alarm_3:=0;
+end_if;
+
+(*4#NaOH池*)
+(*高液位报警*)
+if NaOH_tank_level_8LT08>=NaOH_level_high_setting then
+	NaOH_level_high_alarm_4:=1;
+else
+	NaOH_level_high_alarm_4:=0;
+end_if;
+(*低液位报警*)
+if NaOH_tank_level_8LT08<=NaOH_level_low_setting then
+	NaOH_level_low_alarm_4:=1;
+else
+	NaOH_level_low_alarm_4:=0;
+end_if;

@@ -1,0 +1,84 @@
+(*阀门动作的控制分为分类：*)
+(*1、普通电动阀可以自由动作；*)
+(*2、泵出口阀需要与泵联动；*)
+(*3、储罐进出口阀与储罐液位联动。*)
+
+(*1、普通电动阀控制*)
+RemoteIO1:2:O.Data.18:=VE_PAC_11_actuate;
+RemoteIO1:2:O.Data.19:=VE_PAC_12_actuate;
+RemoteIO1:2:O.Data.20:=VE_PAC_13_actuate;
+RemoteIO1:2:O.Data.21:=VE_PAC_14_actuate;
+RemoteIO1:2:O.Data.22:=VE_PAC_15_actuate;
+
+(*2、泵出口阀控制*)
+(*数字泵启动时，泵出口阀由数字泵控制程序控制，此时泵出口阀必须开启*)
+(*1#泵的出口阀*)
+if RemoteIO1:2:O.Data.4 then
+	RemoteIO1:2:O.Data.8:=1;
+else
+	RemoteIO1:2:O.Data.8:=VE_PAC_01_actuate;
+end_if;
+(*2#泵的出口阀*)
+if RemoteIO1:2:O.Data.5 then
+	RemoteIO1:2:O.Data.9:=1;
+else
+	RemoteIO1:2:O.Data.9:=VE_PAC_02_actuate;
+end_if;
+(*3#泵的出口阀*)
+if RemoteIO1:2:O.Data.6 then
+	RemoteIO1:2:O.Data.10:=1;
+else
+	RemoteIO1:2:O.Data.10:=VE_PAC_03_actuate;
+end_if;
+(*4#泵的出口阀*)
+if RemoteIO1:2:O.Data.7 then
+	RemoteIO1:2:O.Data.11:=1;
+else
+	RemoteIO1:2:O.Data.11:=VE_PAC_04_actuate;
+end_if;
+
+(*3、储罐进出口阀控制*)
+(*液位高高、低低报警时，以及对应池体/储罐作为冷备时阀门关闭*)
+(*进口阀控制*)
+(*1#池的入口阀*)
+if PAC_level_high_alarm_1 or PAC_tank_standby[1] then
+	RemoteIO1:2:O.Data.12:=0;
+else
+	RemoteIO1:2:O.Data.12:=VE_PAC_05_actuate;
+end_if;
+(*2#池的入口阀*)
+if PAC_level_high_alarm_2 or PAC_tank_standby[2] then
+	RemoteIO1:2:O.Data.13:=0;
+else
+	RemoteIO1:2:O.Data.13:=VE_PAC_06_actuate;
+end_if;
+
+(*出口阀控制*)
+(*1#池的出口阀*)
+if PAC_level_low_alarm_1 or PAC_tank_standby[1] then
+	RemoteIO1:2:O.Data.14:=0;
+else
+	RemoteIO1:2:O.Data.14:=VE_PAC_07_actuate;
+end_if;
+(*2#池的出口阀*)
+if PAC_level_low_alarm_2 or PAC_tank_standby[2] then
+	RemoteIO1:2:O.Data.15:=0;
+else
+	RemoteIO1:2:O.Data.15:=VE_PAC_08_actuate;
+end_if;
+(*3#池的出口阀*)
+if PAC_level_low_alarm_3 or PAC_tank_standby[3] then
+	RemoteIO1:2:O.Data.16:=0;
+else
+	RemoteIO1:2:O.Data.16:=VE_PAC_09_actuate;
+end_if;
+(*4#池的出口阀*)
+if PAC_level_low_alarm_4 or PAC_tank_standby[4] then
+	RemoteIO1:2:O.Data.17:=0;
+else
+	RemoteIO1:2:O.Data.17:=VE_PAC_10_actuate;
+end_if;
+
+
+
+

@@ -1,0 +1,599 @@
+(*阀门动作的控制分为分类：*)
+    (*1、普通电动阀可以自由动作；*)
+    (*2、泵出口阀需要与泵联动；*)
+    (*3、储罐进出口阀与储罐液位联动。*)
+
+(*罐体稀释水进水电动阀*)
+(*储罐作为冷备时阀门关闭*)
+(*1号罐*)
+if NaClO_level_high_alarm_1 or NaClO_tank_standby[1] then
+    RemoteIO3:4:O.Data.4:=0;
+else
+	if NaClO_tank_auto_manual[1] then
+		if NaClO_dilution_status_tank_1[4] then
+			if NaClO_dilution_status_tank_1[5] then
+				RemoteIO3:4:O.Data.4:=0;
+			else
+				RemoteIO3:4:O.Data.4:=1;
+			end_if;
+		else
+			RemoteIO3:4:O.Data.4:=0;
+		end_if;
+	else
+    	RemoteIO3:4:O.Data.4:=VE_NaClO_27_actuate;
+	end_if;
+end_if;
+
+(*2号罐*)
+if NaClO_level_high_alarm_2 or NaClO_tank_standby[2] then
+    RemoteIO3:4:O.Data.5:=0;
+else
+	if NaClO_tank_auto_manual[2] then
+		if NaClO_dilution_status_tank_2[4] then
+			if NaClO_dilution_status_tank_2[5] then
+				RemoteIO3:4:O.Data.5:=0;
+			else
+				RemoteIO3:4:O.Data.5:=1;
+			end_if;
+		else
+			RemoteIO3:4:O.Data.5:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.5:=VE_NaClO_28_actuate;
+	end_if;
+end_if;
+
+(*3号罐*)
+if NaClO_level_high_alarm_3 or NaClO_tank_standby[3] then
+    RemoteIO3:4:O.Data.6:=0;
+else
+	if NaClO_tank_auto_manual[3] then
+		if NaClO_dilution_status_tank_3[4] then
+			if NaClO_dilution_status_tank_3[5] then
+				RemoteIO3:4:O.Data.6:=0;
+			else
+				RemoteIO3:4:O.Data.6:=1;
+			end_if;
+		else
+			RemoteIO3:4:O.Data.6:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.6:=VE_NaClO_29_actuate;
+	end_if;
+end_if;
+
+(*4号罐*)
+if NaClO_level_high_alarm_4 or NaClO_tank_standby[4] then
+    RemoteIO3:4:O.Data.7:=0;
+else
+	if NaClO_tank_auto_manual[4] then
+		if NaClO_dilution_status_tank_4[4] then
+			if NaClO_dilution_status_tank_4[5] then
+				RemoteIO3:4:O.Data.7:=0;
+			else
+				RemoteIO3:4:O.Data.7:=1;
+			end_if;
+		else
+			RemoteIO3:4:O.Data.7:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.7:=VE_NaClO_30_actuate;
+	end_if;
+end_if;
+
+(*5号罐*)
+if NaClO_level_high_alarm_5 or NaClO_tank_standby[5] then
+    RemoteIO3:4:O.Data.8:=0;
+else
+	if NaClO_tank_auto_manual[5] then
+		if NaClO_dilution_status_tank_5[4] then
+			if NaClO_dilution_status_tank_5[5] then
+				RemoteIO3:4:O.Data.8:=0;
+			else
+				RemoteIO3:4:O.Data.8:=1;
+			end_if;
+		else
+			RemoteIO3:4:O.Data.8:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.8:=VE_NaClO_31_actuate;
+	end_if;
+end_if;
+
+(*6号罐*)
+if NaClO_level_high_alarm_6 or NaClO_tank_standby[6] then
+    RemoteIO3:4:O.Data.9:=0;
+else
+	if NaClO_tank_auto_manual[6] then
+		if NaClO_dilution_status_tank_6[4] then
+			if NaClO_dilution_status_tank_6[5] then
+				RemoteIO3:4:O.Data.9:=0;
+			else
+				RemoteIO3:4:O.Data.9:=1;
+			end_if;
+		else
+			RemoteIO3:4:O.Data.9:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.9:=VE_NaClO_32_actuate;
+	end_if;
+end_if;
+
+(*7号罐*)
+if NaClO_level_high_alarm_7 or NaClO_tank_standby[7] then
+    RemoteIO3:4:O.Data.10:=0;
+else
+	if NaClO_tank_auto_manual[7] then
+		if NaClO_dilution_status_tank_7[4] then
+			if NaClO_dilution_status_tank_7[5] then
+				RemoteIO3:4:O.Data.10:=0;
+			else
+				RemoteIO3:4:O.Data.10:=1;
+			end_if;
+		else
+			RemoteIO3:4:O.Data.10:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.10:=VE_NaClO_33_actuate;
+	end_if;
+end_if;
+
+(*8号罐*)
+if NaClO_level_high_alarm_8 or NaClO_tank_standby[8] then
+    RemoteIO3:4:O.Data.11:=0;
+else
+	if NaClO_tank_auto_manual[8] then
+		if NaClO_dilution_status_tank_8[4] then
+			if NaClO_dilution_status_tank_8[5] then
+				RemoteIO3:4:O.Data.11:=0;
+			else
+				RemoteIO3:4:O.Data.11:=1;
+			end_if;
+		else
+			RemoteIO3:4:O.Data.11:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.11:=VE_NaClO_34_actuate;
+	end_if;
+end_if;
+
+(*罐体排空电动阀*)
+(*储罐作为冷备时阀门关闭*)
+(*1号罐*)
+if NaClO_tank_standby[1] then
+    RemoteIO3:4:O.Data.14:=0;
+else
+	if NaClO_tank_auto_manual[1] then
+        RemoteIO3:4:O.Data.14:=0;
+	else
+        RemoteIO3:4:O.Data.14:=VE_NaClO_37_actuate;
+	end_if;
+end_if;
+
+(*2号罐*)
+if NaClO_tank_standby[2] then
+    RemoteIO3:4:O.Data.15:=0;
+else
+	if NaClO_tank_auto_manual[2] then
+        RemoteIO3:4:O.Data.15:=0;
+	else
+        RemoteIO3:4:O.Data.15:=VE_NaClO_38_actuate;
+	end_if;
+end_if;
+
+(*3号罐*)
+if NaClO_tank_standby[3] then
+    RemoteIO3:4:O.Data.16:=0;
+else
+	if NaClO_tank_auto_manual[3] then
+        RemoteIO3:4:O.Data.16:=0;
+	else
+        RemoteIO3:4:O.Data.16:=VE_NaClO_39_actuate;
+	end_if;
+end_if;
+
+(*4号罐*)
+if NaClO_tank_standby[4] then
+    RemoteIO3:4:O.Data.17:=0;
+else
+	if NaClO_tank_auto_manual[4] then
+        RemoteIO3:4:O.Data.17:=0;
+	else
+        RemoteIO3:4:O.Data.17:=VE_NaClO_40_actuate;
+	end_if;
+end_if;
+
+(*5号罐*)
+if NaClO_tank_standby[5] then
+    RemoteIO3:4:O.Data.18:=0;
+else
+	if NaClO_tank_auto_manual[5] then
+        RemoteIO3:4:O.Data.18:=0;
+	else
+        RemoteIO3:4:O.Data.18:=VE_NaClO_41_actuate;
+	end_if;
+end_if;
+
+(*6号罐*)
+if NaClO_tank_standby[6] then
+    RemoteIO3:4:O.Data.19:=0;
+else
+	if NaClO_tank_auto_manual[6] then
+        RemoteIO3:4:O.Data.19:=0;
+	else
+        RemoteIO3:4:O.Data.19:=VE_NaClO_42_actuate;
+	end_if;
+end_if;
+
+(*7号罐*)
+if NaClO_tank_standby[7] then
+    RemoteIO3:4:O.Data.20:=0;
+else
+	if NaClO_tank_auto_manual[7] then
+        RemoteIO3:4:O.Data.20:=0;
+	else
+        RemoteIO3:4:O.Data.20:=VE_NaClO_43_actuate;
+	end_if;
+end_if;
+
+(*8号罐*)
+if NaClO_tank_standby[8] then
+    RemoteIO3:4:O.Data.21:=0;
+else
+	if NaClO_tank_auto_manual[8] then
+        RemoteIO3:4:O.Data.21:=0;
+	else
+        RemoteIO3:4:O.Data.21:=VE_NaClO_44_actuate;
+	end_if;
+end_if;
+
+    (*1、普通电动阀控制*)
+RemoteIO3:4:O.Data.12:=VE_NaClO_35_actuate;
+RemoteIO3:4:O.Data.13:=VE_NaClO_36_actuate;
+RemoteIO3:4:O.Data.22:=VE_NaClO_45_actuate;
+
+(*2、泵出口阀控制*)
+    (*数字泵启动时，泵出口阀由数字泵控制程序控制，此时泵出口阀必须开启*)
+(*1#泵的出口阀*)
+if RemoteIO3:3:O.Data.0 then
+	RemoteIO3:3:O.Data.10:=1;
+else
+	RemoteIO3:3:O.Data.10:=VE_NaClO_01_actuate;
+end_if;
+(*2#泵的出口阀*)
+if RemoteIO3:3:O.Data.1 then
+	RemoteIO3:3:O.Data.11:=1;
+else
+	RemoteIO3:3:O.Data.11:=VE_NaClO_02_actuate;
+end_if;
+(*3#泵的出口阀*)
+if RemoteIO3:3:O.Data.2 then
+	RemoteIO3:3:O.Data.12:=1;
+else
+	RemoteIO3:3:O.Data.12:=VE_NaClO_03_actuate;
+end_if;
+(*4#泵的出口阀*)
+if RemoteIO3:3:O.Data.3 then
+	RemoteIO3:3:O.Data.13:=1;
+else
+	RemoteIO3:3:O.Data.13:=VE_NaClO_04_actuate;
+end_if;
+(*5#泵的出口阀*)
+if RemoteIO3:3:O.Data.4 then
+	RemoteIO3:3:O.Data.14:=1;
+else
+	RemoteIO3:3:O.Data.14:=VE_NaClO_05_actuate;
+end_if;
+(*6#泵的出口阀*)
+if RemoteIO3:3:O.Data.5 then
+	RemoteIO3:3:O.Data.15:=1;
+else
+	RemoteIO3:3:O.Data.15:=VE_NaClO_06_actuate;
+end_if;
+(*7#泵的出口阀*)
+if RemoteIO3:3:O.Data.6 then
+	RemoteIO3:3:O.Data.16:=1;
+else
+	RemoteIO3:3:O.Data.16:=VE_NaClO_07_actuate;
+end_if;
+(*8#泵的出口阀*)
+if RemoteIO3:3:O.Data.7 then
+	RemoteIO3:3:O.Data.17:=1;
+else
+	RemoteIO3:3:O.Data.17:=VE_NaClO_08_actuate;
+end_if;
+(*9#泵的出口阀*)
+if RemoteIO3:3:O.Data.8 then
+	RemoteIO3:3:O.Data.18:=1;
+else
+	RemoteIO3:3:O.Data.18:=VE_NaClO_09_actuate;
+end_if;
+(*10#泵的出口阀*)
+if RemoteIO3:3:O.Data.9 then
+	RemoteIO3:3:O.Data.19:=1;
+else
+	RemoteIO3:3:O.Data.19:=VE_NaClO_10_actuate;
+end_if;
+
+(*3、储罐进出口阀控制*)
+(*液位高高、低低报警时，以及对应池体/储罐作为冷备时阀门关闭*)
+(*进口阀控制*)
+(*1#罐的入口阀*)
+if NaClO_level_high_alarm_1 or NaClO_tank_standby[1] then
+	RemoteIO3:3:O.Data.28:=0;
+else
+	if NaClO_tank_auto_manual[1] then
+		if NaClO_dilution_status_tank_1[2] then
+			if NaClO_dilution_status_tank_1[3] then
+            	RemoteIO3:3:O.Data.28:=0;
+			else
+				RemoteIO3:3:O.Data.28:=1;
+			end_if;
+		else
+            RemoteIO3:3:O.Data.28:=0;
+		end_if;
+	else
+        RemoteIO3:3:O.Data.28:=VE_NaClO_19_actuate;
+	end_if;
+end_if;
+
+(*2#罐的入口阀*)
+if NaClO_level_high_alarm_2 or NaClO_tank_standby[2] then
+	RemoteIO3:3:O.Data.29:=0;
+else
+	if NaClO_tank_auto_manual[2] then
+		if NaClO_dilution_status_tank_2[2] then
+			if NaClO_dilution_status_tank_2[3] then
+            	RemoteIO3:3:O.Data.29:=0;
+			else
+				RemoteIO3:3:O.Data.29:=1;
+			end_if;
+		else
+            RemoteIO3:3:O.Data.29:=0;
+		end_if;
+	else
+        RemoteIO3:3:O.Data.29:=VE_NaClO_20_actuate;
+	end_if;
+end_if;
+
+(*3#罐的入口阀*)
+if NaClO_level_high_alarm_3 or NaClO_tank_standby[3] then
+	RemoteIO3:3:O.Data.30:=0;
+else
+	if NaClO_tank_auto_manual[3] then
+		if NaClO_dilution_status_tank_3[2] then
+			if NaClO_dilution_status_tank_3[3] then
+	            RemoteIO3:3:O.Data.30:=0;
+			else
+				RemoteIO3:3:O.Data.30:=1;
+			end_if;
+		else
+            RemoteIO3:3:O.Data.30:=0;
+		end_if;
+	else
+        RemoteIO3:3:O.Data.30:=VE_NaClO_21_actuate;
+	end_if;
+end_if;
+
+(*4#罐的入口阀*)
+if NaClO_level_high_alarm_4 or NaClO_tank_standby[4] then
+	RemoteIO3:3:O.Data.31:=0;
+else
+	if NaClO_tank_auto_manual[4] then
+		if NaClO_dilution_status_tank_4[2] then
+			if NaClO_dilution_status_tank_4[3] then
+            	RemoteIO3:3:O.Data.31:=0;
+			else
+				RemoteIO3:3:O.Data.31:=1;
+			end_if;
+		else
+            RemoteIO3:3:O.Data.31:=0;
+		end_if;
+	else
+        RemoteIO3:3:O.Data.31:=VE_NaClO_22_actuate;
+	end_if;
+end_if;
+
+(*5#罐的入口阀*)
+if NaClO_level_high_alarm_5 or NaClO_tank_standby[5] then
+	RemoteIO3:4:O.Data.0:=0;
+else
+	if NaClO_tank_auto_manual[5] then
+		if NaClO_dilution_status_tank_5[2] then
+			if NaClO_dilution_status_tank_5[3] then
+	            RemoteIO3:4:O.Data.0:=0;
+			else
+				RemoteIO3:4:O.Data.0:=1;
+			end_if;
+		else
+            RemoteIO3:4:O.Data.0:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.0:=VE_NaClO_23_actuate;
+	end_if;
+end_if;
+
+(*6#罐的入口阀*)
+if NaClO_level_high_alarm_6 or NaClO_tank_standby[6] then
+	RemoteIO3:4:O.Data.1:=0;
+else
+	if NaClO_tank_auto_manual[6] then
+		if NaClO_dilution_status_tank_6[2] then
+			if NaClO_dilution_status_tank_6[3] then
+            	RemoteIO3:4:O.Data.1:=0;
+			else
+				RemoteIO3:4:O.Data.1:=1;
+			end_if;
+		else
+            RemoteIO3:4:O.Data.1:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.1:=VE_NaClO_24_actuate;
+	end_if;
+end_if;
+
+(*7#罐的入口阀*)
+if NaClO_level_high_alarm_7 or NaClO_tank_standby[7] then
+	RemoteIO3:4:O.Data.2:=0;
+else
+	if NaClO_tank_auto_manual[7] then
+		if NaClO_dilution_status_tank_7[2] then
+			if NaClO_dilution_status_tank_7[3] then
+            	RemoteIO3:4:O.Data.2:=0;
+			else
+				RemoteIO3:4:O.Data.2:=1;
+			end_if;
+		else
+            RemoteIO3:4:O.Data.2:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.2:=VE_NaClO_25_actuate;
+	end_if;
+end_if;
+
+(*8#罐的入口阀*)
+if NaClO_level_high_alarm_8 or NaClO_tank_standby[8] then
+	RemoteIO3:4:O.Data.3:=0;
+else
+	if NaClO_tank_auto_manual[8] then
+		if NaClO_dilution_status_tank_8[2] then
+			if NaClO_dilution_status_tank_8[3] then
+            	RemoteIO3:4:O.Data.3:=0;
+			else
+				RemoteIO3:4:O.Data.3:=1;
+			end_if;
+		else
+            RemoteIO3:4:O.Data.3:=0;
+		end_if;
+	else
+        RemoteIO3:4:O.Data.3:=VE_NaClO_26_actuate;
+	end_if;
+end_if;
+
+(*出口阀控制*)
+(*1#罐的出口阀*)
+if NaClO_level_low_alarm_1 or NaClO_tank_standby[1] then
+	RemoteIO3:3:O.Data.20:=0;
+else
+	if NaClO_tank_auto_manual[1] then
+        if not NaClO_dilution_status_tank_1[6] then
+            RemoteIO3:3:O.Data.20:=0;
+        else
+            RemoteIO3:3:O.Data.20:=VE_NaClO_11_actuate;
+        end_if;
+    else
+        RemoteIO3:3:O.Data.20:=VE_NaClO_11_actuate;
+    end_if;
+end_if;
+
+(*2#罐的出口阀*)
+if NaClO_level_low_alarm_2 or NaClO_tank_standby[2] then
+	RemoteIO3:3:O.Data.21:=0;
+else
+	if NaClO_tank_auto_manual[2] then
+        if not NaClO_dilution_status_tank_2[6] then
+            RemoteIO3:3:O.Data.21:=0;
+        else
+            RemoteIO3:3:O.Data.21:=VE_NaClO_12_actuate;
+        end_if;
+    else
+        RemoteIO3:3:O.Data.21:=VE_NaClO_12_actuate;
+    end_if;
+end_if;
+
+(*3#罐的出口阀*)
+if NaClO_level_low_alarm_3 or NaClO_tank_standby[3] then
+	RemoteIO3:3:O.Data.22:=0;
+else
+	if NaClO_tank_auto_manual[3] then
+        if not NaClO_dilution_status_tank_3[6] then
+            RemoteIO3:3:O.Data.22:=0;
+        else
+            RemoteIO3:3:O.Data.22:=VE_NaClO_13_actuate;
+        end_if;
+    else
+        RemoteIO3:3:O.Data.22:=VE_NaClO_13_actuate;
+    end_if;
+end_if;
+
+(*4#罐的出口阀*)
+if NaClO_level_low_alarm_4 or NaClO_tank_standby[4] then
+	RemoteIO3:3:O.Data.23:=0;
+else
+	if NaClO_tank_auto_manual[4] then
+        if not NaClO_dilution_status_tank_4[6] then
+            RemoteIO3:3:O.Data.23:=0;
+        else
+            RemoteIO3:3:O.Data.23:=VE_NaClO_14_actuate;
+        end_if;
+    else
+        RemoteIO3:3:O.Data.23:=VE_NaClO_14_actuate;
+    end_if;
+end_if;
+
+(*5#罐的出口阀*)
+if NaClO_level_low_alarm_5 or NaClO_tank_standby[5] then
+	RemoteIO3:3:O.Data.24:=0;
+else
+	if NaClO_tank_auto_manual[5] then
+        if not NaClO_dilution_status_tank_5[6] then
+            RemoteIO3:3:O.Data.24:=0;
+        else
+            RemoteIO3:3:O.Data.24:=VE_NaClO_15_actuate;
+        end_if;
+    else
+        RemoteIO3:3:O.Data.24:=VE_NaClO_15_actuate;
+    end_if;
+end_if;
+
+(*6#罐的出口阀*)
+if NaClO_level_low_alarm_6 or NaClO_tank_standby[6] then
+	RemoteIO3:3:O.Data.25:=0;
+else
+	if NaClO_tank_auto_manual[6] then
+        if not NaClO_dilution_status_tank_6[6] then
+            RemoteIO3:3:O.Data.25:=0;
+        else
+            RemoteIO3:3:O.Data.25:=VE_NaClO_16_actuate;
+        end_if;
+    else
+        RemoteIO3:3:O.Data.25:=VE_NaClO_16_actuate;
+    end_if;
+end_if;
+
+(*7#罐的出口阀*)
+if NaClO_level_low_alarm_7 or NaClO_tank_standby[7] then
+	RemoteIO3:3:O.Data.26:=0;
+else
+	if NaClO_tank_auto_manual[7] then
+        if not NaClO_dilution_status_tank_7[6] then
+            RemoteIO3:3:O.Data.26:=0;
+        else
+            RemoteIO3:3:O.Data.26:=VE_NaClO_17_actuate;
+        end_if;
+    else
+        RemoteIO3:3:O.Data.26:=VE_NaClO_17_actuate;
+    end_if;
+end_if;
+
+(*8#罐的出口阀*)
+if NaClO_level_low_alarm_8 or NaClO_tank_standby[8] then
+	RemoteIO3:3:O.Data.27:=0;
+else
+	if NaClO_tank_auto_manual[8] then
+        if not NaClO_dilution_status_tank_8[6] then
+            RemoteIO3:3:O.Data.27:=0;
+        else
+            RemoteIO3:3:O.Data.27:=VE_NaClO_18_actuate;
+        end_if;
+    else
+        RemoteIO3:3:O.Data.27:=VE_NaClO_18_actuate;
+    end_if;
+end_if;
+
+
+
+
+
+
+

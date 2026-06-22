@@ -1,0 +1,334 @@
+(*搅拌机运行状态*)
+MI_PAC1_run:=RemoteIO1:0:I.Data.0;
+MI_PAC2_run:=RemoteIO1:0:I.Data.1;
+MI_PAC3_run:=RemoteIO1:0:I.Data.2;
+MI_PAC4_run:=RemoteIO1:0:I.Data.3;
+
+(*稀释加压泵运行状态*)
+(*软水加压泵运行状态*)
+pressure_pump_run[1]:=RemoteIO1:1:I.Data.8;
+(*生产用水加压泵运行状态*)
+pressure_pump_run[2]:=RemoteIO1:1:I.Data.9;
+(*软水加压泵故障状态*)
+pressure_pump_run[11]:=RemoteIO1:1:I.Data.8;
+(*生产用水加压泵故障状态*)
+pressure_pump_run[12]:=RemoteIO1:1:I.Data.9;
+
+(*数字泵运行状态*)
+pump_run_status_indicate(pump_run_status_indicate_1,RemoteIO1:2:O.Data.4,P_PAC1_flow_read,P_PAC1_run);
+pump_run_status_indicate(pump_run_status_indicate_2,RemoteIO1:2:O.Data.5,P_PAC2_flow_read,P_PAC2_run);
+pump_run_status_indicate(pump_run_status_indicate_3,RemoteIO1:2:O.Data.6,P_PAC3_flow_read,P_PAC3_run);
+pump_run_status_indicate(pump_run_status_indicate_4,RemoteIO1:2:O.Data.7,P_PAC4_flow_read,P_PAC4_run);
+
+(*流量计偏流报警时、或通讯故障时自动切换到检修状态*)
+if PAC_flow_err_8FT01 then
+	PAC_flow_maintain_8FT01:=1;
+	end_if;
+if PAC_flow_err_8FT02 then
+	PAC_flow_maintain_8FT02:=1;
+	end_if;
+	
+(*流量计故障复位时，检修状态及偏流状态同时复位*)
+if PAC_flow_reset_8FT01 then
+	PAC_flow_maintain_8FT01:=0;
+	end_if;
+if PAC_flow_reset_8FT02 then
+	PAC_flow_maintain_8FT02:=0;
+	end_if;
+	
+(*数字泵故障状态*)
+pump_error(PAC_pump_error_1,RemoteIO1:0:I.Data.4,RemoteIO1:4:I.Ch0OpenWire,P_PAC1_flow_err,P_PAC1_err,P_PAC1_maintain);
+pump_error(PAC_pump_error_2,RemoteIO1:0:I.Data.5,RemoteIO1:4:I.Ch1OpenWire,P_PAC2_flow_err,P_PAC2_err,P_PAC2_maintain);
+pump_error(PAC_pump_error_3,RemoteIO1:0:I.Data.6,RemoteIO1:4:I.Ch2OpenWire,P_PAC3_flow_err,P_PAC3_err,P_PAC3_maintain);
+pump_error(PAC_pump_error_4,RemoteIO1:0:I.Data.7,RemoteIO1:4:I.Ch3OpenWire,P_PAC4_flow_err,P_PAC4_err,P_PAC4_maintain);
+(*P_PAC1_err:=RemoteIO1:0:I.Data.4;*)
+(*P_PAC2_err:=RemoteIO1:0:I.Data.5;*)
+(*P_PAC3_err:=RemoteIO1:0:I.Data.6;*)
+(*P_PAC4_err:=RemoteIO1:0:I.Data.7;*)
+
+(*数字泵故障复位*)
+if P_PAC1_reset then
+	P_PAC1_maintain:=0;
+	RemoteIO1:4:O.WireOffReset:=1;
+else
+    RemoteIO1:4:O.WireOffReset:=0;
+end_if;
+if P_PAC2_reset then
+	P_PAC2_maintain:=0;	
+    RemoteIO1:4:O.WireOffReset:=1;
+else
+    RemoteIO1:4:O.WireOffReset:=0;
+end_if;
+if P_PAC3_reset then
+	P_PAC3_maintain:=0;	
+    RemoteIO1:4:O.WireOffReset:=1;
+else
+    RemoteIO1:4:O.WireOffReset:=0;
+end_if;
+if P_PAC4_reset then
+	P_PAC4_maintain:=0;	
+    RemoteIO1:4:O.WireOffReset:=1;
+else
+    RemoteIO1:4:O.WireOffReset:=0;
+end_if;
+
+(*电动阀阀位反馈*)
+VE_PAC_01_open:=RemoteIO1:0:I.Data.8;
+VE_PAC_01_close:=RemoteIO1:0:I.Data.9;
+VE_PAC_02_open:=RemoteIO1:0:I.Data.10;
+VE_PAC_02_close:=RemoteIO1:0:I.Data.11;
+VE_PAC_03_open:=RemoteIO1:0:I.Data.12;
+VE_PAC_03_close:=RemoteIO1:0:I.Data.13;
+VE_PAC_04_open:=RemoteIO1:0:I.Data.14;
+VE_PAC_04_close:=RemoteIO1:0:I.Data.15;
+VE_PAC_05_open:=RemoteIO1:0:I.Data.16;
+VE_PAC_05_close:=RemoteIO1:0:I.Data.17;
+VE_PAC_06_open:=RemoteIO1:0:I.Data.18;
+VE_PAC_06_close:=RemoteIO1:0:I.Data.19;
+VE_PAC_07_open:=RemoteIO1:0:I.Data.20;
+VE_PAC_07_close:=RemoteIO1:0:I.Data.21;
+VE_PAC_08_open:=RemoteIO1:0:I.Data.22;
+VE_PAC_08_close:=RemoteIO1:0:I.Data.23;
+VE_PAC_09_open:=RemoteIO1:0:I.Data.24;
+VE_PAC_09_close:=RemoteIO1:0:I.Data.25;
+VE_PAC_10_open:=RemoteIO1:0:I.Data.26;
+VE_PAC_10_close:=RemoteIO1:0:I.Data.27;
+VE_PAC_11_open:=RemoteIO1:0:I.Data.28;
+VE_PAC_11_close:=RemoteIO1:0:I.Data.29;
+VE_PAC_12_open:=RemoteIO1:0:I.Data.0;
+VE_PAC_12_close:=RemoteIO1:1:I.Data.1;
+VE_PAC_13_open:=RemoteIO1:1:I.Data.2;
+VE_PAC_13_close:=RemoteIO1:1:I.Data.3;
+VE_PAC_14_open:=RemoteIO1:1:I.Data.4;
+VE_PAC_14_close:=RemoteIO1:1:I.Data.5;
+VE_PAC_15_open:=RemoteIO1:1:I.Data.6;
+VE_PAC_15_close:=RemoteIO1:1:I.Data.7;
+
+(*开/关阀动作过程中显示*)
+valve_operating_indicate(valve_operating_indicate_1,RemoteIO1:2:O.Data.8,VE_PAC_01_open,VE_PAC_01_close,VE_PAC_01_opening,VE_PAC_01_closing);
+valve_operating_indicate(valve_operating_indicate_2,RemoteIO1:2:O.Data.9,VE_PAC_02_open,VE_PAC_02_close,VE_PAC_02_opening,VE_PAC_02_closing);
+valve_operating_indicate(valve_operating_indicate_3,RemoteIO1:2:O.Data.10,VE_PAC_03_open,VE_PAC_03_close,VE_PAC_03_opening,VE_PAC_03_closing);
+valve_operating_indicate(valve_operating_indicate_4,RemoteIO1:2:O.Data.11,VE_PAC_04_open,VE_PAC_04_close,VE_PAC_04_opening,VE_PAC_04_closing);
+valve_operating_indicate(valve_operating_indicate_5,RemoteIO1:2:O.Data.12,VE_PAC_05_open,VE_PAC_05_close,VE_PAC_05_opening,VE_PAC_05_closing);
+valve_operating_indicate(valve_operating_indicate_6,RemoteIO1:2:O.Data.13,VE_PAC_06_open,VE_PAC_06_close,VE_PAC_06_opening,VE_PAC_06_closing);
+valve_operating_indicate(valve_operating_indicate_7,RemoteIO1:2:O.Data.14,VE_PAC_07_open,VE_PAC_07_close,VE_PAC_07_opening,VE_PAC_07_closing);
+valve_operating_indicate(valve_operating_indicate_8,RemoteIO1:2:O.Data.15,VE_PAC_08_open,VE_PAC_08_close,VE_PAC_08_opening,VE_PAC_08_closing);
+valve_operating_indicate(valve_operating_indicate_9,RemoteIO1:2:O.Data.16,VE_PAC_09_open,VE_PAC_09_close,VE_PAC_09_opening,VE_PAC_09_closing);
+valve_operating_indicate(valve_operating_indicate_10,RemoteIO1:2:O.Data.17,VE_PAC_10_open,VE_PAC_10_close,VE_PAC_10_opening,VE_PAC_10_closing);
+valve_operating_indicate(valve_operating_indicate_11,RemoteIO1:2:O.Data.18,VE_PAC_11_open,VE_PAC_11_close,VE_PAC_11_opening,VE_PAC_11_closing);
+valve_operating_indicate(valve_operating_indicate_12,RemoteIO1:2:O.Data.19,VE_PAC_12_open,VE_PAC_12_close,VE_PAC_12_opening,VE_PAC_12_closing);
+valve_operating_indicate(valve_operating_indicate_13,RemoteIO1:2:O.Data.20,VE_PAC_13_open,VE_PAC_13_close,VE_PAC_13_opening,VE_PAC_13_closing);
+valve_operating_indicate(valve_operating_indicate_14,RemoteIO1:2:O.Data.21,VE_PAC_14_open,VE_PAC_14_close,VE_PAC_14_opening,VE_PAC_14_closing);
+valve_operating_indicate(valve_operating_indicate_15,RemoteIO1:2:O.Data.22,VE_PAC_15_open,VE_PAC_15_close,VE_PAC_15_opening,VE_PAC_15_closing);
+
+(*阀动作超时判断*)
+valve_action_overtime(PAC_valve_overtime[1],VE_PAC_01_opening,VE_PAC_01_closing,VE_PAC_01_overtime,PAC_valve_timer[1],PAC_valve_overtime_setting[1]);
+valve_action_overtime(PAC_valve_overtime[2],VE_PAC_02_opening,VE_PAC_02_closing,VE_PAC_02_overtime,PAC_valve_timer[2],PAC_valve_overtime_setting[2]);
+valve_action_overtime(PAC_valve_overtime[3],VE_PAC_03_opening,VE_PAC_03_closing,VE_PAC_03_overtime,PAC_valve_timer[3],PAC_valve_overtime_setting[3]);
+valve_action_overtime(PAC_valve_overtime[4],VE_PAC_04_opening,VE_PAC_04_closing,VE_PAC_04_overtime,PAC_valve_timer[4],PAC_valve_overtime_setting[4]);
+valve_action_overtime(PAC_valve_overtime[5],VE_PAC_05_opening,VE_PAC_05_closing,VE_PAC_05_overtime,PAC_valve_timer[5],PAC_valve_overtime_setting[5]);
+valve_action_overtime(PAC_valve_overtime[6],VE_PAC_06_opening,VE_PAC_06_closing,VE_PAC_06_overtime,PAC_valve_timer[6],PAC_valve_overtime_setting[6]);
+valve_action_overtime(PAC_valve_overtime[7],VE_PAC_07_opening,VE_PAC_07_closing,VE_PAC_07_overtime,PAC_valve_timer[7],PAC_valve_overtime_setting[7]);
+valve_action_overtime(PAC_valve_overtime[8],VE_PAC_08_opening,VE_PAC_08_closing,VE_PAC_08_overtime,PAC_valve_timer[8],PAC_valve_overtime_setting[8]);
+valve_action_overtime(PAC_valve_overtime[9],VE_PAC_09_opening,VE_PAC_09_closing,VE_PAC_09_overtime,PAC_valve_timer[9],PAC_valve_overtime_setting[9]);
+valve_action_overtime(PAC_valve_overtime[10],VE_PAC_10_opening,VE_PAC_10_closing,VE_PAC_10_overtime,PAC_valve_timer[10],PAC_valve_overtime_setting[10]);
+valve_action_overtime(PAC_valve_overtime[11],VE_PAC_11_opening,VE_PAC_11_closing,VE_PAC_11_overtime,PAC_valve_timer[11],PAC_valve_overtime_setting[11]);
+valve_action_overtime(PAC_valve_overtime[12],VE_PAC_12_opening,VE_PAC_12_closing,VE_PAC_12_overtime,PAC_valve_timer[12],PAC_valve_overtime_setting[12]);
+valve_action_overtime(PAC_valve_overtime[13],VE_PAC_13_opening,VE_PAC_13_closing,VE_PAC_13_overtime,PAC_valve_timer[13],PAC_valve_overtime_setting[13]);
+valve_action_overtime(PAC_valve_overtime[14],VE_PAC_14_opening,VE_PAC_14_closing,VE_PAC_14_overtime,PAC_valve_timer[14],PAC_valve_overtime_setting[14]);
+valve_action_overtime(PAC_valve_overtime[15],VE_PAC_15_opening,VE_PAC_15_closing,VE_PAC_15_overtime,PAC_valve_timer[15],PAC_valve_overtime_setting[15]);
+
+(*卸料泵运行状态*)
+P_PAC5_run:=RemoteIO1:0:I.Data.30;
+P_PAC6_run:=RemoteIO1:0:I.Data.31;
+(*电动阀阀位反馈*)
+VE_PAC_12_open:=RemoteIO1:1:I.Data.0;
+VE_PAC_12_close:=RemoteIO1:1:I.Data.1;
+VE_PAC_13_open:=RemoteIO1:1:I.Data.2;
+VE_PAC_13_close:=RemoteIO1:1:I.Data.3;
+VE_PAC_14_open:=RemoteIO1:1:I.Data.4;
+VE_PAC_14_close:=RemoteIO1:1:I.Data.5;
+VE_PAC_15_open:=RemoteIO1:1:I.Data.6;
+VE_PAC_15_close:=RemoteIO1:1:I.Data.7;
+
+(*数字泵反馈流量*)
+(*读取数字泵反馈流量*)
+(*1#数字泵*)
+SCL(SCL_LP1010_AI_1);
+SCL_LP1010_AI_1.In:=RemoteIO1:3:I.Ch0Data;
+P_PAC1_flow_read:=SCL_LP1010_AI_1.Out;
+(*2#数字泵*)
+SCL(SCL_LP1010_AI_2);
+SCL_LP1010_AI_2.In:=RemoteIO1:3:I.Ch1Data;
+P_PAC2_flow_read:=SCL_LP1010_AI_2.Out;
+(*3#数字泵*)
+SCL(SCL_LP1010_AI_3);
+SCL_LP1010_AI_3.In:=RemoteIO1:3:I.Ch2Data;
+P_PAC3_flow_read:=SCL_LP1010_AI_3.Out;
+(*4#数字泵*)
+SCL(SCL_LP1010_AI_4);
+SCL_LP1010_AI_4.In:=RemoteIO1:3:I.Ch3Data;
+P_PAC4_flow_read:=SCL_LP1010_AI_4.Out;
+
+(*数字泵投加流量设置*)
+(*1#数字泵*)
+SCL(SCL_LP1010_AO_1);
+SCL_LP1010_AO_1.In:=P_PAC1_flow_set;
+(*2#数字泵*)
+SCL(SCL_LP1010_AO_2);
+SCL_LP1010_AO_2.In:=P_PAC2_flow_set;
+(*3#数字泵*)
+SCL(SCL_LP1010_AO_3);
+SCL_LP1010_AO_3.In:=P_PAC3_flow_set;
+(*4#数字泵*)
+SCL(SCL_LP1010_AO_4);
+SCL_LP1010_AO_4.In:=P_PAC4_flow_set;
+
+(*储液池液位*)
+(*读取超声波液位计反馈液位*)
+(*1#PAC池*)
+SCL(SCL_PAC_tank_AI_1);
+SCL_PAC_tank_AI_1.In:=RemoteIO1:3:I.Ch4Data;
+PAC_tank_level_8LT01:=SCL_PAC_tank_AI_1.Out;
+(*2#PAC池*)
+SCL(SCL_PAC_tank_AI_2);
+SCL_PAC_tank_AI_2.In:=RemoteIO1:3:I.Ch5Data;
+PAC_tank_level_8LT02:=SCL_PAC_tank_AI_2.Out;
+(*3#PAC池*)
+SCL(SCL_PAC_tank_AI_3);
+SCL_PAC_tank_AI_3.In:=RemoteIO1:3:I.Ch6Data;
+PAC_tank_level_8LT03:=SCL_PAC_tank_AI_3.Out;
+(*4#PAC池*)
+SCL(SCL_PAC_tank_AI_4);
+SCL_PAC_tank_AI_4.In:=RemoteIO1:3:I.Ch7Data;
+PAC_tank_level_8LT04:=SCL_PAC_tank_AI_4.Out;
+
+(*电磁流量计反馈流量*)
+(*电磁流量计流量范围0-1020L/h*)
+(*电磁流量计反馈流量的4-20mA参数与数字泵相同*)
+(*1#电磁流量计*)
+SCL(SCL_LP1010_AI_5);
+SCL_LP1010_AI_5.In:=RemoteIO1:3:I.Ch8Data;
+PAC_flow_8FT01:=tune_factor[0]*SCL_LP1010_AI_5.Out+twaek_factor[0];
+(*2#电磁流量计*)
+SCL(SCL_LP1010_AI_6);
+SCL_LP1010_AI_6.In:=RemoteIO1:3:I.Ch9Data;
+PAC_flow_8FT02:=tune_factor[1]*SCL_LP1010_AI_6.Out+twaek_factor[1];
+
+(*同步上位机数据*)
+(*流量、浊度、pH*)
+Turb_Raw:=water_data_LCU05[0];
+Turb_In_Plant:=water_data_LCU05[1];
+PH_In_Plant:=water_data_LCU05[2];
+Flow1_current:=water_data_LCU05[3];
+Flow2_current:=water_data_LCU05[15];
+FilterEx_Flow:=water_data_LCU05[9];
+
+(*在地/远程切换*)
+(*1号泵组*)
+if PAC_control_local_remote[1] then
+	P_PAC_actuate_local[1]:=P_PAC1_actuate;
+	P_PAC_actuate_local[2]:=P_PAC2_actuate;
+	VE_PAC_actuate_local[1]:=VE_PAC_01_actuate;
+	VE_PAC_actuate_local[2]:=VE_PAC_02_actuate;
+	P_PAC_actuate_local[1]:=RemoteIO1:2:O.Data.4;
+	P_PAC_actuate_local[2]:=RemoteIO1:2:O.Data.5;
+    (*手动控制时数字泵流量在此设置，自动控制时由YaoHao程序设置*)
+    P_PAC_flow_set_local[1]:=P_PAC1_flow_set;
+    P_PAC_flow_set_local[2]:=P_PAC2_flow_set;
+else
+	P_PAC1_actuate:=P_PAC_actuate_local[1];
+	P_PAC2_actuate:=P_PAC_actuate_local[2];
+    VE_PAC_01_actuate:=VE_PAC_actuate_local[1];
+    VE_PAC_02_actuate:=VE_PAC_actuate_local[2];
+	P_PAC1_actuate:=RemoteIO1:2:O.Data.4;
+	P_PAC2_actuate:=RemoteIO1:2:O.Data.5;
+    (*手动控制时数字泵流量在此设置，自动控制时由YaoHao程序设置*)
+    if (not PAC_control_auto_manual[1])
+    and (not PAC_control_auto_manual[11])
+    and (not PAC_control_auto_manual[21])
+    then
+        P_PAC1_flow_set:=P_PAC_flow_set_local[1];
+        P_PAC2_flow_set:=P_PAC_flow_set_local[2];
+    else
+        P_PAC_flow_set_local[1]:=P_PAC1_flow_set;
+        P_PAC_flow_set_local[2]:=P_PAC2_flow_set;
+    end_if;
+end_if;
+
+(*2号泵组*)
+if PAC_control_local_remote[2] then
+	P_PAC_actuate_local[3]:=P_PAC3_actuate;
+	P_PAC_actuate_local[4]:=P_PAC4_actuate;
+	VE_PAC_actuate_local[3]:=VE_PAC_03_actuate;
+	VE_PAC_actuate_local[4]:=VE_PAC_04_actuate;
+	P_PAC_actuate_local[3]:=RemoteIO1:2:O.Data.6;
+	P_PAC_actuate_local[4]:=RemoteIO1:2:O.Data.7;
+    (*手动控制时数字泵流量在此设置，自动控制时由YaoHao程序设置*)
+    P_PAC_flow_set_local[3]:=P_PAC3_flow_set;
+    P_PAC_flow_set_local[4]:=P_PAC4_flow_set;
+else
+	P_PAC3_actuate:=P_PAC_actuate_local[3];
+	P_PAC4_actuate:=P_PAC_actuate_local[4];
+    VE_PAC_03_actuate:=VE_PAC_actuate_local[3];
+    VE_PAC_04_actuate:=VE_PAC_actuate_local[4];
+	P_PAC3_actuate:=RemoteIO1:2:O.Data.6;
+	P_PAC4_actuate:=RemoteIO1:2:O.Data.7;
+    (*手动控制时数字泵流量在此设置，自动控制时由YaoHao程序设置*)
+    if (not PAC_control_auto_manual[2])
+    and (not PAC_control_auto_manual[12])
+    and (not PAC_control_auto_manual[22])
+    then
+        P_PAC3_flow_set:=P_PAC_flow_set_local[3];
+        P_PAC4_flow_set:=P_PAC_flow_set_local[4];
+    else
+        P_PAC_flow_set_local[3]:=P_PAC3_flow_set;
+        P_PAC_flow_set_local[4]:=P_PAC4_flow_set;
+    end_if;
+end_if;
+
+(*1号PAC池*)
+if PAC_tank_local_remote[1] then
+	VE_PAC_actuate_local[5]:=VE_PAC_05_actuate;
+	VE_PAC_actuate_local[7]:=VE_PAC_07_actuate;
+    MI_PAC_actuate_local[1]:=MI_PAC1_actuate;
+    MI_PAC_actuate_local[2]:=MI_PAC2_actuate;
+else
+    VE_PAC_05_actuate:=VE_PAC_actuate_local[5];
+    VE_PAC_07_actuate:=VE_PAC_actuate_local[7];
+	if not PAC_tank_auto_manual[1] then
+        MI_PAC1_actuate:=MI_PAC_actuate_local[1];
+        MI_PAC2_actuate:=MI_PAC_actuate_local[2];
+    else
+        MI_PAC_actuate_local[1]:=MI_PAC1_actuate;
+        MI_PAC_actuate_local[2]:=MI_PAC2_actuate;
+    end_if;
+end_if;
+
+
+(*2号PAC池*)
+if PAC_tank_local_remote[2] then
+	VE_PAC_actuate_local[6]:=VE_PAC_06_actuate;
+	VE_PAC_actuate_local[8]:=VE_PAC_08_actuate;
+    MI_PAC_actuate_local[3]:=MI_PAC3_actuate;
+    MI_PAC_actuate_local[4]:=MI_PAC4_actuate;
+else
+    VE_PAC_06_actuate:=VE_PAC_actuate_local[6];
+    VE_PAC_08_actuate:=VE_PAC_actuate_local[8];
+	if not PAC_tank_auto_manual[1] then
+        MI_PAC3_actuate:=MI_PAC_actuate_local[3];
+        MI_PAC4_actuate:=MI_PAC_actuate_local[4];
+    else
+        MI_PAC_actuate_local[3]:=MI_PAC3_actuate;
+        MI_PAC_actuate_local[4]:=MI_PAC4_actuate;
+    end_if;
+end_if;
+
+
+
+
+
+
+
+
+

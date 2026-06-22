@@ -1,0 +1,40 @@
+(*阀门动作的控制分为分类：*)
+    (*1、普通电动阀可以自由动作；*)
+    (*2、泵出口阀需要与泵联动；*)
+
+    (*1、普通电动阀控制*)
+    RemoteIO4:2:O.Data.8:=VE_KMnO4_05_actuate;
+RemoteIO4:2:O.Data.9:=VE_KMnO4_06_actuate;
+
+(*2、泵出口阀控制*)
+    (*数字泵启动时，泵出口阀由数字泵控制程序控制，此时泵出口阀必须开启*)
+(*1#泵的出口阀*)
+if RemoteIO4:2:O.Data.0 then
+	RemoteIO4:2:O.Data.4:=1;
+else
+	RemoteIO4:2:O.Data.4:=VE_KMnO4_01_actuate;
+end_if;
+(*2#泵的出口阀*)
+if RemoteIO4:2:O.Data.1 then
+	RemoteIO4:2:O.Data.5:=1;
+else
+	RemoteIO4:2:O.Data.5:=VE_KMnO4_02_actuate;
+end_if;
+(*3#泵的出口阀*)
+if RemoteIO4:2:O.Data.2 then
+	RemoteIO4:2:O.Data.6:=1;
+else
+	RemoteIO4:2:O.Data.6:=VE_KMnO4_03_actuate;
+end_if;
+(*4#泵的出口阀*)
+if RemoteIO4:2:O.Data.3 then
+	RemoteIO4:2:O.Data.7:=1;
+else
+	RemoteIO4:2:O.Data.7:=VE_KMnO4_04_actuate;
+end_if;
+
+
+
+
+
+

@@ -1,0 +1,784 @@
+(*数字泵运行状态*)
+pump_run_status_indicate(pump_run_status_indicate_5,P_NaClO1_actuate,P_NaClO1_flow_read,P_NaClO1_run);
+pump_run_status_indicate(pump_run_status_indicate_6,P_NaClO2_actuate,P_NaClO2_flow_read,P_NaClO2_run);
+pump_run_status_indicate(pump_run_status_indicate_7,P_NaClO3_actuate,P_NaClO3_flow_read,P_NaClO3_run);
+pump_run_status_indicate(pump_run_status_indicate_8,P_NaClO4_actuate,P_NaClO4_flow_read,P_NaClO4_run);
+pump_run_status_indicate(pump_run_status_indicate_9,P_NaClO5_actuate,P_NaClO5_flow_read,P_NaClO5_run);
+pump_run_status_indicate(pump_run_status_indicate_10,P_NaClO6_actuate,P_NaClO6_flow_read,P_NaClO6_run);
+pump_run_status_indicate(pump_run_status_indicate_11,P_NaClO7_actuate,P_NaClO7_flow_read,P_NaClO7_run);
+pump_run_status_indicate(pump_run_status_indicate_12,P_NaClO8_actuate,P_NaClO8_flow_read,P_NaClO8_run);
+pump_run_status_indicate(pump_run_status_indicate_13,P_NaClO9_actuate,P_NaClO9_flow_read,P_NaClO9_run);
+pump_run_status_indicate(pump_run_status_indicate_14,P_NaClO10_actuate,P_NaClO10_flow_read,P_NaClO10_run);
+
+(*流量计偏流报警时、或通讯故障时自动切换到检修状态*)
+if NaClO_flow_err_8FT06 then
+	NaClO_flow_maintain_8FT06:=1;
+	end_if;
+	
+if NaClO_flow_err_8FT07 then
+	NaClO_flow_maintain_8FT07:=1;
+	end_if;
+	
+if NaClO_flow_err_8FT08 then
+	NaClO_flow_maintain_8FT08:=1;
+	end_if;
+	
+if NaClO_flow_err_8FT09 then
+	NaClO_flow_maintain_8FT09:=1;
+	end_if;
+	
+if NaClO_flow_err_8FT10 then
+	NaClO_flow_maintain_8FT10:=1;
+	end_if;
+	
+(*流量计故障复位时，检修状态及偏流状态同时复位*)
+if NaClO_flow_reset_8FT06 then
+	NaClO_flow_maintain_8FT06:=0;	
+	end_if;
+
+if NaClO_flow_reset_8FT07 then
+	NaClO_flow_maintain_8FT07:=0;
+	end_if;
+
+if NaClO_flow_reset_8FT08 then
+	NaClO_flow_maintain_8FT08:=0;
+	end_if;
+
+if NaClO_flow_reset_8FT09 then
+	NaClO_flow_maintain_8FT09:=0;
+	end_if;
+
+if NaClO_flow_reset_8FT10 then
+	NaClO_flow_maintain_8FT10:=0;
+	end_if;
+
+(*数字泵故障状态*)
+pump_error(NaClO_pump_error[1],RemoteIO2:7:I.Data.0,RemoteIO4:0:I.Ch0OpenWire,P_NaClO1_flow_err,P_NaClO1_err,P_NaClO1_maintain);
+pump_error(NaClO_pump_error[2],RemoteIO2:7:I.Data.1,RemoteIO4:0:I.Ch1OpenWire,P_NaClO2_flow_err,P_NaClO2_err,P_NaClO2_maintain);
+pump_error(NaClO_pump_error[3],RemoteIO2:7:I.Data.2,RemoteIO4:0:I.Ch2OpenWire,P_NaClO3_flow_err,P_NaClO3_err,P_NaClO3_maintain);
+pump_error(NaClO_pump_error[4],RemoteIO2:7:I.Data.3,RemoteIO4:0:I.Ch3OpenWire,P_NaClO4_flow_err,P_NaClO4_err,P_NaClO4_maintain);
+pump_error(NaClO_pump_error[5],RemoteIO2:7:I.Data.4,RemoteIO4:0:I.Ch4OpenWire,P_NaClO5_flow_err,P_NaClO5_err,P_NaClO5_maintain);
+pump_error(NaClO_pump_error[6],RemoteIO2:7:I.Data.5,RemoteIO4:0:I.Ch5OpenWire,P_NaClO6_flow_err,P_NaClO6_err,P_NaClO6_maintain);
+pump_error(NaClO_pump_error[7],RemoteIO2:7:I.Data.6,RemoteIO4:0:I.Ch6OpenWire,P_NaClO7_flow_err,P_NaClO7_err,P_NaClO7_maintain);
+pump_error(NaClO_pump_error[8],RemoteIO2:7:I.Data.7,RemoteIO4:0:I.Ch7OpenWire,P_NaClO8_flow_err,P_NaClO8_err,P_NaClO8_maintain);
+pump_error(NaClO_pump_error[9],RemoteIO2:7:I.Data.8,RemoteIO4:0:I.Ch8OpenWire,P_NaClO9_flow_err,P_NaClO9_err,P_NaClO9_maintain);
+pump_error(NaClO_pump_error[10],RemoteIO2:7:I.Data.9,RemoteIO4:0:I.Ch9OpenWire,P_NaClO10_flow_err,P_NaClO10_err,P_NaClO10_maintain);
+
+(*数字泵故障复位*)
+if P_NaClO1_reset then
+	P_NaClO1_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO2_reset then
+	P_NaClO2_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO3_reset then
+	P_NaClO3_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO4_reset then
+	P_NaClO4_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO5_reset then
+	P_NaClO5_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO6_reset then
+	P_NaClO6_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO7_reset then
+	P_NaClO7_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO8_reset then
+	P_NaClO8_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO9_reset then
+	P_NaClO9_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+if P_NaClO10_reset then
+	P_NaClO10_maintain:=0;
+	RemoteIO4:0:O.WireOffReset:=1;
+else
+	RemoteIO4:0:O.WireOffReset:=0;
+end_if;
+
+
+(*电动阀阀位反馈*)
+VE_NaClO1_open:=RemoteIO2:7:I.Data.10;
+VE_NaClO1_close:=RemoteIO2:7:I.Data.11;
+VE_NaClO2_open:=RemoteIO2:7:I.Data.12;
+VE_NaClO2_close:=RemoteIO2:7:I.Data.13;
+VE_NaClO3_open:=RemoteIO2:7:I.Data.14;
+VE_NaClO3_close:=RemoteIO2:7:I.Data.15;
+VE_NaClO4_open:=RemoteIO2:7:I.Data.16;
+VE_NaClO4_close:=RemoteIO2:7:I.Data.17;
+VE_NaClO5_open:=RemoteIO2:7:I.Data.18;
+VE_NaClO5_close:=RemoteIO2:7:I.Data.19;
+VE_NaClO6_open:=RemoteIO2:7:I.Data.20;
+VE_NaClO6_close:=RemoteIO2:7:I.Data.21;
+VE_NaClO7_open:=RemoteIO2:7:I.Data.22;
+VE_NaClO7_close:=RemoteIO2:7:I.Data.23;
+VE_NaClO8_open:=RemoteIO2:7:I.Data.24;
+VE_NaClO8_close:=RemoteIO2:7:I.Data.25;
+VE_NaClO9_open:=RemoteIO2:7:I.Data.26;
+VE_NaClO9_close:=RemoteIO2:7:I.Data.27;
+VE_NaClO10_open:=RemoteIO2:7:I.Data.28;
+VE_NaClO10_close:=RemoteIO2:7:I.Data.29;
+VE_NaClO11_open:=RemoteIO2:7:I.Data.30;
+VE_NaClO11_close:=RemoteIO2:7:I.Data.31;
+VE_NaClO12_open:=RemoteIO3:0:I.Data.0;
+VE_NaClO12_close:=RemoteIO3:0:I.Data.1;
+VE_NaClO13_open:=RemoteIO3:0:I.Data.2;
+VE_NaClO13_close:=RemoteIO3:0:I.Data.3;
+VE_NaClO14_open:=RemoteIO3:0:I.Data.4;
+VE_NaClO14_close:=RemoteIO3:0:I.Data.5;
+VE_NaClO15_open:=RemoteIO3:0:I.Data.6;
+VE_NaClO15_close:=RemoteIO3:0:I.Data.7;
+VE_NaClO16_open:=RemoteIO3:0:I.Data.8;
+VE_NaClO16_close:=RemoteIO3:0:I.Data.9;
+VE_NaClO17_open:=RemoteIO3:0:I.Data.10;
+VE_NaClO17_close:=RemoteIO3:0:I.Data.11;
+VE_NaClO18_open:=RemoteIO3:0:I.Data.12;
+VE_NaClO18_close:=RemoteIO3:0:I.Data.13;
+VE_NaClO19_open:=RemoteIO3:0:I.Data.14;
+VE_NaClO19_close:=RemoteIO3:0:I.Data.15;
+VE_NaClO20_open:=RemoteIO3:0:I.Data.16;
+VE_NaClO20_close:=RemoteIO3:0:I.Data.17;
+VE_NaClO21_open:=RemoteIO3:0:I.Data.18;
+VE_NaClO21_close:=RemoteIO3:0:I.Data.19;
+VE_NaClO22_open:=RemoteIO3:0:I.Data.20;
+VE_NaClO22_close:=RemoteIO3:0:I.Data.21;
+VE_NaClO23_open:=RemoteIO3:0:I.Data.22;
+VE_NaClO23_close:=RemoteIO3:0:I.Data.23;
+VE_NaClO24_open:=RemoteIO3:0:I.Data.24;
+VE_NaClO24_close:=RemoteIO3:0:I.Data.25;
+VE_NaClO25_open:=RemoteIO3:0:I.Data.26;
+VE_NaClO25_close:=RemoteIO3:0:I.Data.27;
+VE_NaClO26_open:=RemoteIO3:0:I.Data.28;
+VE_NaClO26_close:=RemoteIO3:0:I.Data.29;
+VE_NaClO27_open:=RemoteIO3:0:I.Data.30;
+VE_NaClO27_close:=RemoteIO3:0:I.Data.31;
+VE_NaClO28_open:=RemoteIO3:1:I.Data.0;
+VE_NaClO28_close:=RemoteIO3:1:I.Data.1;
+VE_NaClO29_open:=RemoteIO3:1:I.Data.2;
+VE_NaClO29_close:=RemoteIO3:1:I.Data.3;
+VE_NaClO30_open:=RemoteIO3:1:I.Data.4;
+VE_NaClO30_close:=RemoteIO3:1:I.Data.5;
+VE_NaClO31_open:=RemoteIO3:1:I.Data.6;
+VE_NaClO31_close:=RemoteIO3:1:I.Data.7;
+VE_NaClO32_open:=RemoteIO3:1:I.Data.8;
+VE_NaClO32_close:=RemoteIO3:1:I.Data.9;
+VE_NaClO33_open:=RemoteIO3:1:I.Data.10;
+VE_NaClO33_close:=RemoteIO3:1:I.Data.11;
+VE_NaClO34_open:=RemoteIO3:1:I.Data.12;
+VE_NaClO34_close:=RemoteIO3:1:I.Data.13;
+VE_NaClO35_open:=RemoteIO3:1:I.Data.14;
+VE_NaClO35_close:=RemoteIO3:1:I.Data.15;
+VE_NaClO36_open:=RemoteIO3:1:I.Data.16;
+VE_NaClO36_close:=RemoteIO3:1:I.Data.17;
+VE_NaClO37_open:=RemoteIO3:1:I.Data.18;
+VE_NaClO37_close:=RemoteIO3:1:I.Data.19;
+VE_NaClO38_open:=RemoteIO3:1:I.Data.20;
+VE_NaClO38_close:=RemoteIO3:1:I.Data.21;
+VE_NaClO39_open:=RemoteIO3:1:I.Data.22;
+VE_NaClO39_close:=RemoteIO3:1:I.Data.23;
+VE_NaClO40_open:=RemoteIO3:1:I.Data.24;
+VE_NaClO40_close:=RemoteIO3:1:I.Data.25;
+VE_NaClO41_open:=RemoteIO3:1:I.Data.26;
+VE_NaClO41_close:=RemoteIO3:1:I.Data.27;
+VE_NaClO42_open:=RemoteIO3:1:I.Data.28;
+VE_NaClO42_close:=RemoteIO3:1:I.Data.29;
+VE_NaClO43_open:=RemoteIO3:1:I.Data.30;
+VE_NaClO43_close:=RemoteIO3:1:I.Data.31;
+VE_NaClO44_open:=RemoteIO3:2:I.Data.0;
+VE_NaClO44_close:=RemoteIO3:2:I.Data.1;
+VE_NaClO45_open:=RemoteIO3:2:I.Data.2;
+VE_NaClO45_close:=RemoteIO3:2:I.Data.3;
+(*开/关阀动作过程中显示*)
+valve_operating_indicate(valve_operating_indicate_48,RemoteIO3:3:O.Data.10,VE_NaClO1_open,VE_NaClO1_close,VE_NaClO1_opening,VE_NaClO1_closing);
+valve_operating_indicate(valve_operating_indicate_49,RemoteIO3:3:O.Data.11,VE_NaClO2_open,VE_NaClO2_close,VE_NaClO2_opening,VE_NaClO2_closing);
+valve_operating_indicate(valve_operating_indicate_50,RemoteIO3:3:O.Data.12,VE_NaClO3_open,VE_NaClO3_close,VE_NaClO3_opening,VE_NaClO3_closing);
+valve_operating_indicate(valve_operating_indicate_51,RemoteIO3:3:O.Data.13,VE_NaClO4_open,VE_NaClO4_close,VE_NaClO4_opening,VE_NaClO4_closing);
+valve_operating_indicate(valve_operating_indicate_52,RemoteIO3:3:O.Data.14,VE_NaClO5_open,VE_NaClO5_close,VE_NaClO5_opening,VE_NaClO5_closing);
+valve_operating_indicate(valve_operating_indicate_53,RemoteIO3:3:O.Data.15,VE_NaClO6_open,VE_NaClO6_close,VE_NaClO6_opening,VE_NaClO6_closing);
+valve_operating_indicate(valve_operating_indicate_54,RemoteIO3:3:O.Data.16,VE_NaClO7_open,VE_NaClO7_close,VE_NaClO7_opening,VE_NaClO7_closing);
+valve_operating_indicate(valve_operating_indicate_55,RemoteIO3:3:O.Data.17,VE_NaClO8_open,VE_NaClO8_close,VE_NaClO8_opening,VE_NaClO8_closing);
+valve_operating_indicate(valve_operating_indicate_56,RemoteIO3:3:O.Data.18,VE_NaClO9_open,VE_NaClO9_close,VE_NaClO9_opening,VE_NaClO9_closing);
+valve_operating_indicate(valve_operating_indicate_57,RemoteIO3:3:O.Data.19,VE_NaClO10_open,VE_NaClO10_close,VE_NaClO10_opening,VE_NaClO10_closing);
+valve_operating_indicate(valve_operating_indicate_58,RemoteIO3:3:O.Data.20,VE_NaClO11_open,VE_NaClO11_close,VE_NaClO11_opening,VE_NaClO11_closing);
+valve_operating_indicate(valve_operating_indicate_59,RemoteIO3:3:O.Data.21,VE_NaClO12_open,VE_NaClO12_close,VE_NaClO12_opening,VE_NaClO12_closing);
+valve_operating_indicate(valve_operating_indicate_60,RemoteIO3:3:O.Data.22,VE_NaClO13_open,VE_NaClO13_close,VE_NaClO13_opening,VE_NaClO13_closing);
+valve_operating_indicate(valve_operating_indicate_61,RemoteIO3:3:O.Data.23,VE_NaClO14_open,VE_NaClO14_close,VE_NaClO14_opening,VE_NaClO14_closing);
+valve_operating_indicate(valve_operating_indicate_62,RemoteIO3:3:O.Data.24,VE_NaClO15_open,VE_NaClO15_close,VE_NaClO15_opening,VE_NaClO15_closing);
+valve_operating_indicate(valve_operating_indicate_63,RemoteIO3:3:O.Data.25,VE_NaClO16_open,VE_NaClO16_close,VE_NaClO16_opening,VE_NaClO16_closing);
+valve_operating_indicate(valve_operating_indicate_64,RemoteIO3:3:O.Data.26,VE_NaClO17_open,VE_NaClO17_close,VE_NaClO17_opening,VE_NaClO17_closing);
+valve_operating_indicate(valve_operating_indicate_65,RemoteIO3:3:O.Data.27,VE_NaClO18_open,VE_NaClO18_close,VE_NaClO18_opening,VE_NaClO18_closing);
+valve_operating_indicate(valve_operating_indicate_66,RemoteIO3:3:O.Data.28,VE_NaClO19_open,VE_NaClO19_close,VE_NaClO19_opening,VE_NaClO19_closing);
+valve_operating_indicate(valve_operating_indicate_67,RemoteIO3:3:O.Data.29,VE_NaClO20_open,VE_NaClO20_close,VE_NaClO20_opening,VE_NaClO20_closing);
+valve_operating_indicate(valve_operating_indicate_68,RemoteIO3:3:O.Data.30,VE_NaClO21_open,VE_NaClO21_close,VE_NaClO21_opening,VE_NaClO21_closing);
+valve_operating_indicate(valve_operating_indicate_69,RemoteIO3:3:O.Data.31,VE_NaClO22_open,VE_NaClO22_close,VE_NaClO22_opening,VE_NaClO22_closing);
+valve_operating_indicate(valve_operating_indicate_70,RemoteIO3:4:O.Data.0,VE_NaClO23_open,VE_NaClO23_close,VE_NaClO23_opening,VE_NaClO23_closing);
+valve_operating_indicate(valve_operating_indicate_71,RemoteIO3:4:O.Data.1,VE_NaClO24_open,VE_NaClO24_close,VE_NaClO24_opening,VE_NaClO24_closing);
+valve_operating_indicate(valve_operating_indicate_72,RemoteIO3:4:O.Data.2,VE_NaClO25_open,VE_NaClO25_close,VE_NaClO25_opening,VE_NaClO25_closing);
+valve_operating_indicate(valve_operating_indicate_73,RemoteIO3:4:O.Data.3,VE_NaClO26_open,VE_NaClO26_close,VE_NaClO26_opening,VE_NaClO26_closing);
+valve_operating_indicate(valve_operating_indicate_74,RemoteIO3:4:O.Data.4,VE_NaClO27_open,VE_NaClO27_close,VE_NaClO27_opening,VE_NaClO27_closing);
+valve_operating_indicate(valve_operating_indicate_75,RemoteIO3:4:O.Data.5,VE_NaClO28_open,VE_NaClO28_close,VE_NaClO28_opening,VE_NaClO28_closing);
+valve_operating_indicate(valve_operating_indicate_76,RemoteIO3:4:O.Data.6,VE_NaClO29_open,VE_NaClO29_close,VE_NaClO29_opening,VE_NaClO29_closing);
+valve_operating_indicate(valve_operating_indicate_77,RemoteIO3:4:O.Data.7,VE_NaClO30_open,VE_NaClO30_close,VE_NaClO30_opening,VE_NaClO30_closing);
+valve_operating_indicate(valve_operating_indicate_78,RemoteIO3:4:O.Data.8,VE_NaClO31_open,VE_NaClO31_close,VE_NaClO31_opening,VE_NaClO31_closing);
+valve_operating_indicate(valve_operating_indicate_79,RemoteIO3:4:O.Data.9,VE_NaClO32_open,VE_NaClO32_close,VE_NaClO32_opening,VE_NaClO32_closing);
+valve_operating_indicate(valve_operating_indicate_80,RemoteIO3:4:O.Data.10,VE_NaClO33_open,VE_NaClO33_close,VE_NaClO33_opening,VE_NaClO33_closing);
+valve_operating_indicate(valve_operating_indicate_81,RemoteIO3:4:O.Data.11,VE_NaClO34_open,VE_NaClO34_close,VE_NaClO34_opening,VE_NaClO34_closing);
+valve_operating_indicate(valve_operating_indicate_82,RemoteIO3:4:O.Data.12,VE_NaClO35_open,VE_NaClO35_close,VE_NaClO35_opening,VE_NaClO35_closing);
+valve_operating_indicate(valve_operating_indicate_83,RemoteIO3:4:O.Data.13,VE_NaClO36_open,VE_NaClO36_close,VE_NaClO36_opening,VE_NaClO36_closing);
+valve_operating_indicate(valve_operating_indicate_84,RemoteIO3:4:O.Data.14,VE_NaClO37_open,VE_NaClO37_close,VE_NaClO37_opening,VE_NaClO37_closing);
+valve_operating_indicate(valve_operating_indicate_85,RemoteIO3:4:O.Data.15,VE_NaClO38_open,VE_NaClO38_close,VE_NaClO38_opening,VE_NaClO38_closing);
+valve_operating_indicate(valve_operating_indicate_86,RemoteIO3:4:O.Data.16,VE_NaClO39_open,VE_NaClO39_close,VE_NaClO39_opening,VE_NaClO39_closing);
+valve_operating_indicate(valve_operating_indicate_87,RemoteIO3:4:O.Data.17,VE_NaClO40_open,VE_NaClO40_close,VE_NaClO40_opening,VE_NaClO40_closing);
+valve_operating_indicate(valve_operating_indicate_88,RemoteIO3:4:O.Data.18,VE_NaClO41_open,VE_NaClO41_close,VE_NaClO41_opening,VE_NaClO41_closing);
+valve_operating_indicate(valve_operating_indicate_89,RemoteIO3:4:O.Data.19,VE_NaClO42_open,VE_NaClO42_close,VE_NaClO42_opening,VE_NaClO42_closing);
+valve_operating_indicate(valve_operating_indicate_90,RemoteIO3:4:O.Data.20,VE_NaClO43_open,VE_NaClO43_close,VE_NaClO43_opening,VE_NaClO43_closing);
+valve_operating_indicate(valve_operating_indicate_91,RemoteIO3:4:O.Data.21,VE_NaClO44_open,VE_NaClO44_close,VE_NaClO44_opening,VE_NaClO44_closing);
+valve_operating_indicate(valve_operating_indicate_92,RemoteIO3:4:O.Data.22,VE_NaClO45_open,VE_NaClO45_close,VE_NaClO45_opening,VE_NaClO45_closing);
+
+(*阀动作超时判断*)
+valve_action_overtime(NaClO_valve_overtime[1],VE_NaClO1_opening,VE_NaClO1_closing,VE_NaClO1_overtime,NaClO_valve_timer[1],NaClO_valve_overtime_setting[1]);
+valve_action_overtime(NaClO_valve_overtime[2],VE_NaClO2_opening,VE_NaClO2_closing,VE_NaClO2_overtime,NaClO_valve_timer[2],NaClO_valve_overtime_setting[2]);
+valve_action_overtime(NaClO_valve_overtime[3],VE_NaClO3_opening,VE_NaClO3_closing,VE_NaClO3_overtime,NaClO_valve_timer[3],NaClO_valve_overtime_setting[3]);
+valve_action_overtime(NaClO_valve_overtime[4],VE_NaClO4_opening,VE_NaClO4_closing,VE_NaClO4_overtime,NaClO_valve_timer[4],NaClO_valve_overtime_setting[4]);
+valve_action_overtime(NaClO_valve_overtime[5],VE_NaClO5_opening,VE_NaClO5_closing,VE_NaClO5_overtime,NaClO_valve_timer[5],NaClO_valve_overtime_setting[5]);
+valve_action_overtime(NaClO_valve_overtime[6],VE_NaClO6_opening,VE_NaClO6_closing,VE_NaClO6_overtime,NaClO_valve_timer[6],NaClO_valve_overtime_setting[6]);
+valve_action_overtime(NaClO_valve_overtime[7],VE_NaClO7_opening,VE_NaClO7_closing,VE_NaClO7_overtime,NaClO_valve_timer[7],NaClO_valve_overtime_setting[7]);
+valve_action_overtime(NaClO_valve_overtime[8],VE_NaClO8_opening,VE_NaClO8_closing,VE_NaClO8_overtime,NaClO_valve_timer[8],NaClO_valve_overtime_setting[8]);
+valve_action_overtime(NaClO_valve_overtime[9],VE_NaClO9_opening,VE_NaClO9_closing,VE_NaClO9_overtime,NaClO_valve_timer[9],NaClO_valve_overtime_setting[9]);
+valve_action_overtime(NaClO_valve_overtime[10],VE_NaClO10_opening,VE_NaClO10_closing,VE_NaClO10_overtime,NaClO_valve_timer[10],NaClO_valve_overtime_setting[10]);
+valve_action_overtime(NaClO_valve_overtime[11],VE_NaClO11_opening,VE_NaClO11_closing,VE_NaClO11_overtime,NaClO_valve_timer[11],NaClO_valve_overtime_setting[11]);
+valve_action_overtime(NaClO_valve_overtime[12],VE_NaClO12_opening,VE_NaClO12_closing,VE_NaClO12_overtime,NaClO_valve_timer[12],NaClO_valve_overtime_setting[12]);
+valve_action_overtime(NaClO_valve_overtime[13],VE_NaClO13_opening,VE_NaClO13_closing,VE_NaClO13_overtime,NaClO_valve_timer[13],NaClO_valve_overtime_setting[13]);
+valve_action_overtime(NaClO_valve_overtime[14],VE_NaClO14_opening,VE_NaClO14_closing,VE_NaClO14_overtime,NaClO_valve_timer[14],NaClO_valve_overtime_setting[14]);
+valve_action_overtime(NaClO_valve_overtime[15],VE_NaClO15_opening,VE_NaClO15_closing,VE_NaClO15_overtime,NaClO_valve_timer[15],NaClO_valve_overtime_setting[15]);
+valve_action_overtime(NaClO_valve_overtime[16],VE_NaClO16_opening,VE_NaClO16_closing,VE_NaClO16_overtime,NaClO_valve_timer[16],NaClO_valve_overtime_setting[16]);
+valve_action_overtime(NaClO_valve_overtime[17],VE_NaClO17_opening,VE_NaClO17_closing,VE_NaClO17_overtime,NaClO_valve_timer[17],NaClO_valve_overtime_setting[17]);
+valve_action_overtime(NaClO_valve_overtime[18],VE_NaClO18_opening,VE_NaClO18_closing,VE_NaClO18_overtime,NaClO_valve_timer[18],NaClO_valve_overtime_setting[18]);
+valve_action_overtime(NaClO_valve_overtime[19],VE_NaClO19_opening,VE_NaClO19_closing,VE_NaClO19_overtime,NaClO_valve_timer[19],NaClO_valve_overtime_setting[19]);
+valve_action_overtime(NaClO_valve_overtime[20],VE_NaClO20_opening,VE_NaClO20_closing,VE_NaClO20_overtime,NaClO_valve_timer[20],NaClO_valve_overtime_setting[20]);
+valve_action_overtime(NaClO_valve_overtime[21],VE_NaClO21_opening,VE_NaClO21_closing,VE_NaClO21_overtime,NaClO_valve_timer[21],NaClO_valve_overtime_setting[21]);
+valve_action_overtime(NaClO_valve_overtime[22],VE_NaClO22_opening,VE_NaClO22_closing,VE_NaClO22_overtime,NaClO_valve_timer[22],NaClO_valve_overtime_setting[22]);
+valve_action_overtime(NaClO_valve_overtime[23],VE_NaClO23_opening,VE_NaClO23_closing,VE_NaClO23_overtime,NaClO_valve_timer[23],NaClO_valve_overtime_setting[23]);
+valve_action_overtime(NaClO_valve_overtime[24],VE_NaClO24_opening,VE_NaClO24_closing,VE_NaClO24_overtime,NaClO_valve_timer[24],NaClO_valve_overtime_setting[24]);
+valve_action_overtime(NaClO_valve_overtime[25],VE_NaClO25_opening,VE_NaClO25_closing,VE_NaClO25_overtime,NaClO_valve_timer[25],NaClO_valve_overtime_setting[25]);
+valve_action_overtime(NaClO_valve_overtime[26],VE_NaClO26_opening,VE_NaClO26_closing,VE_NaClO26_overtime,NaClO_valve_timer[26],NaClO_valve_overtime_setting[26]);
+valve_action_overtime(NaClO_valve_overtime[27],VE_NaClO27_opening,VE_NaClO27_closing,VE_NaClO27_overtime,NaClO_valve_timer[27],NaClO_valve_overtime_setting[27]);
+valve_action_overtime(NaClO_valve_overtime[28],VE_NaClO28_opening,VE_NaClO28_closing,VE_NaClO28_overtime,NaClO_valve_timer[28],NaClO_valve_overtime_setting[28]);
+valve_action_overtime(NaClO_valve_overtime[29],VE_NaClO29_opening,VE_NaClO29_closing,VE_NaClO29_overtime,NaClO_valve_timer[29],NaClO_valve_overtime_setting[29]);
+valve_action_overtime(NaClO_valve_overtime[30],VE_NaClO30_opening,VE_NaClO30_closing,VE_NaClO30_overtime,NaClO_valve_timer[30],NaClO_valve_overtime_setting[30]);
+valve_action_overtime(NaClO_valve_overtime[31],VE_NaClO31_opening,VE_NaClO31_closing,VE_NaClO31_overtime,NaClO_valve_timer[31],NaClO_valve_overtime_setting[31]);
+valve_action_overtime(NaClO_valve_overtime[32],VE_NaClO32_opening,VE_NaClO32_closing,VE_NaClO32_overtime,NaClO_valve_timer[32],NaClO_valve_overtime_setting[32]);
+valve_action_overtime(NaClO_valve_overtime[33],VE_NaClO33_opening,VE_NaClO33_closing,VE_NaClO33_overtime,NaClO_valve_timer[33],NaClO_valve_overtime_setting[33]);
+valve_action_overtime(NaClO_valve_overtime[34],VE_NaClO34_opening,VE_NaClO34_closing,VE_NaClO34_overtime,NaClO_valve_timer[34],NaClO_valve_overtime_setting[34]);
+valve_action_overtime(NaClO_valve_overtime[35],VE_NaClO35_opening,VE_NaClO35_closing,VE_NaClO35_overtime,NaClO_valve_timer[35],NaClO_valve_overtime_setting[35]);
+valve_action_overtime(NaClO_valve_overtime[36],VE_NaClO36_opening,VE_NaClO36_closing,VE_NaClO36_overtime,NaClO_valve_timer[36],NaClO_valve_overtime_setting[36]);
+valve_action_overtime(NaClO_valve_overtime[37],VE_NaClO37_opening,VE_NaClO37_closing,VE_NaClO37_overtime,NaClO_valve_timer[37],NaClO_valve_overtime_setting[37]);
+valve_action_overtime(NaClO_valve_overtime[38],VE_NaClO38_opening,VE_NaClO38_closing,VE_NaClO38_overtime,NaClO_valve_timer[38],NaClO_valve_overtime_setting[38]);
+valve_action_overtime(NaClO_valve_overtime[39],VE_NaClO39_opening,VE_NaClO39_closing,VE_NaClO39_overtime,NaClO_valve_timer[39],NaClO_valve_overtime_setting[39]);
+valve_action_overtime(NaClO_valve_overtime[40],VE_NaClO40_opening,VE_NaClO40_closing,VE_NaClO40_overtime,NaClO_valve_timer[40],NaClO_valve_overtime_setting[40]);
+valve_action_overtime(NaClO_valve_overtime[41],VE_NaClO41_opening,VE_NaClO41_closing,VE_NaClO41_overtime,NaClO_valve_timer[41],NaClO_valve_overtime_setting[41]);
+valve_action_overtime(NaClO_valve_overtime[42],VE_NaClO42_opening,VE_NaClO42_closing,VE_NaClO42_overtime,NaClO_valve_timer[42],NaClO_valve_overtime_setting[42]);
+valve_action_overtime(NaClO_valve_overtime[43],VE_NaClO43_opening,VE_NaClO43_closing,VE_NaClO43_overtime,NaClO_valve_timer[43],NaClO_valve_overtime_setting[43]);
+valve_action_overtime(NaClO_valve_overtime[44],VE_NaClO44_opening,VE_NaClO44_closing,VE_NaClO44_overtime,NaClO_valve_timer[44],NaClO_valve_overtime_setting[44]);
+valve_action_overtime(NaClO_valve_overtime[45],VE_NaClO45_opening,VE_NaClO45_closing,VE_NaClO45_overtime,NaClO_valve_timer[45],NaClO_valve_overtime_setting[45]);
+
+(*读取数字泵反馈流量*)
+(*1#数字泵*)
+SCL(SCL_LP400_AI_1);
+SCL_LP400_AI_1.In:=RemoteIO3:5:I.Ch0Data;
+P_NaClO1_flow_read:=SCL_LP400_AI_1.Out;
+(*2#数字泵*)
+SCL(SCL_LP400_AI_2);
+SCL_LP400_AI_2.In:=RemoteIO3:5:I.Ch1Data;
+P_NaClO2_flow_read:=SCL_LP400_AI_2.Out;
+(*3#数字泵*)
+SCL(SCL_LP400_AI_3);
+SCL_LP400_AI_3.In:=RemoteIO3:5:I.Ch2Data;
+P_NaClO3_flow_read:=SCL_LP400_AI_3.Out;
+(*4#数字泵*)
+SCL(SCL_LP400_AI_4);
+SCL_LP400_AI_4.In:=RemoteIO3:5:I.Ch3Data;
+P_NaClO4_flow_read:=SCL_LP400_AI_4.Out;
+(*5#数字泵*)
+SCL(SCL_LP400_AI_5);
+SCL_LP400_AI_5.In:=RemoteIO3:5:I.Ch4Data;
+P_NaClO5_flow_read:=SCL_LP400_AI_5.Out;
+(*6#数字泵*)
+SCL(SCL_LP400_AI_6);
+SCL_LP400_AI_6.In:=RemoteIO3:5:I.Ch5Data;
+P_NaClO6_flow_read:=SCL_LP400_AI_6.Out;
+
+(*读取数字泵反馈流量*)
+(*7#数字泵*)
+SCL(SCL_LP1010_AI_7);
+SCL_LP1010_AI_7.In:=RemoteIO3:5:I.Ch6Data;
+P_NaClO7_flow_read:=SCL_LP1010_AI_7.Out;
+(*8#数字泵*)
+SCL(SCL_LP1010_AI_8);
+SCL_LP1010_AI_8.In:=RemoteIO3:5:I.Ch7Data;
+P_NaClO8_flow_read:=SCL_LP1010_AI_8.Out;
+(*9#数字泵*)
+SCL(SCL_LP1010_AI_9);
+SCL_LP1010_AI_9.In:=RemoteIO3:5:I.Ch8Data;
+P_NaClO9_flow_read:=SCL_LP1010_AI_9.Out;
+(*10#数字泵*)
+SCL(SCL_LP1010_AI_10);
+SCL_LP1010_AI_10.In:=RemoteIO3:5:I.Ch9Data;
+P_NaClO10_flow_read:=SCL_LP1010_AI_10.Out;
+
+(*数字泵投加流量设置*)
+(*1#数字泵*)
+SCL(SCL_LP400_AO_1);
+SCL_LP400_AO_1.In:=P_NaClO1_flow_set;
+(*2#数字泵*)
+SCL(SCL_LP400_AO_2);
+SCL_LP400_AO_2.In:=P_NaClO2_flow_set;
+(*3#数字泵*)
+SCL(SCL_LP400_AO_3);
+SCL_LP400_AO_3.In:=P_NaClO3_flow_set;
+(*4#数字泵*)
+SCL(SCL_LP400_AO_4);
+SCL_LP400_AO_4.In:=P_NaClO4_flow_set;
+(*5#数字泵*)
+SCL(SCL_LP400_AO_5);
+SCL_LP400_AO_5.In:=P_NaClO5_flow_set;
+(*6#数字泵*)
+SCL(SCL_LP400_AO_6);
+SCL_LP400_AO_6.In:=P_NaClO6_flow_set;
+(*7#数字泵*)
+SCL(SCL_LP1010_AO_7);
+SCL_LP1010_AO_7.In:=P_NaClO7_flow_set;
+(*8#数字泵*)
+SCL(SCL_LP1010_AO_8);
+SCL_LP1010_AO_8.In:=P_NaClO8_flow_set;
+(*9#数字泵*)
+SCL(SCL_LP1010_AO_9);
+SCL_LP1010_AO_9.In:=P_NaClO9_flow_set;
+(*10#数字泵*)
+SCL(SCL_LP1010_AO_10);
+SCL_LP1010_AO_10.In:=P_NaClO10_flow_set;
+
+(*储液池液位*)
+(*读取超声波液位计反馈液位*)
+(*1#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_5);
+SCL_NaOH_NaClO_tank_AI_5.In:=RemoteIO3:5:I.Ch10Data;
+NaClO_tank_level_8LT09:=SCL_NaOH_NaClO_tank_AI_5.Out;
+(*2#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_6);
+SCL_NaOH_NaClO_tank_AI_6.In:=RemoteIO3:5:I.Ch11Data;
+NaClO_tank_level_8LT10:=SCL_NaOH_NaClO_tank_AI_6.Out;
+(*3#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_7);
+SCL_NaOH_NaClO_tank_AI_7.In:=RemoteIO3:6:I.Ch0Data;
+NaClO_tank_level_8LT11:=SCL_NaOH_NaClO_tank_AI_7.Out;
+(*4#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_8);
+SCL_NaOH_NaClO_tank_AI_8.In:=RemoteIO3:6:I.Ch1Data;
+NaClO_tank_level_8LT12:=SCL_NaOH_NaClO_tank_AI_8.Out;
+(*5#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_9);
+SCL_NaOH_NaClO_tank_AI_9.In:=RemoteIO3:6:I.Ch2Data;
+NaClO_tank_level_8LT13:=SCL_NaOH_NaClO_tank_AI_9.Out;
+(*6#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_10);
+SCL_NaOH_NaClO_tank_AI_10.In:=RemoteIO3:6:I.Ch3Data;
+NaClO_tank_level_8LT14:=SCL_NaOH_NaClO_tank_AI_10.Out;
+(*7#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_11);
+SCL_NaOH_NaClO_tank_AI_11.In:=RemoteIO3:6:I.Ch4Data;
+NaClO_tank_level_8LT15:=SCL_NaOH_NaClO_tank_AI_11.Out;
+(*8#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_12);
+SCL_NaOH_NaClO_tank_AI_12.In:=RemoteIO3:6:I.Ch5Data;
+NaClO_tank_level_8LT16:=SCL_NaOH_NaClO_tank_AI_12.Out;
+
+(*储罐液体重量*)
+(*读取压力变送器反馈*)
+(*1#NaOH储罐*)
+SCL(SCL_pressure_AI_5);
+SCL_pressure_AI_5.In:=RemoteIO3:6:I.Ch6Data;
+NaClO_tank_pressure_1:=tune_factor[13]*SCL_pressure_AI_5.Out+twaek_factor[13];
+(*2#NaOH储罐*)
+SCL(SCL_pressure_AI_6);
+SCL_pressure_AI_6.In:=RemoteIO3:6:I.Ch7Data;
+NaClO_tank_pressure_2:=tune_factor[14]*SCL_pressure_AI_6.Out+twaek_factor[14];
+(*3#NaOH储罐*)
+SCL(SCL_pressure_AI_7);
+SCL_pressure_AI_7.In:=RemoteIO3:6:I.Ch8Data;
+NaClO_tank_pressure_3:=tune_factor[15]*SCL_pressure_AI_7.Out+twaek_factor[15];
+(*4#NaOH储罐*)
+SCL(SCL_pressure_AI_8);
+SCL_pressure_AI_8.In:=RemoteIO3:6:I.Ch9Data;
+NaClO_tank_pressure_4:=tune_factor[16]*SCL_pressure_AI_8.Out+twaek_factor[16];
+(*5#NaOH储罐*)
+SCL(SCL_pressure_AI_9);
+SCL_pressure_AI_9.In:=RemoteIO3:6:I.Ch10Data;
+NaClO_tank_pressure_5:=tune_factor[17]*SCL_pressure_AI_9.Out+twaek_factor[17];
+(*6#NaOH储罐*)
+SCL(SCL_pressure_AI_10);
+SCL_pressure_AI_10.In:=RemoteIO3:6:I.Ch11Data;
+NaClO_tank_pressure_6:=tune_factor[18]*SCL_pressure_AI_10.Out+twaek_factor[18];
+(*7#NaOH储罐*)
+SCL(SCL_pressure_AI_11);
+SCL_pressure_AI_11.In:=RemoteIO3:7:I.Ch0Data;
+NaClO_tank_pressure_7:=tune_factor[19]*SCL_pressure_AI_11.Out+twaek_factor[19];
+(*8#NaOH储罐*)
+SCL(SCL_pressure_AI_12);
+SCL_pressure_AI_12.In:=RemoteIO3:7:I.Ch1Data;
+NaClO_tank_pressure_8:=tune_factor[20]*SCL_pressure_AI_12.Out+twaek_factor[20];
+
+(*将读取的压力数值转变为重量*)
+(*计算公式：m(kg)=p*S/g=p*pi*(d/2)^2/g*)
+(*1000Pa*3.14*(3.5/2)^2/9.8/1000，单位:吨*)
+(*g=9.8m/s^2,pi=3.14,压力变送器测量范围0-240kPa*)
+NaClO_weight_8PT05:=(NaClO_tank_pressure_1*3.14*(3.5/2)**2/9.8);
+NaClO_weight_8PT06:=(NaClO_tank_pressure_2*3.14*(3.5/2)**2/9.8);
+NaClO_weight_8PT07:=(NaClO_tank_pressure_3*3.14*(3.5/2)**2/9.8);
+NaClO_weight_8PT08:=(NaClO_tank_pressure_4*3.14*(3.5/2)**2/9.8);
+NaClO_weight_8PT09:=(NaClO_tank_pressure_5*3.14*(3.5/2)**2/9.8);
+NaClO_weight_8PT10:=(NaClO_tank_pressure_6*3.14*(3.5/2)**2/9.8);
+NaClO_weight_8PT11:=(NaClO_tank_pressure_7*3.14*(3.5/2)**2/9.8);
+NaClO_weight_8PT12:=(NaClO_tank_pressure_8*3.14*(3.5/2)**2/9.8);
+
+(*流量计*)
+(*读取NaClO流量计参数*)
+(*1#流量计*)
+SCL(SCL_LP400_AI_7);
+SCL_LP400_AI_7.In:=RemoteIO3:7:I.Ch2Data;
+NaClO_flow_8FT06:=tune_factor[21]*SCL_LP400_AI_7.Out+twaek_factor[21];
+(*2#流量计*)
+SCL(SCL_LP400_AI_8);
+SCL_LP400_AI_8.In:=RemoteIO3:7:I.Ch3Data;
+NaClO_flow_8FT07:=tune_factor[22]*SCL_LP400_AI_8.Out+twaek_factor[22];
+(*3#流量计*)
+SCL(SCL_LP400_AI_9);
+SCL_LP400_AI_9.In:=RemoteIO3:7:I.Ch4Data;
+NaClO_flow_8FT08:=tune_factor[23]*SCL_LP400_AI_9.Out+twaek_factor[23];
+
+(*4#流量计*)
+SCL(SCL_LP1010_AI_11);
+SCL_LP1010_AI_11.In:=RemoteIO3:7:I.Ch5Data;
+NaClO_flow_8FT09:=tune_factor[24]*SCL_LP1010_AI_11.Out+twaek_factor[24];
+(*5#流量计*)
+SCL(SCL_LP1010_AI_12);
+SCL_LP1010_AI_12.In:=RemoteIO3:7:I.Ch6Data;
+NaClO_flow_8FT10:=tune_factor[25]*SCL_LP1010_AI_12.Out+twaek_factor[25];
+
+(*有效氯分析仪*)
+(*改为用RS-485读取，不再使用4-20mA模块*)
+
+(*同步上位机数据*)
+(*余氯*)
+CL_Out_SediT_A1:=water_data_LCU05[5];
+CL_Out_SediT_A2:=water_data_LCU05[6];
+CL_Out_SediT_B1:=water_data_LCU05[7];
+CL_Out_SediT_B2:=water_data_LCU05[8];
+CL_Out_SediT_C1:=water_data_LCU05[16];
+CL_Out_SediT_C2:=water_data_LCU05[17];
+CL_Out_SediT_D1:=water_data_LCU05[18];
+CL_Out_SediT_D2:=water_data_LCU05[19];
+
+(*清水池*)
+ClearEx_HClO:=water_data_LCU05[12];
+(*V型滤池*)
+FilterEx_HClO:=water_data_LCU05[11];
+
+(*在地/远程切换*)
+(*1号泵组*)
+if NaClO_control_local_remote[1] then
+	P_NaClO_actuate_local[1]:=P_NaClO1_actuate;
+	P_NaClO_actuate_local[2]:=P_NaClO2_actuate;
+    (*投加流量设置*)
+	P_NaClO_flow_set_local[1]:=P_NaClO1_flow_set;
+	P_NaClO_flow_set_local[2]:=P_NaClO2_flow_set;
+	VE_NaClO_actuate_local[1]:=VE_NaClO_01_actuate;
+	VE_NaClO_actuate_local[2]:=VE_NaClO_02_actuate;
+	P_NaClO_actuate_local[1]:=RemoteIO3:3:O.Data.0;
+	P_NaClO_actuate_local[2]:=RemoteIO3:3:O.Data.1;
+else
+	P_NaClO1_actuate:=P_NaClO_actuate_local[1];
+	P_NaClO2_actuate:=P_NaClO_actuate_local[2];
+    (*投加流量设置*)
+    if (not NaClO_control_auto_manual[1]) 
+    and (NaClO_control_auto_manual[21])
+    then
+        P_NaClO1_flow_set:=P_NaClO_flow_set_local[1];
+        P_NaClO2_flow_set:=P_NaClO_flow_set_local[2];
+    else
+        P_NaClO_flow_set_local[1]:=P_NaClO1_flow_set;
+        P_NaClO_flow_set_local[2]:=P_NaClO2_flow_set;
+    end_if;
+    VE_NaClO_01_actuate:=VE_NaClO_actuate_local[1];
+    VE_NaClO_02_actuate:=VE_NaClO_actuate_local[2];
+	P_NaClO1_actuate:=RemoteIO3:3:O.Data.0;
+	P_NaClO2_actuate:=RemoteIO3:3:O.Data.1;
+end_if;
+
+(*2号泵组*)
+if NaClO_control_local_remote[2] then
+	P_NaClO_actuate_local[3]:=P_NaClO3_actuate;
+	P_NaClO_actuate_local[4]:=P_NaClO4_actuate;
+    (*投加流量设置*)
+	P_NaClO_flow_set_local[3]:=P_NaClO3_flow_set;
+	P_NaClO_flow_set_local[4]:=P_NaClO4_flow_set;
+	VE_NaClO_actuate_local[3]:=VE_NaClO_03_actuate;
+	VE_NaClO_actuate_local[4]:=VE_NaClO_04_actuate;
+	P_NaClO_actuate_local[3]:=RemoteIO3:3:O.Data.2;
+	P_NaClO_actuate_local[4]:=RemoteIO3:3:O.Data.3;
+else
+	P_NaClO3_actuate:=P_NaClO_actuate_local[3];
+	P_NaClO4_actuate:=P_NaClO_actuate_local[4];
+    (*投加流量设置*)
+    if (not NaClO_control_auto_manual[2]) 
+    and (NaClO_control_auto_manual[22])
+    then
+        P_NaClO3_flow_set:=P_NaClO_flow_set_local[3];
+        P_NaClO4_flow_set:=P_NaClO_flow_set_local[4];
+    else
+        P_NaClO_flow_set_local[3]:=P_NaClO3_flow_set;
+        P_NaClO_flow_set_local[4]:=P_NaClO4_flow_set;
+    end_if;
+    VE_NaClO_03_actuate:=VE_NaClO_actuate_local[3];
+    VE_NaClO_04_actuate:=VE_NaClO_actuate_local[4];
+	P_NaClO3_actuate:=RemoteIO3:3:O.Data.2;
+	P_NaClO4_actuate:=RemoteIO3:3:O.Data.3;
+end_if;
+
+(*3号泵组*)
+if NaClO_control_local_remote[3] then
+	P_NaClO_actuate_local[5]:=P_NaClO5_actuate;
+	P_NaClO_actuate_local[6]:=P_NaClO6_actuate;
+    (*投加流量设置*)
+	P_NaClO_flow_set_local[5]:=P_NaClO5_flow_set;
+	P_NaClO_flow_set_local[6]:=P_NaClO6_flow_set;
+	VE_NaClO_actuate_local[5]:=VE_NaClO_05_actuate;
+	VE_NaClO_actuate_local[6]:=VE_NaClO_06_actuate;
+	P_NaClO_actuate_local[5]:=RemoteIO3:3:O.Data.4;
+	P_NaClO_actuate_local[6]:=RemoteIO3:3:O.Data.5;
+else
+	P_NaClO5_actuate:=P_NaClO_actuate_local[5];
+	P_NaClO6_actuate:=P_NaClO_actuate_local[6];
+    (*投加流量设置*)
+    if (not NaClO_control_auto_manual[3]) 
+    and (NaClO_control_auto_manual[23])
+    then
+        P_NaClO5_flow_set:=P_NaClO_flow_set_local[5];
+        P_NaClO6_flow_set:=P_NaClO_flow_set_local[6];
+    else
+        P_NaClO_flow_set_local[5]:=P_NaClO5_flow_set;
+        P_NaClO_flow_set_local[6]:=P_NaClO6_flow_set;
+    end_if;
+    VE_NaClO_05_actuate:=VE_NaClO_actuate_local[5];
+    VE_NaClO_06_actuate:=VE_NaClO_actuate_local[6];
+	P_NaClO5_actuate:=RemoteIO3:3:O.Data.4;
+	P_NaClO6_actuate:=RemoteIO3:3:O.Data.5;
+end_if;
+
+(*4号泵组*)
+if NaClO_control_local_remote[4] then
+	P_NaClO_actuate_local[7]:=P_NaClO7_actuate;
+	P_NaClO_actuate_local[8]:=P_NaClO8_actuate;
+    (*投加流量设置*)
+	P_NaClO_flow_set_local[7]:=P_NaClO7_flow_set;
+	P_NaClO_flow_set_local[8]:=P_NaClO8_flow_set;
+	VE_NaClO_actuate_local[7]:=VE_NaClO_07_actuate;
+	VE_NaClO_actuate_local[8]:=VE_NaClO_08_actuate;
+	P_NaClO_actuate_local[7]:=RemoteIO3:3:O.Data.6;
+	P_NaClO_actuate_local[8]:=RemoteIO3:3:O.Data.7;
+else
+	P_NaClO7_actuate:=P_NaClO_actuate_local[7];
+	P_NaClO8_actuate:=P_NaClO_actuate_local[8];
+    (*投加流量设置*)
+    if (not NaClO_control_auto_manual[4]) 
+    and (NaClO_control_auto_manual[24])
+    then
+        P_NaClO7_flow_set:=P_NaClO_flow_set_local[7];
+        P_NaClO8_flow_set:=P_NaClO_flow_set_local[8];
+    else
+        P_NaClO_flow_set_local[7]:=P_NaClO7_flow_set;
+        P_NaClO_flow_set_local[8]:=P_NaClO8_flow_set;
+    end_if;
+    VE_NaClO_07_actuate:=VE_NaClO_actuate_local[7];
+    VE_NaClO_08_actuate:=VE_NaClO_actuate_local[8];
+	P_NaClO7_actuate:=RemoteIO3:3:O.Data.6;
+	P_NaClO8_actuate:=RemoteIO3:3:O.Data.7;
+end_if;
+
+(*5号泵组*)
+if NaClO_control_local_remote[5] then
+	P_NaClO_actuate_local[9]:=P_NaClO9_actuate;
+	P_NaClO_actuate_local[10]:=P_NaClO10_actuate;
+    (*投加流量设置*)
+	P_NaClO_flow_set_local[9]:=P_NaClO9_flow_set;
+	P_NaClO_flow_set_local[10]:=P_NaClO10_flow_set;
+	VE_NaClO_actuate_local[9]:=VE_NaClO_09_actuate;
+	VE_NaClO_actuate_local[10]:=VE_NaClO_10_actuate;
+	P_NaClO_actuate_local[9]:=RemoteIO3:3:O.Data.8;
+	P_NaClO_actuate_local[10]:=RemoteIO3:3:O.Data.9;
+else
+	P_NaClO9_actuate:=P_NaClO_actuate_local[9];
+	P_NaClO10_actuate:=P_NaClO_actuate_local[10];
+    (*投加流量设置*)
+    if (not NaClO_control_auto_manual[5]) 
+    and (NaClO_control_auto_manual[25])
+    then
+        P_NaClO9_flow_set:=P_NaClO_flow_set_local[9];
+        P_NaClO10_flow_set:=P_NaClO_flow_set_local[10];
+    else
+        P_NaClO_flow_set_local[9]:=P_NaClO9_flow_set;
+        P_NaClO_flow_set_local[10]:=P_NaClO10_flow_set;
+    end_if;
+    VE_NaClO_09_actuate:=VE_NaClO_actuate_local[9];
+    VE_NaClO_10_actuate:=VE_NaClO_actuate_local[10];
+	P_NaClO9_actuate:=RemoteIO3:3:O.Data.8;
+	P_NaClO10_actuate:=RemoteIO3:3:O.Data.9;
+end_if;
+
+(*1号NaClO储罐*)
+if NaClO_tank_local_remote[1] then
+    VE_NaClO_actuate_local[11]:=VE_NaClO_11_actuate;
+    VE_NaClO_actuate_local[19]:=VE_NaClO_19_actuate;
+    VE_NaClO_actuate_local[27]:=VE_NaClO_27_actuate;
+    VE_NaClO_actuate_local[37]:=VE_NaClO_37_actuate;
+else
+    VE_NaClO_11_actuate:=VE_NaClO_actuate_local[11];
+    VE_NaClO_19_actuate:=VE_NaClO_actuate_local[19];
+    VE_NaClO_27_actuate:=VE_NaClO_actuate_local[27];
+    VE_NaClO_37_actuate:=VE_NaClO_actuate_local[37];
+end_if;
+
+(*2号NaClO储罐*)
+if NaClO_tank_local_remote[2] then
+    VE_NaClO_actuate_local[12]:=VE_NaClO_12_actuate;
+    VE_NaClO_actuate_local[20]:=VE_NaClO_20_actuate;
+    VE_NaClO_actuate_local[28]:=VE_NaClO_28_actuate;
+    VE_NaClO_actuate_local[38]:=VE_NaClO_38_actuate;
+else
+    VE_NaClO_12_actuate:=VE_NaClO_actuate_local[12];
+    VE_NaClO_20_actuate:=VE_NaClO_actuate_local[20];
+    VE_NaClO_28_actuate:=VE_NaClO_actuate_local[28];
+    VE_NaClO_38_actuate:=VE_NaClO_actuate_local[38];
+end_if;
+
+(*3号NaClO储罐*)
+if NaClO_tank_local_remote[3] then
+    VE_NaClO_actuate_local[13]:=VE_NaClO_13_actuate;
+    VE_NaClO_actuate_local[21]:=VE_NaClO_21_actuate;
+    VE_NaClO_actuate_local[29]:=VE_NaClO_29_actuate;
+    VE_NaClO_actuate_local[39]:=VE_NaClO_39_actuate;
+else
+    VE_NaClO_13_actuate:=VE_NaClO_actuate_local[13];
+    VE_NaClO_21_actuate:=VE_NaClO_actuate_local[21];
+    VE_NaClO_29_actuate:=VE_NaClO_actuate_local[29];
+    VE_NaClO_39_actuate:=VE_NaClO_actuate_local[39];
+end_if;
+
+(*4号NaClO储罐*)
+if NaClO_tank_local_remote[4] then
+    VE_NaClO_actuate_local[14]:=VE_NaClO_14_actuate;
+    VE_NaClO_actuate_local[22]:=VE_NaClO_22_actuate;
+    VE_NaClO_actuate_local[30]:=VE_NaClO_30_actuate;
+    VE_NaClO_actuate_local[40]:=VE_NaClO_40_actuate;
+else
+    VE_NaClO_14_actuate:=VE_NaClO_actuate_local[14];
+    VE_NaClO_22_actuate:=VE_NaClO_actuate_local[22];
+    VE_NaClO_30_actuate:=VE_NaClO_actuate_local[30];
+    VE_NaClO_40_actuate:=VE_NaClO_actuate_local[40];
+end_if;
+
+(*5号NaClO储罐*)
+if NaClO_tank_local_remote[5] then
+    VE_NaClO_actuate_local[15]:=VE_NaClO_15_actuate;
+    VE_NaClO_actuate_local[23]:=VE_NaClO_23_actuate;
+    VE_NaClO_actuate_local[31]:=VE_NaClO_31_actuate;
+    VE_NaClO_actuate_local[41]:=VE_NaClO_41_actuate;
+else
+    VE_NaClO_15_actuate:=VE_NaClO_actuate_local[15];
+    VE_NaClO_23_actuate:=VE_NaClO_actuate_local[23];
+    VE_NaClO_31_actuate:=VE_NaClO_actuate_local[31];
+    VE_NaClO_41_actuate:=VE_NaClO_actuate_local[41];
+end_if;
+
+(*6号NaClO储罐*)
+if NaClO_tank_local_remote[6] then
+    VE_NaClO_actuate_local[16]:=VE_NaClO_16_actuate;
+    VE_NaClO_actuate_local[24]:=VE_NaClO_24_actuate;
+    VE_NaClO_actuate_local[32]:=VE_NaClO_32_actuate;
+    VE_NaClO_actuate_local[42]:=VE_NaClO_42_actuate;
+else
+    VE_NaClO_16_actuate:=VE_NaClO_actuate_local[16];
+    VE_NaClO_24_actuate:=VE_NaClO_actuate_local[24];
+    VE_NaClO_32_actuate:=VE_NaClO_actuate_local[32];
+    VE_NaClO_42_actuate:=VE_NaClO_actuate_local[42];
+end_if;
+
+(*7号NaClO储罐*)
+if NaClO_tank_local_remote[7] then
+    VE_NaClO_actuate_local[17]:=VE_NaClO_17_actuate;
+    VE_NaClO_actuate_local[25]:=VE_NaClO_25_actuate;
+    VE_NaClO_actuate_local[33]:=VE_NaClO_33_actuate;
+    VE_NaClO_actuate_local[43]:=VE_NaClO_43_actuate;
+else
+    VE_NaClO_17_actuate:=VE_NaClO_actuate_local[17];
+    VE_NaClO_25_actuate:=VE_NaClO_actuate_local[25];
+    VE_NaClO_33_actuate:=VE_NaClO_actuate_local[33];
+    VE_NaClO_43_actuate:=VE_NaClO_actuate_local[43];
+end_if;
+
+(*8号NaClO储罐*)
+if NaClO_tank_local_remote[8] then
+    VE_NaClO_actuate_local[18]:=VE_NaClO_18_actuate;
+    VE_NaClO_actuate_local[26]:=VE_NaClO_26_actuate;
+    VE_NaClO_actuate_local[34]:=VE_NaClO_34_actuate;
+    VE_NaClO_actuate_local[44]:=VE_NaClO_44_actuate;
+else
+    VE_NaClO_18_actuate:=VE_NaClO_actuate_local[18];
+    VE_NaClO_26_actuate:=VE_NaClO_actuate_local[26];
+    VE_NaClO_34_actuate:=VE_NaClO_actuate_local[34];
+    VE_NaClO_44_actuate:=VE_NaClO_actuate_local[44];
+end_if;
+
+
+
+
+

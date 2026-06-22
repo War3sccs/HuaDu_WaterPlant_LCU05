@@ -1,0 +1,437 @@
+(*投加泵故障状态*)
+P_NaOH1_err:=RemoteIO1:5:I.Data.0;
+P_NaOH2_err:=RemoteIO1:5:I.Data.1;
+P_NaOH3_err:=RemoteIO1:5:I.Data.2;
+P_NaOH4_err:=RemoteIO1:5:I.Data.3;
+P_NaOH5_err:=RemoteIO1:5:I.Data.4;
+P_NaOH6_err:=RemoteIO1:5:I.Data.5;
+
+(*投加泵运行状态*)
+P_NaOH1_run:=RemoteIO1:5:I.Data.6;
+P_NaOH2_run:=RemoteIO1:5:I.Data.7;
+P_NaOH3_run:=RemoteIO1:5:I.Data.8;
+P_NaOH4_run:=RemoteIO1:5:I.Data.9;
+P_NaOH5_run:=RemoteIO1:5:I.Data.10;
+P_NaOH6_run:=RemoteIO1:5:I.Data.11;
+
+(*转运泵运行状态*)
+P_NaOH7_run:=RemoteIO1:5:I.Data.12;
+P_NaOH8_run:=RemoteIO1:5:I.Data.13;
+
+(*卸料泵运行状态*)
+P_NaOH9_run:=RemoteIO1:5:I.Data.14;
+P_NaOH10_run:=RemoteIO1:5:I.Data.15;
+
+(*电动阀阀位反馈*)
+VE_NaOH_01_open:=RemoteIO1:5:I.Data.16;
+VE_NaOH_01_close:=RemoteIO1:5:I.Data.17;
+VE_NaOH_02_open:=RemoteIO1:5:I.Data.18;
+VE_NaOH_02_close:=RemoteIO1:5:I.Data.19;
+VE_NaOH_03_open:=RemoteIO1:5:I.Data.20;
+VE_NaOH_03_close:=RemoteIO1:5:I.Data.21;
+VE_NaOH_04_open:=RemoteIO1:5:I.Data.22;
+VE_NaOH_04_close:=RemoteIO1:5:I.Data.23;
+VE_NaOH_05_open:=RemoteIO1:5:I.Data.24;
+VE_NaOH_05_close:=RemoteIO1:5:I.Data.25;
+VE_NaOH_06_open:=RemoteIO1:5:I.Data.26;
+VE_NaOH_06_close:=RemoteIO1:5:I.Data.27;
+VE_NaOH_07_open:=RemoteIO1:5:I.Data.28;
+VE_NaOH_07_close:=RemoteIO1:5:I.Data.29;
+VE_NaOH_08_open:=RemoteIO1:5:I.Data.30;
+VE_NaOH_08_close:=RemoteIO1:5:I.Data.31;
+VE_NaOH_09_open:=RemoteIO1:6:I.Data.0;
+VE_NaOH_09_close:=RemoteIO1:6:I.Data.1;
+VE_NaOH_10_open:=RemoteIO1:6:I.Data.2;
+VE_NaOH_10_close:=RemoteIO1:6:I.Data.3;
+VE_NaOH_11_open:=RemoteIO1:6:I.Data.4;
+VE_NaOH_11_close:=RemoteIO1:6:I.Data.5;
+VE_NaOH_12_open:=RemoteIO1:6:I.Data.6;
+VE_NaOH_12_close:=RemoteIO1:6:I.Data.7;
+VE_NaOH_13_open:=RemoteIO1:6:I.Data.8;
+VE_NaOH_13_close:=RemoteIO1:6:I.Data.9;
+VE_NaOH_14_open:=RemoteIO1:6:I.Data.10;
+VE_NaOH_14_close:=RemoteIO1:6:I.Data.11;
+VE_NaOH_15_open:=RemoteIO1:6:I.Data.12;
+VE_NaOH_15_close:=RemoteIO1:6:I.Data.13;
+VE_NaOH_16_open:=RemoteIO1:6:I.Data.14;
+VE_NaOH_16_close:=RemoteIO1:6:I.Data.15;
+VE_NaOH_17_open:=RemoteIO1:6:I.Data.16;
+VE_NaOH_17_close:=RemoteIO1:6:I.Data.17;
+VE_NaOH_18_open:=RemoteIO1:6:I.Data.18;
+VE_NaOH_18_close:=RemoteIO1:6:I.Data.19;
+VE_NaOH_19_open:=RemoteIO1:6:I.Data.20;
+VE_NaOH_19_close:=RemoteIO1:6:I.Data.21;
+VE_NaOH_20_open:=RemoteIO1:6:I.Data.22;
+VE_NaOH_20_close:=RemoteIO1:6:I.Data.23;
+VE_NaOH_21_open:=RemoteIO1:6:I.Data.24;
+VE_NaOH_21_close:=RemoteIO1:6:I.Data.25;
+VE_NaOH_22_open:=RemoteIO1:6:I.Data.26;
+VE_NaOH_22_close:=RemoteIO1:6:I.Data.27;
+VE_NaOH_23_open:=RemoteIO1:6:I.Data.28;
+VE_NaOH_23_close:=RemoteIO1:6:I.Data.29;
+VE_NaOH_24_open:=RemoteIO1:6:I.Data.30;
+VE_NaOH_24_close:=RemoteIO1:6:I.Data.31;
+VE_NaOH_25_open:=RemoteIO1:7:I.Data.0;
+VE_NaOH_25_close:=RemoteIO1:7:I.Data.1;
+VE_NaOH_26_open:=RemoteIO1:7:I.Data.2;
+VE_NaOH_26_close:=RemoteIO1:7:I.Data.3;
+VE_NaOH_27_open:=RemoteIO1:7:I.Data.4;
+VE_NaOH_27_close:=RemoteIO1:7:I.Data.5;
+VE_NaOH_28_open:=RemoteIO1:7:I.Data.6;
+VE_NaOH_28_close:=RemoteIO1:7:I.Data.7;
+VE_NaOH_29_open:=RemoteIO1:7:I.Data.8;
+VE_NaOH_29_close:=RemoteIO1:7:I.Data.9;
+VE_NaOH_30_open:=RemoteIO1:7:I.Data.10;
+VE_NaOH_30_close:=RemoteIO1:7:I.Data.11;
+VE_NaOH_31_open:=RemoteIO1:7:I.Data.12;
+VE_NaOH_31_close:=RemoteIO1:7:I.Data.13;
+VE_NaOH_32_open:=RemoteIO1:7:I.Data.14;
+VE_NaOH_32_close:=RemoteIO1:7:I.Data.15;
+VE_NaOH_33_open:=RemoteIO1:7:I.Data.16;
+VE_NaOH_33_close:=RemoteIO1:7:I.Data.17;
+VE_NaOH_34_open:=RemoteIO1:7:I.Data.18;
+VE_NaOH_34_close:=RemoteIO1:7:I.Data.19;
+VE_NaOH_35_open:=RemoteIO1:7:I.Data.20;
+VE_NaOH_35_close:=RemoteIO1:7:I.Data.21;
+VE_NaOH_36_open:=RemoteIO1:7:I.Data.22;
+VE_NaOH_36_close:=RemoteIO1:7:I.Data.23;
+(*开/关阀动作过程中显示*)
+valve_operating_indicate(valve_operating_indicate_12,RemoteIO2:1:O.Data.14,VE_NaOH_01_open,VE_NaOH_01_close,VE_NaOH_01_opening,VE_NaOH_01_closing);
+valve_operating_indicate(valve_operating_indicate_13,RemoteIO2:1:O.Data.15,VE_NaOH_02_open,VE_NaOH_02_close,VE_NaOH_02_opening,VE_NaOH_02_closing);
+valve_operating_indicate(valve_operating_indicate_14,RemoteIO2:1:O.Data.16,VE_NaOH_03_open,VE_NaOH_03_close,VE_NaOH_03_opening,VE_NaOH_03_closing);
+valve_operating_indicate(valve_operating_indicate_15,RemoteIO2:1:O.Data.17,VE_NaOH_04_open,VE_NaOH_04_close,VE_NaOH_04_opening,VE_NaOH_04_closing);
+valve_operating_indicate(valve_operating_indicate_16,RemoteIO2:1:O.Data.18,VE_NaOH_05_open,VE_NaOH_05_close,VE_NaOH_05_opening,VE_NaOH_05_closing);
+valve_operating_indicate(valve_operating_indicate_17,RemoteIO2:1:O.Data.19,VE_NaOH_06_open,VE_NaOH_06_close,VE_NaOH_06_opening,VE_NaOH_06_closing);
+valve_operating_indicate(valve_operating_indicate_18,RemoteIO2:1:O.Data.20,VE_NaOH_07_open,VE_NaOH_07_close,VE_NaOH_07_opening,VE_NaOH_07_closing);
+valve_operating_indicate(valve_operating_indicate_19,RemoteIO2:1:O.Data.21,VE_NaOH_08_open,VE_NaOH_08_close,VE_NaOH_08_opening,VE_NaOH_08_closing);
+valve_operating_indicate(valve_operating_indicate_20,RemoteIO2:1:O.Data.22,VE_NaOH_09_open,VE_NaOH_09_close,VE_NaOH_09_opening,VE_NaOH_09_closing);
+valve_operating_indicate(valve_operating_indicate_21,RemoteIO2:1:O.Data.23,VE_NaOH_10_open,VE_NaOH_10_close,VE_NaOH_10_opening,VE_NaOH_10_closing);
+valve_operating_indicate(valve_operating_indicate_22,RemoteIO2:1:O.Data.24,VE_NaOH_11_open,VE_NaOH_11_close,VE_NaOH_11_opening,VE_NaOH_11_closing);
+valve_operating_indicate(valve_operating_indicate_23,RemoteIO2:1:O.Data.25,VE_NaOH_12_open,VE_NaOH_12_close,VE_NaOH_12_opening,VE_NaOH_12_closing);
+valve_operating_indicate(valve_operating_indicate_24,RemoteIO2:1:O.Data.26,VE_NaOH_13_open,VE_NaOH_13_close,VE_NaOH_13_opening,VE_NaOH_13_closing);
+valve_operating_indicate(valve_operating_indicate_25,RemoteIO2:1:O.Data.27,VE_NaOH_14_open,VE_NaOH_14_close,VE_NaOH_14_opening,VE_NaOH_14_closing);
+valve_operating_indicate(valve_operating_indicate_26,RemoteIO2:1:O.Data.28,VE_NaOH_15_open,VE_NaOH_15_close,VE_NaOH_15_opening,VE_NaOH_15_closing);
+valve_operating_indicate(valve_operating_indicate_27,RemoteIO2:1:O.Data.29,VE_NaOH_16_open,VE_NaOH_16_close,VE_NaOH_16_opening,VE_NaOH_16_closing);
+valve_operating_indicate(valve_operating_indicate_28,RemoteIO2:1:O.Data.30,VE_NaOH_17_open,VE_NaOH_17_close,VE_NaOH_17_opening,VE_NaOH_17_closing);
+valve_operating_indicate(valve_operating_indicate_29,RemoteIO2:1:O.Data.31,VE_NaOH_18_open,VE_NaOH_18_close,VE_NaOH_18_opening,VE_NaOH_18_closing);
+valve_operating_indicate(valve_operating_indicate_30,RemoteIO2:2:O.Data.0,VE_NaOH_19_open,VE_NaOH_19_close,VE_NaOH_19_opening,VE_NaOH_19_closing);
+valve_operating_indicate(valve_operating_indicate_31,RemoteIO2:2:O.Data.1,VE_NaOH_20_open,VE_NaOH_20_close,VE_NaOH_20_opening,VE_NaOH_20_closing);
+valve_operating_indicate(valve_operating_indicate_32,RemoteIO2:2:O.Data.2,VE_NaOH_21_open,VE_NaOH_21_close,VE_NaOH_21_opening,VE_NaOH_21_closing);
+valve_operating_indicate(valve_operating_indicate_33,RemoteIO2:2:O.Data.3,VE_NaOH_22_open,VE_NaOH_22_close,VE_NaOH_22_opening,VE_NaOH_22_closing);
+valve_operating_indicate(valve_operating_indicate_34,RemoteIO2:2:O.Data.4,VE_NaOH_23_open,VE_NaOH_23_close,VE_NaOH_23_opening,VE_NaOH_23_closing);
+valve_operating_indicate(valve_operating_indicate_35,RemoteIO2:2:O.Data.5,VE_NaOH_24_open,VE_NaOH_24_close,VE_NaOH_24_opening,VE_NaOH_24_closing);
+valve_operating_indicate(valve_operating_indicate_36,RemoteIO2:2:O.Data.6,VE_NaOH_25_open,VE_NaOH_25_close,VE_NaOH_25_opening,VE_NaOH_25_closing);
+valve_operating_indicate(valve_operating_indicate_37,RemoteIO2:2:O.Data.7,VE_NaOH_26_open,VE_NaOH_26_close,VE_NaOH_26_opening,VE_NaOH_26_closing);
+valve_operating_indicate(valve_operating_indicate_38,RemoteIO2:2:O.Data.8,VE_NaOH_27_open,VE_NaOH_27_close,VE_NaOH_27_opening,VE_NaOH_27_closing);
+valve_operating_indicate(valve_operating_indicate_39,RemoteIO2:2:O.Data.9,VE_NaOH_28_open,VE_NaOH_28_close,VE_NaOH_28_opening,VE_NaOH_28_closing);
+valve_operating_indicate(valve_operating_indicate_40,RemoteIO2:2:O.Data.10,VE_NaOH_29_open,VE_NaOH_29_close,VE_NaOH_29_opening,VE_NaOH_29_closing);
+valve_operating_indicate(valve_operating_indicate_41,RemoteIO2:2:O.Data.11,VE_NaOH_30_open,VE_NaOH_30_close,VE_NaOH_30_opening,VE_NaOH_30_closing);
+valve_operating_indicate(valve_operating_indicate_42,RemoteIO2:2:O.Data.12,VE_NaOH_31_open,VE_NaOH_31_close,VE_NaOH_31_opening,VE_NaOH_31_closing);
+valve_operating_indicate(valve_operating_indicate_43,RemoteIO2:2:O.Data.13,VE_NaOH_32_open,VE_NaOH_32_close,VE_NaOH_32_opening,VE_NaOH_32_closing);
+valve_operating_indicate(valve_operating_indicate_44,RemoteIO2:2:O.Data.14,VE_NaOH_33_open,VE_NaOH_33_close,VE_NaOH_33_opening,VE_NaOH_33_closing);
+valve_operating_indicate(valve_operating_indicate_45,RemoteIO2:2:O.Data.15,VE_NaOH_34_open,VE_NaOH_34_close,VE_NaOH_34_opening,VE_NaOH_34_closing);
+valve_operating_indicate(valve_operating_indicate_46,RemoteIO2:2:O.Data.16,VE_NaOH_35_open,VE_NaOH_35_close,VE_NaOH_35_opening,VE_NaOH_35_closing);
+valve_operating_indicate(valve_operating_indicate_47,RemoteIO2:2:O.Data.17,VE_NaOH_36_open,VE_NaOH_36_close,VE_NaOH_36_opening,VE_NaOH_36_closing);
+
+(*投加泵频率反馈*)
+(*读取投加泵变频器反馈运行频率*)
+(*1#投加泵*)
+SCL(SCL_frequency_AI_1);
+SCL_frequency_AI_1.In:=RemoteIO2:3:I.Ch0Data;
+P_NaOH1_frequency:=SCL_frequency_AI_1.Out;
+(*2#投加泵*)
+SCL(SCL_frequency_AI_2);
+SCL_frequency_AI_2.In:=RemoteIO2:3:I.Ch1Data;
+P_NaOH2_frequency:=SCL_frequency_AI_2.Out;
+(*3#投加泵*)
+SCL(SCL_frequency_AI_3);
+SCL_frequency_AI_3.In:=RemoteIO2:3:I.Ch2Data;
+P_NaOH3_frequency:=SCL_frequency_AI_3.Out;
+(*4#投加泵*)
+SCL(SCL_frequency_AI_4);
+SCL_frequency_AI_4.In:=RemoteIO2:3:I.Ch3Data;
+P_NaOH4_frequency:=SCL_frequency_AI_4.Out;
+(*5#投加泵*)
+SCL(SCL_frequency_AI_5);
+SCL_frequency_AI_5.In:=RemoteIO2:3:I.Ch4Data;
+P_NaOH5_frequency:=SCL_frequency_AI_5.Out;
+(*6#投加泵*)
+SCL(SCL_frequency_AI_6);
+SCL_frequency_AI_6.In:=RemoteIO2:3:I.Ch5Data;
+P_NaOH6_frequency:=SCL_frequency_AI_6.Out;
+
+(*储罐液位*)
+(*读取超声波液位计反馈液位*)
+(*1#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_1);
+SCL_NaOH_NaClO_tank_AI_1.In:=RemoteIO2:3:I.Ch6Data;
+NaOH_tank_level_8LT05:=SCL_NaOH_NaClO_tank_AI_1.Out;
+(*2#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_2);
+SCL_NaOH_NaClO_tank_AI_2.In:=RemoteIO2:3:I.Ch7Data;
+NaOH_tank_level_8LT06:=SCL_NaOH_NaClO_tank_AI_2.Out;
+(*3#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_3);
+SCL_NaOH_NaClO_tank_AI_3.In:=RemoteIO2:3:I.Ch8Data;
+NaOH_tank_level_8LT07:=SCL_NaOH_NaClO_tank_AI_3.Out;
+(*4#NaOH储罐*)
+SCL(SCL_NaOH_NaClO_tank_AI_4);
+SCL_NaOH_NaClO_tank_AI_4.In:=RemoteIO2:3:I.Ch9Data;
+NaOH_tank_level_8LT08:=SCL_NaOH_NaClO_tank_AI_4.Out;
+
+(*储罐液体重量*)
+(*读取压力变送器反馈*)
+(*1#NaOH储罐*)
+SCL(SCL_pressure_AI_1);
+SCL_pressure_AI_1.In:=RemoteIO2:3:I.Ch10Data;
+NaOH_tank_pressure_1:=tune_factor[2]*SCL_pressure_AI_1.Out+twaek_factor[2];
+(*2#NaOH储罐*)
+SCL(SCL_pressure_AI_2);
+SCL_pressure_AI_2.In:=RemoteIO2:3:I.Ch11Data;
+NaOH_tank_pressure_2:=tune_factor[3]*SCL_pressure_AI_2.Out+twaek_factor[3];
+(*3#NaOH储罐*)
+SCL(SCL_pressure_AI_3);
+SCL_pressure_AI_3.In:=RemoteIO2:4:I.Ch0Data;
+NaOH_tank_pressure_3:=tune_factor[4]*SCL_pressure_AI_3.Out+twaek_factor[4];
+(*4#NaOH储罐*)
+SCL(SCL_pressure_AI_4);
+SCL_pressure_AI_4.In:=RemoteIO2:4:I.Ch1Data;
+NaOH_tank_pressure_4:=tune_factor[5]*SCL_pressure_AI_4.Out+twaek_factor[5];
+
+(*将读取的压力数值转变为重量*)
+(*计算公式：m(kg)=p*S/g=p*pi*(d/2)^2/g*)
+(*1000Pa*3.14*(3.5/2)^2/9.8/1000，单位:吨*)
+(*g=9.8m/s^2,pi=3.14,压力变送器测量范围0-240kPa*)
+NaOH_weight_8PT01:=(NaOH_tank_pressure_1*3.14*(3.5/2)**2/9.8);
+NaOH_weight_8PT02:=(NaOH_tank_pressure_2*3.14*(3.5/2)**2/9.8);
+NaOH_weight_8PT03:=(NaOH_tank_pressure_3*3.14*(3.5/2)**2/9.8);
+NaOH_weight_8PT04:=(NaOH_tank_pressure_4*3.14*(3.5/2)**2/9.8);
+
+(*NaOH浓度*)
+(*读取NaOH浓度计参数*)
+(*1#NaOH浓度计*)
+SCL(SCL_concentration_AI_1);
+SCL_concentration_AI_1.In:=RemoteIO2:4:I.Ch2Data;
+NaOH_concentration_8AT01:=tune_factor[6]*SCL_concentration_AI_1.Out+twaek_factor[6];
+(*2#NaOH浓度计*)
+SCL(SCL_concentration_AI_2);
+SCL_concentration_AI_2.In:=RemoteIO2:4:I.Ch3Data;
+NaOH_concentration_8AT02:=tune_factor[7]*SCL_concentration_AI_2.Out+twaek_factor[7];
+(*3#NaOH浓度计*)
+SCL(SCL_concentration_AI_3);
+SCL_concentration_AI_3.In:=RemoteIO2:4:I.Ch4Data;
+NaOH_concentration_8AT03:=tune_factor[8]*SCL_concentration_AI_3.Out+twaek_factor[8];
+(*4#NaOH浓度计*)
+SCL(SCL_concentration_AI_4);
+SCL_concentration_AI_4.In:=RemoteIO2:4:I.Ch5Data;
+NaOH_concentration_8AT04:=tune_factor[9]*SCL_concentration_AI_4.Out+twaek_factor[9];
+
+(*pH值，测量范围0-14*)
+(*读取pH计参数*)
+(*1#pH计*)
+SCL(SCL_pH_AI_1);
+SCL_pH_AI_1.In:=RemoteIO2:4:I.Ch6Data;
+NaOH_pH_8AT05:=SCL_pH_AI_1.Out;
+(*2#pH计*)
+SCL(SCL_pH_AI_2);
+SCL_pH_AI_2.In:=RemoteIO2:4:I.Ch7Data;
+NaOH_pH_8AT06:=SCL_pH_AI_2.Out;
+(*3#pH计*)
+SCL(SCL_pH_AI_3);
+SCL_pH_AI_3.In:=RemoteIO2:4:I.Ch8Data;
+NaOH_pH_8AT07:=SCL_pH_AI_3.Out;
+(*4#pH计*)
+SCL(SCL_pH_AI_4);
+SCL_pH_AI_4.In:=RemoteIO2:4:I.Ch9Data;
+NaOH_pH_8AT08:=SCL_pH_AI_4.Out;
+(*5#pH计*)
+SCL(SCL_pH_AI_5);
+SCL_pH_AI_5.In:=RemoteIO2:4:I.Ch10Data;
+NaOH_pH_8AT09:=SCL_pH_AI_5.Out;
+(*6#pH计*)
+SCL(SCL_pH_AI_6);
+SCL_pH_AI_6.In:=RemoteIO2:4:I.Ch11Data;
+NaOH_pH_8AT10:=SCL_pH_AI_6.Out;
+
+(*电磁流量计*)
+(*读取NaOH电磁流量计参数*)
+(*1#电磁流量计*)
+SCL(SCL_NaOH_flow_meter_AI_1);
+SCL_NaOH_flow_meter_AI_1.In:=RemoteIO2:5:I.Ch0Data;
+NaOH_flow_8FT03:=tune_factor[10]*SCL_NaOH_flow_meter_AI_1.Out+twaek_factor[10];
+(*2#电磁流量计*)
+SCL(SCL_NaOH_flow_meter_AI_2);
+SCL_NaOH_flow_meter_AI_2.In:=RemoteIO2:5:I.Ch1Data;
+NaOH_flow_8FT04:=tune_factor[11]*SCL_NaOH_flow_meter_AI_2.Out+twaek_factor[11];
+(*3#电磁流量计*)
+SCL(SCL_NaOH_flow_meter_AI_3);
+SCL_NaOH_flow_meter_AI_3.In:=RemoteIO2:5:I.Ch2Data;
+NaOH_flow_8FT05:=tune_factor[12]*SCL_NaOH_flow_meter_AI_3.Out+twaek_factor[12];
+
+(*调流电动阀开度反馈*)
+(*读取调流电动阀开度*)
+(*1#调流电动阀*)
+SCL(SCL_NaOH_vavle_AI_1);
+SCL_NaOH_vavle_AI_1.In:=RemoteIO2:5:I.Ch3Data;
+NaOH_flow_valve_1_read:=SCL_NaOH_vavle_AI_1.Out;
+(*2#调流电动阀*)
+SCL(SCL_NaOH_vavle_AI_2);
+SCL_NaOH_vavle_AI_2.In:=RemoteIO2:5:I.Ch4Data;
+NaOH_flow_valve_2_read:=SCL_NaOH_vavle_AI_2.Out;
+(*3#调流电动阀*)
+SCL(SCL_NaOH_vavle_AI_3);
+SCL_NaOH_vavle_AI_3.In:=RemoteIO2:5:I.Ch5Data;
+NaOH_flow_valve_3_read:=SCL_NaOH_vavle_AI_3.Out;
+
+(*在地/远程切换*)
+(*1号泵组*)
+if NaOH_control_local_remote[1] then
+    VE_NaOH_actuate_local[1]:=VE_NaOH_01_actuate;
+    VE_NaOH_actuate_local[2]:=VE_NaOH_02_actuate;
+    VE_NaOH_actuate_local[8]:=VE_NaOH_08_actuate;
+    VE_NaOH_actuate_local[15]:=VE_NaOH_15_actuate;
+    VE_NaOH_actuate_local[16]:=VE_NaOH_16_actuate;
+    P_NaOH_actuate_local[1]:=P_NaOH1_actuate;
+    P_NaOH_actuate_local[2]:=P_NaOH2_actuate;
+    P_NaOH_frequency_set_local[1]:=P_NaOH1_frequency_set;
+    P_NaOH_frequency_set_local[2]:=P_NaOH2_frequency_set;
+    NaOH_flow_valve_set_local[1]:=NaOH_flow_valve_1_set;
+else
+    VE_NaOH_01_actuate:=VE_NaOH_actuate_local[1];
+    VE_NaOH_02_actuate:=VE_NaOH_actuate_local[2];
+    VE_NaOH_08_actuate:=VE_NaOH_actuate_local[8];
+    VE_NaOH_15_actuate:=VE_NaOH_actuate_local[15];
+    VE_NaOH_16_actuate:=VE_NaOH_actuate_local[16];
+    P_NaOH1_actuate:=P_NaOH_actuate_local[1];
+    P_NaOH2_actuate:=P_NaOH_actuate_local[2];
+    (*在地手动时，将在地手动设置流量设置传送至中控，其余情况由自动程序控制流量设置*)
+    if (not NaOH_control_auto_manual[1])
+    and (not NaOH_control_auto_manual[21])
+    then
+        P_NaOH1_frequency_set:=P_NaOH_frequency_set_local[1];
+        P_NaOH2_frequency_set:=P_NaOH_frequency_set_local[2];
+        NaOH_flow_valve_1_set:=NaOH_flow_valve_set_local[1];
+    else
+        P_NaOH_frequency_set_local[1]:=P_NaOH1_frequency_set;
+        P_NaOH_frequency_set_local[2]:=P_NaOH2_frequency_set;
+        NaOH_flow_valve_set_local[1]:=NaOH_flow_valve_1_set;
+    end_if;
+end_if;
+
+(*2号泵组*)
+if NaOH_control_local_remote[2] then
+    VE_NaOH_actuate_local[3]:=VE_NaOH_03_actuate;
+    VE_NaOH_actuate_local[4]:=VE_NaOH_04_actuate;
+    VE_NaOH_actuate_local[10]:=VE_NaOH_10_actuate;
+    VE_NaOH_actuate_local[17]:=VE_NaOH_17_actuate;
+    VE_NaOH_actuate_local[18]:=VE_NaOH_18_actuate;
+    P_NaOH_actuate_local[3]:=P_NaOH3_actuate;
+    P_NaOH_actuate_local[4]:=P_NaOH4_actuate;
+    P_NaOH_frequency_set_local[3]:=P_NaOH3_frequency_set;
+    P_NaOH_frequency_set_local[4]:=P_NaOH4_frequency_set;
+    NaOH_flow_valve_set_local[2]:=NaOH_flow_valve_2_set;
+else
+    VE_NaOH_03_actuate:=VE_NaOH_actuate_local[3];
+    VE_NaOH_04_actuate:=VE_NaOH_actuate_local[4];
+    VE_NaOH_10_actuate:=VE_NaOH_actuate_local[10];
+    VE_NaOH_17_actuate:=VE_NaOH_actuate_local[17];
+    VE_NaOH_18_actuate:=VE_NaOH_actuate_local[18];
+    P_NaOH3_actuate:=P_NaOH_actuate_local[3];
+    P_NaOH4_actuate:=P_NaOH_actuate_local[4];
+    (*在地手动时，将在地手动设置流量设置传送至中控，其余情况由自动程序控制流量设置*)
+    if (not NaOH_control_auto_manual[2])
+    and (not NaOH_control_auto_manual[22])
+    then
+        P_NaOH3_frequency_set:=P_NaOH_frequency_set_local[3];
+        P_NaOH4_frequency_set:=P_NaOH_frequency_set_local[4];
+        NaOH_flow_valve_2_set:=NaOH_flow_valve_set_local[2];
+    else
+        P_NaOH_frequency_set_local[3]:=P_NaOH3_frequency_set;
+        P_NaOH_frequency_set_local[4]:=P_NaOH4_frequency_set;
+        NaOH_flow_valve_set_local[2]:=NaOH_flow_valve_2_set;
+    end_if;
+end_if;
+
+(*3号泵组*)
+if NaOH_control_local_remote[3] then
+    VE_NaOH_actuate_local[5]:=VE_NaOH_05_actuate;
+    VE_NaOH_actuate_local[6]:=VE_NaOH_06_actuate;
+    VE_NaOH_actuate_local[12]:=VE_NaOH_12_actuate;
+    VE_NaOH_actuate_local[19]:=VE_NaOH_19_actuate;
+    VE_NaOH_actuate_local[20]:=VE_NaOH_20_actuate;
+    P_NaOH_actuate_local[5]:=P_NaOH5_actuate;
+    P_NaOH_actuate_local[6]:=P_NaOH6_actuate;
+    P_NaOH_frequency_set_local[5]:=P_NaOH5_frequency_set;
+    P_NaOH_frequency_set_local[6]:=P_NaOH6_frequency_set;
+    NaOH_flow_valve_set_local[3]:=NaOH_flow_valve_3_set;
+else
+    VE_NaOH_05_actuate:=VE_NaOH_actuate_local[5];
+    VE_NaOH_06_actuate:=VE_NaOH_actuate_local[6];
+    VE_NaOH_12_actuate:=VE_NaOH_actuate_local[12];
+    VE_NaOH_19_actuate:=VE_NaOH_actuate_local[19];
+    VE_NaOH_20_actuate:=VE_NaOH_actuate_local[20];
+    P_NaOH5_actuate:=P_NaOH_actuate_local[5];
+    P_NaOH6_actuate:=P_NaOH_actuate_local[6];
+    (*在地手动时，将在地手动设置流量设置传送至中控，其余情况由自动程序控制流量设置*)
+    if (not NaOH_control_auto_manual[3])
+    and (not NaOH_control_auto_manual[23])
+    then
+        P_NaOH5_frequency_set:=P_NaOH_frequency_set_local[5];
+        P_NaOH6_frequency_set:=P_NaOH_frequency_set_local[6];
+        NaOH_flow_valve_3_set:=NaOH_flow_valve_set_local[3];
+    else
+        P_NaOH_frequency_set_local[5]:=P_NaOH5_frequency_set;
+        P_NaOH_frequency_set_local[6]:=P_NaOH6_frequency_set;
+        NaOH_flow_valve_set_local[3]:=NaOH_flow_valve_3_set;
+    end_if;
+end_if;
+
+(*1号NaOH储罐*)
+if NaOH_tank_local_remote[1] then
+    VE_NaOH_actuate_local[13]:=VE_NaOH_13_actuate;
+    VE_NaOH_actuate_local[21]:=VE_NaOH_21_actuate;
+    VE_NaOH_actuate_local[23]:=VE_NaOH_23_actuate;
+    VE_NaOH_actuate_local[35]:=VE_NaOH_35_actuate;
+else
+    VE_NaOH_13_actuate:=VE_NaOH_actuate_local[13];
+    VE_NaOH_21_actuate:=VE_NaOH_actuate_local[21];
+    VE_NaOH_23_actuate:=VE_NaOH_actuate_local[23];
+    VE_NaOH_35_actuate:=VE_NaOH_actuate_local[35];
+end_if;
+
+(*2号NaOH储罐*)
+if NaOH_tank_local_remote[2] then
+    VE_NaOH_actuate_local[14]:=VE_NaOH_14_actuate;
+    VE_NaOH_actuate_local[22]:=VE_NaOH_22_actuate;
+    VE_NaOH_actuate_local[24]:=VE_NaOH_24_actuate;
+    VE_NaOH_actuate_local[36]:=VE_NaOH_36_actuate;
+else
+    VE_NaOH_14_actuate:=VE_NaOH_actuate_local[14];
+    VE_NaOH_22_actuate:=VE_NaOH_actuate_local[22];
+    VE_NaOH_24_actuate:=VE_NaOH_actuate_local[24];
+    VE_NaOH_36_actuate:=VE_NaOH_actuate_local[36];
+end_if;
+
+(*3号NaOH储罐*)
+if NaOH_tank_local_remote[3] then
+    VE_NaOH_actuate_local[25]:=VE_NaOH_25_actuate;
+    VE_NaOH_actuate_local[27]:=VE_NaOH_27_actuate;
+    VE_NaOH_actuate_local[29]:=VE_NaOH_29_actuate;
+else
+    VE_NaOH_25_actuate:=VE_NaOH_actuate_local[25];
+    VE_NaOH_27_actuate:=VE_NaOH_actuate_local[27];
+    VE_NaOH_29_actuate:=VE_NaOH_actuate_local[29];
+end_if;
+
+(*4号NaOH储罐*)
+if NaOH_tank_local_remote[4] then
+    VE_NaOH_actuate_local[26]:=VE_NaOH_26_actuate;
+    VE_NaOH_actuate_local[28]:=VE_NaOH_28_actuate;
+    VE_NaOH_actuate_local[30]:=VE_NaOH_30_actuate;
+else
+    VE_NaOH_26_actuate:=VE_NaOH_actuate_local[26];
+    VE_NaOH_28_actuate:=VE_NaOH_actuate_local[28];
+    VE_NaOH_30_actuate:=VE_NaOH_actuate_local[30];
+end_if;
+
+

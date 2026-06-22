@@ -1,0 +1,29 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(*1#搅拌机*)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB1 := STOP ;
+__EDTB2 := __EDTB1 AND METHOD_CONTROL AND START_AUTO ;
+__EDTB3 := __EDTB1 AND NOT(METHOD_CONTROL) AND START_MANUAL ;
+STIRRER_ACTION := (__EDTB2 OR __EDTB3) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+

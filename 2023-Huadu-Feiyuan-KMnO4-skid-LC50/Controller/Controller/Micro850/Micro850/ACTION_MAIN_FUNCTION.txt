@@ -1,0 +1,151 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(*振荡器只能手动启动*)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+_IO_EM_DO_05 := VIBRATOR_MANUAL_START AND _IO_EM_DI_01 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Rung **********************************)
+(*1#搅拌机*)
+__STEPPRAGMA
+0,3
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: equipment_actuate *)
+equipment_actuate_1(_IO_EM_DI_01, SOLUTION_PREPARE_CONTROL_METHOD, STIRRER_1_AUTO_START, STIRRER_1_MANUAL_START) ;
+_IO_EM_DO_02 := equipment_actuate_1.stirrer_action ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0002 ;
+
+
+(*************** Rung **********************************)
+(*2#搅拌机*)
+__STEPPRAGMA
+0,8
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: equipment_actuate *)
+equipment_actuate_2(_IO_EM_DI_01, SOLUTION_PREPARE_CONTROL_METHOD, STIRRER_2_AUTO_START, STIRRER_2_MANUAL_START) ;
+_IO_EM_DO_03 := equipment_actuate_2.stirrer_action ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0003 ;
+
+
+(*************** Rung **********************************)
+(*3#搅拌机*)
+__STEPPRAGMA
+0,13
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: equipment_actuate *)
+equipment_actuate_3(_IO_EM_DI_01, SOLUTION_PREPARE_CONTROL_METHOD, STIRRER_3_AUTO_START, STIRRER_3_MANUAL_START) ;
+_IO_EM_DO_04 := equipment_actuate_3.stirrer_action ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0004 ;
+
+
+(*************** Rung **********************************)
+(*螺旋进料器*)
+__STEPPRAGMA
+0,18
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: equipment_actuate *)
+equipment_actuate_4(_IO_EM_DI_01, SOLUTION_PREPARE_CONTROL_METHOD, POWDER_SCREW_AUTO_START, POWDER_SCREW_MANUAL_START) ;
+_IO_EM_DO_00 := equipment_actuate_4.stirrer_action ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0005 ;
+
+
+(*************** Rung **********************************)
+(*1#泵出口电动阀*)
+__STEPPRAGMA
+0,23
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB1 := _IO_EM_DI_01 ;
+__EDTB2 := __EDTB1 AND NOT(_IO_EM_DI_10) AND VALVE_LOCAL_ACTUATE[1] ;
+__EDTB3 := __EDTB1 AND _IO_EM_DI_10 AND BOOL_TO_LCU05[1].1 ;
+_IO_EM_DO_06 := (__EDTB2 OR __EDTB3) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0006 ;
+
+
+(*************** Rung **********************************)
+(*1#泵出口电动阀*)
+__STEPPRAGMA
+0,26
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB4 := _IO_EM_DI_01 ;
+__EDTB5 := __EDTB4 AND NOT(_IO_EM_DI_10) AND VALVE_LOCAL_ACTUATE[1] ;
+__EDTB6 := __EDTB4 AND _IO_EM_DI_10 AND BOOL_TO_LCU05[1].1 ;
+_IO_EM_DO_06 := (__EDTB5 OR __EDTB6) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0007 ;
+
+
+(*************** Rung **********************************)
+(*2#泵出口电动阀*)
+__STEPPRAGMA
+0,29
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB7 := _IO_EM_DI_01 ;
+__EDTB8 := __EDTB7 AND NOT(_IO_EM_DI_10) AND VALVE_LOCAL_ACTUATE[2] ;
+__EDTB9 := __EDTB7 AND _IO_EM_DI_10 AND BOOL_TO_LCU05[1].2 ;
+_IO_EM_DO_07 := (__EDTB8 OR __EDTB9) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0008 ;
+
+
+(*************** Rung **********************************)
+(*供水总电动阀*)
+__STEPPRAGMA
+0,32
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB10 := _IO_EM_DI_01 ;
+__EDTB11 := __EDTB10 AND NOT(_IO_EM_DI_10) AND VALVE_LOCAL_ACTUATE[3] ;
+__EDTB12 := __EDTB10 AND _IO_EM_DI_10 AND BOOL_TO_LCU05[1].3 ;
+_IO_EM_DO_08 := (__EDTB11 OR __EDTB12) ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0009 ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+(* __EDTB6 *)
+(* __EDTB7 *)
+(* __EDTB8 *)
+(* __EDTB9 *)
+(* __EDTB10 *)
+(* __EDTB11 *)
+(* __EDTB12 *)
+

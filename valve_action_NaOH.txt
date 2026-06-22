@@ -1,0 +1,177 @@
+(*阀门动作的控制分为分类：*)
+(*1、普通电动阀可以自由动作；*)
+(*2、泵入口阀需要与泵联动；*)
+(*3、储罐进出口阀与储罐液位联动。*)
+
+(*1、普通电动阀控制*)
+(*泵出口*)
+RemoteIO2:1:O.Data.14:=VE_NaOH_01_actuate;
+RemoteIO2:1:O.Data.15:=VE_NaOH_02_actuate;
+RemoteIO2:1:O.Data.16:=VE_NaOH_03_actuate;
+RemoteIO2:1:O.Data.17:=VE_NaOH_04_actuate;
+RemoteIO2:1:O.Data.18:=VE_NaOH_05_actuate;
+RemoteIO2:1:O.Data.19:=VE_NaOH_06_actuate;
+RemoteIO2:1:O.Data.20:=VE_NaOH_07_actuate;
+RemoteIO2:1:O.Data.21:=VE_NaOH_08_actuate;
+RemoteIO2:1:O.Data.22:=VE_NaOH_09_actuate;
+RemoteIO2:1:O.Data.23:=VE_NaOH_10_actuate;
+RemoteIO2:1:O.Data.24:=VE_NaOH_11_actuate;
+RemoteIO2:1:O.Data.25:=VE_NaOH_12_actuate;
+(*排空*)
+(*储罐作为冷备时阀门关闭*)
+(*1号罐*)
+if NaOH_tank_standby[1] then
+    RemoteIO2:2:O.Data.4:=0;
+else
+    RemoteIO2:2:O.Data.4:=VE_NaOH_23_actuate;
+end_if;
+(*2号罐*)
+if NaOH_tank_standby[2] then
+    RemoteIO2:2:O.Data.5:=0;
+else
+    RemoteIO2:2:O.Data.5:=VE_NaOH_24_actuate;
+end_if;
+(*3号罐*)
+if NaOH_tank_standby[3] then
+    RemoteIO2:2:O.Data.6:=0;
+else
+    RemoteIO2:2:O.Data.6:=VE_NaOH_25_actuate;
+end_if;
+(*4号罐*)
+if NaOH_tank_standby[4] then
+    RemoteIO2:2:O.Data.7:=0;
+else
+    RemoteIO2:2:O.Data.7:=VE_NaOH_26_actuate;
+end_if;
+
+(*浓碱连通*)
+RemoteIO2:2:O.Data.14:=VE_NaOH_33_actuate;
+(*生产用水及稀释水*)
+RemoteIO2:2:O.Data.15:=VE_NaOH_34_actuate;
+(*储罐作为冷备时阀门关闭*)
+(*1号罐*)
+if NaOH_tank_standby[1] then
+    RemoteIO2:2:O.Data.16:=0;
+else
+    RemoteIO2:2:O.Data.16:=VE_NaOH_35_actuate;
+end_if;
+(*储罐作为冷备时阀门关闭*)
+(*2号罐*)
+if NaOH_tank_standby[2] then
+    RemoteIO2:2:O.Data.17:=0;
+else
+    RemoteIO2:2:O.Data.17:=VE_NaOH_36_actuate;
+end_if;
+
+(*2、泵入口阀控制*)
+(*数字泵启动时，泵入口阀由数字泵控制程序控制，此时泵入口阀必须开启*)
+(*投加泵入口阀*)
+(*1#泵的入口阀*)
+if RemoteIO2:1:O.Data.0 then
+	RemoteIO2:1:O.Data.28:=1;
+else
+	RemoteIO2:1:O.Data.28:=VE_NaOH_15_actuate;
+end_if;
+(*2#泵的入口阀*)
+if RemoteIO2:1:O.Data.2 then
+	RemoteIO2:1:O.Data.29:=1;
+else
+	RemoteIO2:1:O.Data.29:=VE_NaOH_16_actuate;
+end_if;
+(*3#泵的入口阀*)
+if RemoteIO2:1:O.Data.4 then
+	RemoteIO2:1:O.Data.30:=1;
+else
+	RemoteIO2:1:O.Data.30:=VE_NaOH_17_actuate;
+end_if;
+(*4#泵的入口阀*)
+if RemoteIO2:1:O.Data.6 then
+	RemoteIO2:1:O.Data.31:=1;
+else
+	RemoteIO2:1:O.Data.31:=VE_NaOH_18_actuate;
+end_if;
+(*5#泵的入口阀*)
+if RemoteIO2:1:O.Data.8 then
+	RemoteIO2:2:O.Data.0:=1;
+else
+	RemoteIO2:2:O.Data.0:=VE_NaOH_19_actuate;
+end_if;
+(*6#泵的入口阀*)
+if RemoteIO2:2:O.Data.10 then
+	RemoteIO2:2:O.Data.1:=1;
+else
+	RemoteIO2:2:O.Data.1:=VE_NaOH_20_actuate;
+end_if;
+(*转运泵入口阀*)
+(*1#泵的入口阀*)
+if RemoteIO2:1:O.Data.12 then
+	RemoteIO2:2:O.Data.12:=1;
+else
+	RemoteIO2:2:O.Data.12:=VE_NaOH_31_actuate;
+end_if;
+(*2#泵的入口阀*)
+if RemoteIO2:1:O.Data.13 then
+	RemoteIO2:2:O.Data.13:=1;
+else
+	RemoteIO2:2:O.Data.13:=VE_NaOH_32_actuate;
+end_if;
+
+(*3、储罐进出口阀控制*)
+(*液位高高、低低报警时，以及对应池体/储罐作为冷备时阀门关闭*)
+(*进口阀控制*)
+(*1#罐的入口阀*)
+if NaOH_level_high_alarm_1 or NaOH_tank_standby[1] then
+	RemoteIO2:1:O.Data.26:=0;
+else
+	RemoteIO2:1:O.Data.26:=VE_NaOH_13_actuate;
+end_if;
+(*2#罐的入口阀*)
+if NaOH_level_high_alarm_2 or NaOH_tank_standby[2] then
+	RemoteIO2:1:O.Data.27:=0;
+else
+	RemoteIO2:1:O.Data.27:=VE_NaOH_14_actuate;
+end_if;
+(*3#罐的入口阀*)
+if NaOH_level_high_alarm_3 or NaOH_tank_standby[3] then
+	RemoteIO2:2:O.Data.8:=0;
+else
+	RemoteIO2:2:O.Data.8:=VE_NaOH_27_actuate;
+end_if;
+(*4#罐的入口阀*)
+if NaOH_level_high_alarm_4 or NaOH_tank_standby[4] then
+	RemoteIO2:2:O.Data.9:=0;
+else
+	RemoteIO2:2:O.Data.9:=VE_NaOH_28_actuate;
+end_if;
+
+(*出口阀控制*)
+(*1#罐的出口阀*)
+if NaOH_level_low_alarm_1 or NaOH_tank_standby[1] then
+	RemoteIO2:2:O.Data.2:=0;
+else
+	RemoteIO2:2:O.Data.2:=VE_NaOH_21_actuate;
+end_if;
+(*2#罐的出口阀*)
+if NaOH_level_low_alarm_2 or NaOH_tank_standby[2] then
+	RemoteIO2:2:O.Data.3:=0;
+else
+	RemoteIO2:2:O.Data.3:=VE_NaOH_22_actuate;
+end_if;
+(*3#罐的出口阀*)
+if NaOH_level_low_alarm_3 or NaOH_tank_standby[3] then
+	RemoteIO2:2:O.Data.10:=0;
+else
+	RemoteIO2:2:O.Data.10:=VE_NaOH_29_actuate;
+end_if;
+(*4#罐的出口阀*)
+if NaOH_level_low_alarm_4 or NaOH_tank_standby[4] then
+	RemoteIO2:2:O.Data.11:=0;
+else
+	RemoteIO2:2:O.Data.11:=VE_NaOH_30_actuate;
+end_if;
+
+
+
+
+
+

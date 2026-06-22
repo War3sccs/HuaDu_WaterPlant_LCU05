@@ -1,0 +1,61 @@
+(*1#PAC池*)
+(*高液位报警*)
+if PAC_tank_level_8LT01>=PAC_level_high_setting then
+	PAC_level_high_alarm_1:=1;
+    (*池液位过高时，进液阀应关闭*)
+	VE_PAC_05_actuate:=0;
+else
+	PAC_level_high_alarm_1:=0;
+end_if;
+(*低液位报警*)
+if PAC_tank_level_8LT01<=PAC_level_low_setting then
+	PAC_level_low_alarm_1:=1;
+    (*池液位过低时，出液阀应关闭*)
+	VE_PAC_05_actuate:=0;
+else
+	PAC_level_low_alarm_1:=0;
+end_if;
+
+(*2#PAC池*)
+(*高液位报警*)
+if PAC_tank_level_8LT02>=PAC_level_high_setting then
+	PAC_level_high_alarm_2:=1;
+else
+	PAC_level_high_alarm_2:=0;
+end_if;
+(*低液位报警*)
+if PAC_tank_level_8LT02<=PAC_level_low_setting then
+	PAC_level_low_alarm_2:=1;
+else
+	PAC_level_low_alarm_2:=0;
+end_if;
+
+(*3#PAC池*)
+(*高液位报警*)
+if PAC_tank_level_8LT03>=PAC_level_high_setting then
+	PAC_level_high_alarm_3:=1;
+else
+	PAC_level_high_alarm_3:=0;
+end_if;
+(*低液位报警*)
+if PAC_tank_level_8LT03<=PAC_level_low_setting then
+	PAC_level_low_alarm_3:=1;
+else
+	PAC_level_low_alarm_3:=0;
+end_if;
+
+(*3#PAC池*)
+(*高液位报警*)
+if PAC_tank_level_8LT03>=PAC_level_high_setting then
+	PAC_level_high_alarm_3:=1;
+else
+	PAC_level_high_alarm_3:=0;
+end_if;
+(*低液位报警*)
+if PAC_tank_level_8LT04<=PAC_level_low_setting then
+	PAC_level_low_alarm_4:=1;
+else
+	PAC_level_low_alarm_4:=0;
+end_if;
+
+

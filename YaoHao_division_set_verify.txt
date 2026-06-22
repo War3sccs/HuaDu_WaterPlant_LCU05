@@ -1,0 +1,51 @@
+(*本程序用于输入浊度分档信息的异常处理*)
+(*第0档分界校核*)
+    (*第0档分界线设置值应小于前一次设置的第1档分界线，否则将拒绝设置，避免程序出现混乱*)
+if YaoHao_turb_division_set[0] >= YaoHao_turb_division[1] then
+	YaoHao_turb_division_set[0]:= YaoHao_turb_division[0];
+else
+	YaoHao_turb_division[0]:=YaoHao_turb_division_set[0];
+end_if;
+
+(*第1档分界校核*)
+    (*第1档分界线设置值应处于前一次设置的第0、2档分界线之间，否则将拒绝设置，避免程序出现混乱*)
+if YaoHao_turb_division_set[1] >= YaoHao_turb_division[2] or YaoHao_turb_division_set[1] <= YaoHao_turb_division_set[0] then
+	YaoHao_turb_division_set[1]:= YaoHao_turb_division[1];
+else
+	YaoHao_turb_division[1]:=YaoHao_turb_division_set[1];
+end_if;
+
+(*第2档分界校核*)
+    (*第2档分界线设置值应处于前一次设置的第1、3档分界线之间，否则将拒绝设置，避免程序出现混乱*)
+if YaoHao_turb_division_set[2] >= YaoHao_turb_division[3] or YaoHao_turb_division_set[2] <= YaoHao_turb_division_set[1] then
+	YaoHao_turb_division_set[2]:= YaoHao_turb_division[2];
+else
+	YaoHao_turb_division[2]:=YaoHao_turb_division_set[2];
+end_if;
+
+(*第3档分界校核*)
+    (*第3档分界线设置值应处于前一次设置的第2、4档分界线之间，否则将拒绝设置，避免程序出现混乱*)
+if YaoHao_turb_division_set[3] >= YaoHao_turb_division[4] or YaoHao_turb_division_set[3] <= YaoHao_turb_division_set[2] then
+	YaoHao_turb_division_set[3]:= YaoHao_turb_division[3];
+else
+	YaoHao_turb_division[3]:=YaoHao_turb_division_set[3];
+end_if;
+
+(*第4档分界校核*)
+    (*第4档分界线设置值应处于前一次设置的第3、5档分界线之间，否则将拒绝设置，避免程序出现混乱*)
+if YaoHao_turb_division_set[4] >= YaoHao_turb_division[5] or YaoHao_turb_division_set[4] <= YaoHao_turb_division_set[3] then
+	YaoHao_turb_division_set[4]:= YaoHao_turb_division[4];
+else
+	YaoHao_turb_division[4]:=YaoHao_turb_division_set[4];
+end_if;
+
+(*第5档分界校核*)
+    (*第5档分界线应该比第4档分界线大，否则将拒绝设置，避免程序出现混乱*)
+if YaoHao_turb_division_set[5] <= YaoHao_turb_division[4] then
+	YaoHao_turb_division_set[5]:= YaoHao_turb_division[5];
+else
+	YaoHao_turb_division[5]:=YaoHao_turb_division_set[5];
+end_if;
+
+
+

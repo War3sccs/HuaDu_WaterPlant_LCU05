@@ -1,0 +1,17 @@
+(*高液位报警*)
+if tank_level>=high_setting then
+	high_alarm:=1;
+    (*池液位过高时，进液阀应关闭*)
+	valve_in:=0;
+else
+	high_alarm:=0;
+end_if;
+(*低液位报警*)
+if tank_level<=low_setting then
+	low_alarm:=1;
+    (*池液位过低时，出液阀应关闭*)
+	valve_out:=0;
+else
+	low_alarm:=0;
+end_if;
+

@@ -1,0 +1,87 @@
+(*1#数字泵流量计算*)
+(*计算流量*)
+dosing_flow_setting(
+    dosing_flow_setting_1,
+    PAC_control_auto_manual[1],(*控制状态：手动-0，自动-1*)
+    PAC_dosing_mg_L_mixing_tank_1,(*PAC溶液投加率，原设计最大60mg/L*)
+    P_PAC1_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)
+    water_data_LCU05[3],(*源水流量m3/h*)
+    flow_calculate_PAC_1,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)
+    PAC_concentration, (*PAC浓度*)
+    PAC_density,(*PAC密度*)
+    PAC_quantity(*PAC用量kg/h*)
+    );
+    (*AO模块4-20mA输出*)
+    SCL(SCL_LP1010_AO_1);
+    SCL_LP1010_AO_1.In:=flow_calculate_PAC_1;
+
+(*2#数字泵流量计算*)
+(*计算流量*)
+dosing_flow_setting(
+    dosing_flow_setting_2,
+    PAC_control_auto_manual[1],(*控制状态：手动-0，自动-1*)
+    PAC_dosing_mg_L_mixing_tank_1,(*PAC溶液投加率，原设计最大60mg/L*)
+    P_PAC2_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)
+    water_data_LCU05[3],(*源水流量m3/h*)
+    flow_calculate_PAC_2,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)
+    PAC_concentration, (*PAC浓度*)
+    PAC_density,(*PAC密度*)
+    PAC_quantity(*PAC用量kg/h*)
+    );
+    (*AO模块4-20mA输出*)
+    SCL(SCL_LP1010_AO_2);
+    SCL_LP1010_AO_2.In:=flow_calculate_PAC_2;
+
+(*3#数字泵流量计算*)
+(*计算流量*)
+dosing_flow_setting(
+    dosing_flow_setting_3,
+    PAC_control_auto_manual[2],(*控制状态：手动-0，自动-1*)
+    PAC_dosing_mg_L_mixing_tank_2,(*PAC溶液投加率，原设计最大60mg/L*)
+    P_PAC3_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)
+    water_data_LCU05[4],(*源水流量m3/h*)
+    flow_calculate_PAC_3,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)
+    PAC_concentration, (*PAC浓度*)
+    PAC_density,(*PAC密度*)
+    PAC_quantity(*PAC用量kg/h*)
+    );
+    (*AO模块4-20mA输出*)
+    SCL(SCL_LP1010_AO_3);
+    SCL_LP1010_AO_3.In:=flow_calculate_PAC_3;
+
+(*4#数字泵流量计算*)
+(*计算流量*)
+dosing_flow_setting(
+    dosing_flow_setting_4,
+    PAC_control_auto_manual[2],(*控制状态：手动-0，自动-1*)
+    PAC_dosing_mg_L_mixing_tank_2,(*PAC溶液投加率，原设计最大60mg/L*)
+    P_PAC4_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)
+    water_data_LCU05[4],(*源水流量m3/h*)
+    flow_calculate_PAC_4,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)
+    PAC_concentration, (*PAC浓度*)
+    PAC_density,(*PAC密度*)
+    PAC_quantity(*PAC用量kg/h*)
+    );
+    (*AO模块4-20mA输出*)
+    SCL(SCL_LP1010_AO_4);
+    SCL_LP1010_AO_4.In:=flow_calculate_PAC_4;
+
+(*数字泵故障时，流量切换*)
+if P_PAC1_err and not P_PAC2_err then
+	P_PAC2_flow_set:=P_PAC1_flow_set+P_PAC2_flow_set;
+	P_PAC1_flow_set:=0;
+end_if;
+if not P_PAC1_err and P_PAC2_err then
+	P_PAC1_flow_set:=P_PAC1_flow_set+P_PAC2_flow_set;
+	P_PAC2_flow_set:=0;
+end_if;
+
+if P_PAC3_err and not P_PAC4_err then
+	P_PAC4_flow_set:=P_PAC3_flow_set+P_PAC4_flow_set;
+	P_PAC3_flow_set:=0;
+end_if;
+if not P_PAC3_err and P_PAC4_err then
+	P_PAC3_flow_set:=P_PAC3_flow_set+P_PAC4_flow_set;
+	P_PAC4_flow_set:=0;
+end_if;
+

@@ -1,0 +1,23 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+SOLUTION_PREPARING := START_POLYMER_PREPARING AND NOT(STOP_POLYMER_PREPARING) AND NOT(LOW_PRESSURE_ALARM) AND NOT(POWDER_SCREW_MAINTAIN) AND NOT(STIRRER_1_MAINTAIN) AND NOT(STIRRER_2_MAINTAIN) AND NOT(STIRRER_3_MAINTAIN) AND NOT(WATER_PRESSURE_SENSOR_MAINTAIN) AND _IO_EM_DI_09 ;
+
+(*************** Code for the end of Rung **************)
+__GL __LG0001 ;
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+

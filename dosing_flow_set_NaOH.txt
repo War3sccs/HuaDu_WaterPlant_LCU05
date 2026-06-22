@@ -1,0 +1,85 @@
+(*1#-2#投加泵流量控制*)
+(*计算实时碱耗*)
+YaoHao_AB_actual_NaOH:=NaOH_flow_8FT03*NaOH_density/Flow1_current_dam;
+
+(*计算流量*)
+flow_calculate_NaOH_1:=YaoHao_AB_setting_NaOH*Flow1_current_dam/NaOH_density;
+
+(*3#-4#投加泵流量控制*)
+(*计算实时碱耗*)
+YaoHao_CD_actual_NaOH:=NaOH_flow_8FT04*NaOH_density/Flow2_current_dam;
+
+(*计算流量*)
+flow_calculate_NaOH_2:=YaoHao_CD_setting_NaOH*Flow2_current_dam/NaOH_density;
+
+(*5#-6#投加泵流量控制*)
+(*计算实时碱耗*)
+YaoHao_filtration_actual_NaOH:=NaOH_flow_8FT05*NaOH_density/(Flow1_current_dam+Flow2_current_dam);
+
+(*计算流量*)
+flow_calculate_NaOH_3:=YaoHao_filtration_setting_NaOH*(Flow1_current_dam+Flow2_current_dam)/NaOH_density;
+
+(*投加泵运行频率*)
+(*1号泵组1、2号投加泵*)
+(*普通自动*)
+if NaOH_control_auto_manual[1] then
+(*自动控制时以工频50Hz运行*)
+    P_NaOH1_frequency_set:=50;
+    P_NaOH2_frequency_set:=50;
+end_if;
+(*智慧投加*)
+if NaOH_control_auto_manual[21] then
+(*智慧投加时，频率由上位机设置*)
+    P_NaOH1_frequency_set:=NaOH_AB_AI_frequency_set;
+    P_NaOH2_frequency_set:=NaOH_AB_AI_frequency_set;
+(*调流电动阀开度*)
+    NaOH_flow_valve_1_set:=NaOH_AB_AI_flow_valve_set;
+end_if;
+(*频率转换*)
+SCL(SCL_frequency_AO_1);
+SCL_frequency_AO_1.In:=P_NaOH1_frequency_set;
+SCL(SCL_frequency_AO_2);
+SCL_frequency_AO_2.In:=P_NaOH2_frequency_set;
+
+
+(*2号泵组3、4号投加泵*)
+if NaOH_control_auto_manual[2] then
+(*自动控制时以工频50Hz运行*)
+    P_NaOH3_frequency_set:=50;
+    P_NaOH4_frequency_set:=50;
+end_if;
+(*智慧投加*)
+if NaOH_control_auto_manual[22] then
+(*智慧投加时，频率由上位机设置*)
+    P_NaOH3_frequency_set:=NaOH_CD_AI_frequency_set;
+    P_NaOH4_frequency_set:=NaOH_CD_AI_frequency_set;
+(*调流电动阀开度*)
+    NaOH_flow_valve_2_set:=NaOH_CD_AI_flow_valve_set;
+end_if;
+(*频率转换*)
+SCL(SCL_frequency_AO_3);
+SCL_frequency_AO_3.In:=P_NaOH3_frequency_set;
+SCL(SCL_frequency_AO_4);
+SCL_frequency_AO_4.In:=P_NaOH4_frequency_set;
+
+(*3号泵组5、6号投加泵*)
+if NaOH_control_auto_manual[3] then
+(*自动控制时以工频50Hz运行*)
+    P_NaOH5_frequency_set:=50;
+    P_NaOH6_frequency_set:=50;
+end_if;
+(*智慧投加*)
+if NaOH_control_auto_manual[23] then
+(*智慧投加时，频率由上位机设置*)
+    P_NaOH5_frequency_set:=NaOH_filtration_AI_frequency_set;
+    P_NaOH6_frequency_set:=NaOH_filtration_AI_frequency_set;
+(*调流电动阀开度*)
+    NaOH_flow_valve_3_set:=NaOH_filtration_AI_flow_valve_set;
+end_if;
+(*频率转换*)
+SCL(SCL_frequency_AO_5);
+SCL_frequency_AO_5.In:=P_NaOH5_frequency_set;
+SCL(SCL_frequency_AO_6);
+SCL_frequency_AO_6.In:=P_NaOH6_frequency_set;
+
+

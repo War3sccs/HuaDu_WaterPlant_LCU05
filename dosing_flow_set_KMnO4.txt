@@ -1,0 +1,46 @@
+(*1号制备投加装置：1、2号数字泵*)
+(*计算实时锰耗*)
+YaoHao_AB_actual_KMnO4:=KMnO4_flow_8FT11*KMnO4_density/Flow1_current_dam;
+
+(*计算流量*)
+flow_calculate_KMnO4_1:=YaoHao_AB_setting_KMnO4*Flow1_current_dam/KMnO4_density;
+
+(*1#/2#数字泵流量计算*)
+(*自动时通过锰耗、水量计算，手动时由触摸屏、上位机设置*)
+if KMnO4_control_auto_manual[1] then
+    P_KMnO4_1_flow_set:=flow_calculate_KMnO4_1;
+    P_KMnO4_2_flow_set:=flow_calculate_KMnO4_1;
+end_if;
+
+(*AO模块4-20mA输出*)
+(*1#数字泵*)
+SCL(SCL_LP1010_AO_13);
+SCL_LP1010_AO_13.In:=P_KMnO4_1_flow_set;
+
+(*2#数字泵*)
+SCL(SCL_LP1010_AO_14);
+SCL_LP1010_AO_14.In:=P_KMnO4_2_flow_set;
+
+(*2号制备投加装置：3、4号数字泵*)
+(*计算实时锰耗*)
+YaoHao_CD_actual_KMnO4:=KMnO4_flow_8FT12*KMnO4_density/Flow2_current_dam;
+
+(*计算流量*)
+flow_calculate_KMnO4_2:=YaoHao_CD_setting_KMnO4*Flow2_current_dam/KMnO4_density;
+
+(*3#/4#数字泵流量计算*)
+(*自动时通过锰耗、水量计算，手动时由触摸屏、上位机设置*)
+if KMnO4_control_auto_manual[2] then
+    P_KMnO4_3_flow_set:=flow_calculate_KMnO4_2;
+    P_KMnO4_4_flow_set:=flow_calculate_KMnO4_2;
+end_if;
+
+(*AO模块4-20mA输出*)
+SCL(SCL_LP1010_AO_15);
+SCL_LP1010_AO_15.In:=P_KMnO4_3_flow_set;
+
+SCL(SCL_LP1010_AO_16);
+SCL_LP1010_AO_16.In:=P_KMnO4_4_flow_set;
+
+
+

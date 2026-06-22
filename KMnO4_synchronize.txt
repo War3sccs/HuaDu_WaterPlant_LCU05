@@ -1,0 +1,141 @@
+(*数字泵运行状态*)
+pump_run_status_indicate(pump_run_status_indicate_15,P_KMnO4_1_actuate,P_KMnO4_1_flow_read,P_KMnO4_1_run);
+pump_run_status_indicate(pump_run_status_indicate_16,P_KMnO4_2_actuate,P_KMnO4_2_flow_read,P_KMnO4_2_run);
+pump_run_status_indicate(pump_run_status_indicate_17,P_KMnO4_3_actuate,P_KMnO4_3_flow_read,P_KMnO4_3_run);
+pump_run_status_indicate(pump_run_status_indicate_18,P_KMnO4_4_actuate,P_KMnO4_4_flow_read,P_KMnO4_4_run);
+
+(*数字泵故障状态*)
+P_KMnO4_1_err:=RemoteIO4:1:I.Data.0;
+P_KMnO4_2_err:=RemoteIO4:1:I.Data.1;
+P_KMnO4_3_err:=RemoteIO4:1:I.Data.2;
+P_KMnO4_4_err:=RemoteIO4:1:I.Data.3;
+
+(*电动阀阀位反馈*)
+VE_KMnO4_01_open:=RemoteIO4:1:I.Data.4;
+VE_KMnO4_01_close:=RemoteIO4:1:I.Data.5;
+VE_KMnO4_02_open:=RemoteIO4:1:I.Data.6;
+VE_KMnO4_02_close:=RemoteIO4:1:I.Data.7;
+VE_KMnO4_03_open:=RemoteIO4:1:I.Data.8;
+VE_KMnO4_03_close:=RemoteIO4:1:I.Data.9;
+VE_KMnO4_04_open:=RemoteIO4:1:I.Data.10;
+VE_KMnO4_04_close:=RemoteIO4:1:I.Data.11;
+VE_KMnO4_05_open:=RemoteIO4:1:I.Data.12;
+VE_KMnO4_05_close:=RemoteIO4:1:I.Data.13;
+VE_KMnO4_06_open:=RemoteIO4:1:I.Data.14;
+VE_KMnO4_06_close:=RemoteIO4:1:I.Data.15;
+
+(*开/关阀动作过程中显示*)
+valve_operating_indicate(valve_operating_indicate_93,RemoteIO4:2:O.Data.4,VE_KMnO4_01_open,VE_KMnO4_01_close,VE_KMnO4_01_opening,VE_KMnO4_01_closing);
+valve_operating_indicate(valve_operating_indicate_94,RemoteIO4:2:O.Data.5,VE_KMnO4_02_open,VE_KMnO4_02_close,VE_KMnO4_02_opening,VE_KMnO4_02_closing);
+valve_operating_indicate(valve_operating_indicate_95,RemoteIO4:2:O.Data.6,VE_KMnO4_03_open,VE_KMnO4_03_close,VE_KMnO4_03_opening,VE_KMnO4_03_closing);
+valve_operating_indicate(valve_operating_indicate_96,RemoteIO4:2:O.Data.7,VE_KMnO4_04_open,VE_KMnO4_04_close,VE_KMnO4_04_opening,VE_KMnO4_04_closing);
+valve_operating_indicate(valve_operating_indicate_97,RemoteIO4:2:O.Data.8,VE_KMnO4_05_open,VE_KMnO4_05_close,VE_KMnO4_05_opening,VE_KMnO4_05_closing);
+valve_operating_indicate(valve_operating_indicate_98,RemoteIO4:2:O.Data.9,VE_KMnO4_06_open,VE_KMnO4_06_close,VE_KMnO4_06_opening,VE_KMnO4_06_closing);
+
+(*阀动作超时判断*)
+valve_action_overtime(KMnO4_valve_overtime[1],VE_KMnO4_01_opening,VE_KMnO4_01_closing,VE_KMnO4_01_overtime,KMnO4_valve_timer[1],KMnO4_valve_overtime_setting[1]);
+valve_action_overtime(KMnO4_valve_overtime[2],VE_KMnO4_02_opening,VE_KMnO4_02_closing,VE_KMnO4_02_overtime,KMnO4_valve_timer[2],KMnO4_valve_overtime_setting[2]);
+valve_action_overtime(KMnO4_valve_overtime[3],VE_KMnO4_03_opening,VE_KMnO4_03_closing,VE_KMnO4_03_overtime,KMnO4_valve_timer[3],KMnO4_valve_overtime_setting[3]);
+valve_action_overtime(KMnO4_valve_overtime[4],VE_KMnO4_04_opening,VE_KMnO4_04_closing,VE_KMnO4_04_overtime,KMnO4_valve_timer[4],KMnO4_valve_overtime_setting[4]);
+valve_action_overtime(KMnO4_valve_overtime[5],VE_KMnO4_05_opening,VE_KMnO4_05_closing,VE_KMnO4_05_overtime,KMnO4_valve_timer[5],KMnO4_valve_overtime_setting[5]);
+valve_action_overtime(KMnO4_valve_overtime[6],VE_KMnO4_06_opening,VE_KMnO4_06_closing,VE_KMnO4_06_overtime,KMnO4_valve_timer[6],KMnO4_valve_overtime_setting[6]);
+
+(*读取数字泵反馈流量*)
+(*1#数字泵*)
+SCL(SCL_LP1010_AI_13);
+SCL_LP1010_AI_13.In:=RemoteIO4:3:I.Ch0Data;
+P_KMnO4_1_flow_read:=SCL_LP1010_AI_13.Out;
+(*2#数字泵*)
+SCL(SCL_LP1010_AI_14);
+SCL_LP1010_AI_14.In:=RemoteIO4:3:I.Ch1Data;
+P_KMnO4_2_flow_read:=SCL_LP1010_AI_14.Out;
+(*3#数字泵*)
+SCL(SCL_LP1010_AI_15);
+SCL_LP1010_AI_15.In:=RemoteIO4:3:I.Ch2Data;
+P_KMnO4_3_flow_read:=SCL_LP1010_AI_15.Out;
+(*4#数字泵*)
+SCL(SCL_LP1010_AI_16);
+SCL_LP1010_AI_16.In:=RemoteIO4:3:I.Ch3Data;
+P_KMnO4_4_flow_read:=SCL_LP1010_AI_16.Out;
+
+(*电磁流量计流量范围0-1020L/h*)
+(*电磁流量计反馈流量的4-20mA参数与数字泵相同*)
+(*1#电磁流量计*)
+SCL(SCL_LP1010_AI_17);
+SCL_LP1010_AI_17.In:=RemoteIO4:3:I.Ch4Data;
+KMnO4_flow_8FT11:=tune_factor[26]*SCL_LP1010_AI_17.Out+twaek_factor[26];
+(*2#电磁流量计*)
+SCL(SCL_LP1010_AI_18);
+SCL_LP1010_AI_18.In:=RemoteIO4:3:I.Ch5Data;
+KMnO4_flow_8FT12:=tune_factor[27]*SCL_LP1010_AI_18.Out+twaek_factor[27];
+
+(*读取锰检测仪反馈信号*)
+SCL(SCL_Mn_AI);
+SCL_Mn_AI.In:=RemoteIO4:3:I.Ch6Data;
+KMnO4_Mn_concentration_8AT13:=SCL_Mn_AI.Out;
+
+(*同步KMnO4制备装置参数*)
+(*1号制备装置*)
+KMnO4_S1_run:=bool_from_8AC05[0].0;
+KMnO4_S1_err:=bool_from_8AC05[0].1;
+KMnO4_MI1_run:=bool_from_8AC05[0].2;
+KMnO4_MI2_run:=bool_from_8AC05[0].3;
+KMnO4_MI3_run:=bool_from_8AC05[0].4;
+KMnO4_SH1_run:=bool_from_8AC05[0].5;
+KMnO4_S1_frequent:=real_from_8AC05[0];
+liquid_level_1:=real_from_8AC05[1];
+water_in_valve_position_1:=real_from_8AC05[2];
+water_pressure_1:=real_from_8AC05[3];
+
+(*2号制备装置*)
+KMnO4_S2_run:=bool_from_8AC06[0].0;
+KMnO4_S2_err:=bool_from_8AC06[0].1;
+KMnO4_MI4_run:=bool_from_8AC06[0].2;
+KMnO4_MI5_run:=bool_from_8AC06[0].3;
+KMnO4_MI6_run:=bool_from_8AC06[0].4;
+KMnO4_SH2_run:=bool_from_8AC06[0].5;
+KMnO4_S2_frequent:=real_from_8AC06[0];
+liquid_level_2:=real_from_8AC06[1];
+water_in_valve_position_2:=real_from_8AC06[2];
+water_pressure_2:=real_from_8AC06[3];
+
+(*在地/远程切换*)
+(*1号制备投加装置*)
+if KMnO4_control_local_remote[1] then
+    VE_KMnO4_actuate_local[1]:=VE_KMnO4_01_actuate;
+    VE_KMnO4_actuate_local[2]:=VE_KMnO4_02_actuate;
+    VE_KMnO4_actuate_local[5]:=VE_KMnO4_05_actuate;
+    P_KMnO4_actuate_local[1]:=P_KMnO4_1_actuate;
+    P_KMnO4_actuate_local[2]:=P_KMnO4_2_actuate;
+    P_KMnO4_flow_set_local[1]:=P_KMnO4_1_flow_set;
+    P_KMnO4_flow_set_local[2]:=P_KMnO4_2_flow_set;
+else
+    VE_KMnO4_01_actuate:=VE_KMnO4_actuate_local[1];
+    VE_KMnO4_02_actuate:=VE_KMnO4_actuate_local[2];
+    VE_KMnO4_05_actuate:=VE_KMnO4_actuate_local[5];
+    P_KMnO4_1_actuate:=P_KMnO4_actuate_local[1];
+    P_KMnO4_2_actuate:=P_KMnO4_actuate_local[2];
+    P_KMnO4_1_flow_set:=P_KMnO4_flow_set_local[1];
+    P_KMnO4_2_flow_set:=P_KMnO4_flow_set_local[2];
+end_if;
+
+(*2号制备投加装置*)
+if KMnO4_control_local_remote[2] then
+    VE_KMnO4_actuate_local[3]:=VE_KMnO4_03_actuate;
+    VE_KMnO4_actuate_local[4]:=VE_KMnO4_04_actuate;
+    VE_KMnO4_actuate_local[6]:=VE_KMnO4_06_actuate;
+    P_KMnO4_actuate_local[3]:=P_KMnO4_3_actuate;
+    P_KMnO4_actuate_local[4]:=P_KMnO4_4_actuate;
+    P_KMnO4_flow_set_local[3]:=P_KMnO4_3_flow_set;
+    P_KMnO4_flow_set_local[4]:=P_KMnO4_4_flow_set;
+else
+    VE_KMnO4_03_actuate:=VE_KMnO4_actuate_local[3];
+    VE_KMnO4_04_actuate:=VE_KMnO4_actuate_local[4];
+    VE_KMnO4_06_actuate:=VE_KMnO4_actuate_local[6];
+    P_KMnO4_3_actuate:=P_KMnO4_actuate_local[3];
+    P_KMnO4_4_actuate:=P_KMnO4_actuate_local[4];
+    P_KMnO4_3_flow_set:=P_KMnO4_flow_set_local[3];
+    P_KMnO4_4_flow_set:=P_KMnO4_flow_set_local[4];
+end_if;
+
+
