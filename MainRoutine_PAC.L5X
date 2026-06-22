@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="34.00" TargetName="MainRoutine" TargetType="Routine" TargetSubType="RLL" ContainsContext="true" ExportDate="Thu Mar 14 19:38:47 2024" ExportOptions="References NoRawData L5KData DecoratedData Context Dependencies ForceProtectedEncoding AllProjDocTrans LogicalHierarchy">
+<Controller Use="Context" Name="HuaDu_WaterPlant_ChemicalDosingSystem">
+<Programs Use="Context">
+<Program Use="Context" Name="PAC">
+<Routines Use="Context">
+<Routine Use="Target" Name="MainRoutine" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[将I/O输入的数值，同步到系统变量，方便触摸屏及上位机读取]]>
+</Comment>
+<Text>
+<![CDATA[JSR(synchronize,0);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+<Routine Use="Reference" Name="synchronize">
+</Routine>
+</Routines>
+</Program>
+</Programs>
+</Controller>
+</RSLogix5000Content>

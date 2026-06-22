@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="34.00" TargetName="MainRoutine" TargetType="Routine" TargetSubType="RLL" ContainsContext="true" ExportDate="Wed Dec 13 12:53:09 2023" ExportOptions="References NoRawData L5KData DecoratedData Context Dependencies ForceProtectedEncoding AllProjDocTrans">
+<Controller Use="Context" Name="HuaDu_WaterPlant_ChemicalDosingSystem">
+<DataTypes Use="Context">
+</DataTypes>
+<Modules Use="Context">
+<Module Use="Reference" Name="PAC_DI">
+</Module>
+<Module Use="Reference" Name="RemoteIO1">
+</Module>
+</Modules>
+<Tags Use="Context">
+<Tag Name="MI_PAC1_run" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[1#PAC搅拌机运行状态:0-停止,1-运行]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+</Tags>
+<Programs Use="Context">
+<Program Use="Context" Name="MainProgram">
+<Routines Use="Context">
+<Routine Use="Target" Name="MainRoutine" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Text>
+<![CDATA[XIC(RemoteIO1:0:I.Data.0)OTE(MI_PAC1_run);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+</Programs>
+</Controller>
+</RSLogix5000Content>

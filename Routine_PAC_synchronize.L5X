@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--&#x540C;&#x6B65;I/O&#x8F93;&#x5165;&#x7684;&#x6570;&#x503C;&#x3002;-->
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="34.00" TargetName="synchronize" TargetType="Routine" TargetSubType="ST" ContainsContext="true" ExportDate="Thu Mar 14 19:59:56 2024" ExportOptions="References NoRawData L5KData DecoratedData Context Dependencies ForceProtectedEncoding AllProjDocTrans LogicalHierarchy">
+<Controller Use="Context" Name="HuaDu_WaterPlant_ChemicalDosingSystem">
+<DataTypes Use="Context">
+</DataTypes>
+<Modules Use="Context">
+<Module Use="Reference" Name="PAC_DI_1">
+</Module>
+<Module Use="Reference" Name="RemoteIO1">
+</Module>
+</Modules>
+<Tags Use="Context">
+<Tag Name="MI_PAC1_run" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[1#PAC搅拌机运行状态:0-停止,1-运行]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="MI_PAC2_run" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[2#PAC搅拌机运行状态:0-停止,1-运行]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="MI_PAC3_run" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[3#PAC搅拌机运行状态:0-停止,1-运行]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="MI_PAC4_run" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[4#PAC搅拌机运行状态:0-停止,1-运行]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_PAC1_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[1#PAC数字泵故障状态:]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_PAC2_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[2#PAC数字泵故障状态:]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_PAC3_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[3#PAC数字泵故障状态:]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_PAC4_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[4#PAC数字泵故障状态:]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_PAC5_run" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[1#PAC卸料泵运行状态:0-停止,1-运行]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_PAC6_run" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[2#PAC卸料泵运行状态:0-停止,1-运行]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_01_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_01_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_02_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_02_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_03_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_03_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_04_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_04_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_05_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_05_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_06_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_06_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_07_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_07_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_08_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_08_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_09_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_09_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_10_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_10_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_11_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_PAC_11_open" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-开到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+</Tags>
+<Programs Use="Context">
+<Program Use="Context" Name="PAC">
+<Routines Use="Context">
+<Routine Use="Target" Name="synchronize" Type="ST">
+<Description>
+<![CDATA[同步I/O输入的数值。]]>
+</Description>
+<STContent>
+<Line Number="0">
+<![CDATA[(*搅拌机运行状态*)]]>
+</Line>
+<Line Number="1">
+<![CDATA[MI_PAC1_run:=RemoteIO1:0:I.Data.0;]]>
+</Line>
+<Line Number="2">
+<![CDATA[MI_PAC2_run:=RemoteIO1:0:I.Data.1;]]>
+</Line>
+<Line Number="3">
+<![CDATA[MI_PAC3_run:=RemoteIO1:0:I.Data.2;]]>
+</Line>
+<Line Number="4">
+<![CDATA[MI_PAC4_run:=RemoteIO1:0:I.Data.3;]]>
+</Line>
+<Line Number="5">
+<![CDATA[(*数字泵故障状态*)]]>
+</Line>
+<Line Number="6">
+<![CDATA[P_PAC1_err:=RemoteIO1:0:I.Data.4;]]>
+</Line>
+<Line Number="7">
+<![CDATA[P_PAC2_err:=RemoteIO1:0:I.Data.5;]]>
+</Line>
+<Line Number="8">
+<![CDATA[P_PAC3_err:=RemoteIO1:0:I.Data.6;]]>
+</Line>
+<Line Number="9">
+<![CDATA[P_PAC4_err:=RemoteIO1:0:I.Data.7;]]>
+</Line>
+<Line Number="10">
+<![CDATA[(*电动阀阀位反馈*)]]>
+</Line>
+<Line Number="11">
+<![CDATA[VE_PAC_01_open:=RemoteIO1:0:I.Data.8;]]>
+</Line>
+<Line Number="12">
+<![CDATA[VE_PAC_01_close:=RemoteIO1:0:I.Data.9;]]>
+</Line>
+<Line Number="13">
+<![CDATA[VE_PAC_02_open:=RemoteIO1:0:I.Data.10;]]>
+</Line>
+<Line Number="14">
+<![CDATA[VE_PAC_02_close:=RemoteIO1:0:I.Data.11;]]>
+</Line>
+<Line Number="15">
+<![CDATA[VE_PAC_03_open:=RemoteIO1:0:I.Data.12;]]>
+</Line>
+<Line Number="16">
+<![CDATA[VE_PAC_03_close:=RemoteIO1:0:I.Data.13;]]>
+</Line>
+<Line Number="17">
+<![CDATA[VE_PAC_04_open:=RemoteIO1:0:I.Data.14;]]>
+</Line>
+<Line Number="18">
+<![CDATA[VE_PAC_04_close:=RemoteIO1:0:I.Data.15;]]>
+</Line>
+<Line Number="19">
+<![CDATA[VE_PAC_05_open:=RemoteIO1:0:I.Data.16;]]>
+</Line>
+<Line Number="20">
+<![CDATA[VE_PAC_05_close:=RemoteIO1:0:I.Data.17;]]>
+</Line>
+<Line Number="21">
+<![CDATA[VE_PAC_06_open:=RemoteIO1:0:I.Data.18;]]>
+</Line>
+<Line Number="22">
+<![CDATA[VE_PAC_06_close:=RemoteIO1:0:I.Data.19;]]>
+</Line>
+<Line Number="23">
+<![CDATA[VE_PAC_07_open:=RemoteIO1:0:I.Data.20;]]>
+</Line>
+<Line Number="24">
+<![CDATA[VE_PAC_07_close:=RemoteIO1:0:I.Data.21;]]>
+</Line>
+<Line Number="25">
+<![CDATA[VE_PAC_08_open:=RemoteIO1:0:I.Data.22;]]>
+</Line>
+<Line Number="26">
+<![CDATA[VE_PAC_08_close:=RemoteIO1:0:I.Data.23;]]>
+</Line>
+<Line Number="27">
+<![CDATA[VE_PAC_09_open:=RemoteIO1:0:I.Data.24;]]>
+</Line>
+<Line Number="28">
+<![CDATA[VE_PAC_09_close:=RemoteIO1:0:I.Data.25;]]>
+</Line>
+<Line Number="29">
+<![CDATA[VE_PAC_10_open:=RemoteIO1:0:I.Data.26;]]>
+</Line>
+<Line Number="30">
+<![CDATA[VE_PAC_10_close:=RemoteIO1:0:I.Data.27;]]>
+</Line>
+<Line Number="31">
+<![CDATA[VE_PAC_11_open:=RemoteIO1:0:I.Data.28;]]>
+</Line>
+<Line Number="32">
+<![CDATA[VE_PAC_11_close:=RemoteIO1:0:I.Data.29;]]>
+</Line>
+<Line Number="33">
+<![CDATA[(*卸料泵运行状态*)]]>
+</Line>
+<Line Number="34">
+<![CDATA[P_PAC5_run:=RemoteIO1:0:I.Data.30;]]>
+</Line>
+<Line Number="35">
+<![CDATA[P_PAC6_run:=RemoteIO1:0:I.Data.31;]]>
+</Line>
+<Line Number="36">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</Program>
+</Programs>
+</Controller>
+</RSLogix5000Content>

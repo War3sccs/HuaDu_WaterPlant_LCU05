@@ -1,0 +1,2001 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--NaClO&#x7A00;&#x91CA;&#x7A0B;&#x5E8F;-->
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="34.00" TargetName="dilution_NaClO" TargetType="Routine" TargetSubType="RLL" ContainsContext="true" ExportDate="Tue Mar 18 11:15:13 2025" ExportOptions="References NoRawData L5KData DecoratedData Context Dependencies ForceProtectedEncoding AllProjDocTrans">
+<Controller Use="Context" Name="HuaDu_WaterPlant_ChemicalDosingSystem">
+<DataTypes Use="Context">
+</DataTypes>
+<Modules Use="Context">
+<Module Use="Reference" Name="PAC_DO_1">
+</Module>
+<Module Use="Reference" Name="RemoteIO1">
+</Module>
+</Modules>
+<AddOnInstructionDefinitions Use="Context">
+<AddOnInstructionDefinition Name="NaClO_dilution_operation" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2024-11-09T13:02:04.807Z" CreatedBy="PC-XINGUANG\wymwym" EditedDate="2025-02-24T06:23:23.677Z" EditedBy="DESKTOP-E69AD44\wuyum" SoftwareRevision="v34.00">
+<Description>
+<![CDATA[NaClO稀释操作]]>
+</Description>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="start_dilution" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_one_shot" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="tank_level" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_target" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="high_level_alarm_setting" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_status_0" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[稀释中]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_status_1" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[稀释准备，关阀]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_status_2" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[打开进液阀进浓液]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_status_3" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[停止进浓液]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_status_4" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[开始进稀释水]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_status_5" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[停止稀释，关稀释水进水阀]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_status_6" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[静置等待混合均匀]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_status_7" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[稀释完成]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="start_dilution_level" TagType="Base" DataType="REAL" Usage="Output" Radix="Float" Required="true" Visible="true" ExternalAccess="Read Only">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_middle_level" TagType="Base" DataType="REAL" Usage="Output" Radix="Float" Required="true" Visible="true" ExternalAccess="Read Only">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dilution_factor" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="water_in_vavle" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[进水阀]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="chemical_out_valve" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[出药阀]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="chemical_in_valve" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[进药阀]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="drain_valve" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[排空阀]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="timer" TagType="Base" DataType="TIMER" Usage="InOut" Required="true" Visible="true" Constant="false"/>
+</Parameters>
+<LocalTags/>
+<Routines>
+<Routine Name="Logic" Type="RLL">
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[开始稀释]]>
+</Comment>
+<Text>
+<![CDATA[XIC(start_dilution)ONS(dilution_one_shot)LIM(tank_level,dilution_target,high_level_alarm_setting)[OTL(dilution_status_0) ,OTL(dilution_status_1) ,OTU(dilution_status_7) ,MOV(tank_level,start_dilution_level) CPT(dilution_middle_level,(dilution_target-start_dilution_level)/(1+dilution_factor)+start_dilution_level) ];]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Comment>
+<![CDATA[关闭出液阀及其他阀，做好稀释准备，然后开始进浓液]]>
+</Comment>
+<Text>
+<![CDATA[XIC(water_in_vavle)XIC(chemical_out_valve)XIC(chemical_in_valve)XIC(drain_valve)XIC(dilution_status_1)OTL(dilution_status_2);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[进浓液，直至达到结束液位。]]>
+</Comment>
+<Text>
+<![CDATA[XIC(water_in_vavle)XIC(chemical_out_valve)XIC(drain_valve)XIC(dilution_status_1)XIC(dilution_status_2)GEQ(tank_level,dilution_middle_level)OTL(dilution_status_3);]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Comment>
+<![CDATA[关浓液进液阀]]>
+</Comment>
+<Text>
+<![CDATA[XIC(chemical_out_valve)XIC(chemical_in_valve)XIC(drain_valve)XIC(dilution_status_1)XIC(dilution_status_2)XIC(dilution_status_3)OTL(dilution_status_4);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
+<Comment>
+<![CDATA[进稀释水直至到达稀释目标液位]]>
+</Comment>
+<Text>
+<![CDATA[XIC(chemical_out_valve)XIC(chemical_in_valve)XIC(drain_valve)XIC(dilution_status_1)XIC(dilution_status_2)XIC(dilution_status_3)XIC(dilution_status_4)GEQ(tank_level,dilution_target)OTL(dilution_status_5);]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Comment>
+<![CDATA[关稀释水阀，停止进稀释水]]>
+</Comment>
+<Text>
+<![CDATA[XIC(water_in_vavle)XIC(chemical_out_valve)XIC(chemical_in_valve)XIC(drain_valve)XIC(dilution_status_1)XIC(dilution_status_2)XIC(dilution_status_3)XIC(dilution_status_4)XIC(dilution_status_5)OTL(dilution_status_6);]]>
+</Text>
+</Rung>
+<Rung Number="6" Type="N">
+<Comment>
+<![CDATA[储罐静置等待混合均匀]]>
+</Comment>
+<Text>
+<![CDATA[XIC(water_in_vavle)XIC(chemical_out_valve)XIC(chemical_in_valve)XIC(drain_valve)XIC(dilution_status_1)XIC(dilution_status_2)XIC(dilution_status_3)XIC(dilution_status_4)XIC(dilution_status_5)XIC(dilution_status_6)TON(timer,?,?);]]>
+</Text>
+</Rung>
+<Rung Number="7" Type="N">
+<Text>
+<![CDATA[XIC(timer.DN)[OTL(dilution_status_7) ,OTU(dilution_status_0) ,OTU(dilution_status_1) ,OTU(dilution_status_2) ,OTU(dilution_status_3) ,OTU(dilution_status_4) ,OTU(dilution_status_5) ,OTU(dilution_status_6) ];]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
+</AddOnInstructionDefinitions>
+<Tags Use="Context">
+<Tag Name="dilution_factor" TagType="Base" DataType="REAL" Dimensions="5" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[NaClO稀释倍数]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[NaOH稀释倍数]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[1.00000000e+000,1.00000000e+000,1.00000000e+000,1.00000000e+000,1.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="REAL" Dimensions="5" Radix="Float">
+<Element Index="[0]" Value="1.0"/>
+<Element Index="[1]" Value="1.0"/>
+<Element Index="[2]" Value="1.0"/>
+<Element Index="[3]" Value="1.0"/>
+<Element Index="[4]" Value="1.0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_middle_level" TagType="Base" DataType="REAL" Dimensions="10" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[中间位，停止进浓度，开始进稀液]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[0.00000000e+000,7.07927346e-001,7.31164694e-001,1.04919267e+000,1.03753054e+000,0.00000000e+000
+		,1.49345577e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="REAL" Dimensions="10" Radix="Float">
+<Element Index="[0]" Value="0.0"/>
+<Element Index="[1]" Value="0.70792735"/>
+<Element Index="[2]" Value="0.7311647"/>
+<Element Index="[3]" Value="1.0491927"/>
+<Element Index="[4]" Value="1.0375305"/>
+<Element Index="[5]" Value="0.0"/>
+<Element Index="[6]" Value="1.4934558"/>
+<Element Index="[7]" Value="0.0"/>
+<Element Index="[8]" Value="0.0"/>
+<Element Index="[9]" Value="0.0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_one_shot" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_operation" TagType="Base" DataType="NaClO_dilution_operation" Dimensions="10" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[[1,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		],[61443,3.50153828e+000,3.50000000e+000,4.50000000e+000,2.08414531e+000,7.07927346e-001,1.00000000e+000
+		],[61443,3.53846431e+000,3.52999997e+000,4.50000000e+000,2.06767058e+000,7.31164694e-001,1.00000000e+000
+		],[61443,6.71498060e-001,4.21000000e+000,4.50000000e+000,2.11161470e+000,1.04919267e+000,1.00000000e+000
+		],[53251,6.11268520e-001,4.17000008e+000,4.50000000e+000,2.09493899e+000,1.03753054e+000,1.00000000e+000
+		],[61443,5.37926733e-001,2.59999990e-001,4.50000000e+000,0.00000000e+000,0.00000000e+000,1.00000000e+000
+		],[61443,6.64858937e-001,3.00000000e+000,4.50000000e+000,1.30885215e-002,1.49345577e+000,1.00000000e+000
+		],[61443,5.61099231e-001,0.00000000e+000,4.50000000e+000,0.00000000e+000,0.00000000e+000,1.00000000e+000
+		],[61443,7.80181587e-002,0.00000000e+000,4.50000000e+000,0.00000000e+000,0.00000000e+000,1.00000000e+000
+		],[1,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		]]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="NaClO_dilution_operation" Dimensions="10">
+<Element Index="[0]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="0"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="0"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="0"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[1]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="3.5015383"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="3.5"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="4.5"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="2.0841453"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="0.70792735"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="1.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="1"/>
+</Structure>
+</Element>
+<Element Index="[2]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="3.5384643"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="3.53"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="4.5"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="2.0676706"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="0.7311647"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="1.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="1"/>
+</Structure>
+</Element>
+<Element Index="[3]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="0.67149806"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="4.21"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="4.5"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="2.1116147"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="1.0491927"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="1.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="1"/>
+</Structure>
+</Element>
+<Element Index="[4]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="0.6112685"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="4.17"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="4.5"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="2.094939"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="1.0375305"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="1.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="0"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="1"/>
+</Structure>
+</Element>
+<Element Index="[5]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="0.53792673"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="0.26"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="4.5"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="1.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="1"/>
+</Structure>
+</Element>
+<Element Index="[6]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="0.66485894"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="3.0"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="4.5"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="0.013088522"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="1.4934558"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="1.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="1"/>
+</Structure>
+</Element>
+<Element Index="[7]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="0.56109923"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="4.5"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="1.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="1"/>
+</Structure>
+</Element>
+<Element Index="[8]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="0.07801816"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="4.5"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="1.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="1"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="1"/>
+</Structure>
+</Element>
+<Element Index="[9]">
+<Structure DataType="NaClO_dilution_operation">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_one_shot" DataType="BOOL" Value="0"/>
+<DataValueMember Name="tank_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_target" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="high_level_alarm_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_status_0" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_1" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_2" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_3" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_4" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_5" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_6" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dilution_status_7" DataType="BOOL" Value="0"/>
+<DataValueMember Name="start_dilution_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_middle_level" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="dilution_factor" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="water_in_vavle" DataType="BOOL" Value="0"/>
+<DataValueMember Name="chemical_out_valve" DataType="BOOL" Value="0"/>
+<DataValueMember Name="chemical_in_valve" DataType="BOOL" Value="0"/>
+<DataValueMember Name="drain_valve" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_status_tank_1" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[稀释中]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[稀释准备，关阀]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[打开进液阀进浓液]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[停止进浓液，]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[开始进稀释水]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[停止稀释，关闭稀释水进水阀]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[静置等待混合均匀]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[稀释完成]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_status_tank_2" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[稀释中]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[稀释准备，关阀]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[打开进液阀进浓液]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[停止进浓液，]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[开始进稀释水]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[停止稀释，关闭稀释水进水阀]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[静置等待混合均匀]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[稀释完成]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_status_tank_3" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[稀释中]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[稀释准备，关阀]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[打开进液阀进浓液]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[停止进浓液，]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[开始进稀释水]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[停止稀释，关闭稀释水进水阀]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[静置等待混合均匀]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[稀释完成]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_status_tank_4" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[稀释中]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[稀释准备，关阀]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[打开进液阀进浓液]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[停止进浓液，]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[开始进稀释水]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[停止稀释，关闭稀释水进水阀]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[静置等待混合均匀]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[稀释完成]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_status_tank_5" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[稀释中]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[稀释准备，关阀]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[打开进液阀进浓液]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[停止进浓液，]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[开始进稀释水]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[停止稀释，关闭稀释水进水阀]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[静置等待混合均匀]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[稀释完成]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_status_tank_6" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[稀释中]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[稀释准备，关阀]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[打开进液阀进浓液]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[停止进浓液，]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[开始进稀释水]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[停止稀释，关闭稀释水进水阀]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[静置等待混合均匀]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[稀释完成]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_status_tank_7" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[稀释中]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[稀释准备，关阀]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[打开进液阀进浓液]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[停止进浓液，]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[开始进稀释水]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[停止稀释，关闭稀释水进水阀]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[静置等待混合均匀]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[稀释完成]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_status_tank_8" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[稀释中]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[稀释准备，关阀]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[打开进液阀进浓液]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[停止进浓液，]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[开始进稀释水]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[停止稀释，关闭稀释水进水阀]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[静置等待混合均匀]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[稀释完成]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_target_1" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[1#NaClO罐稀释目标液位,单位:米，此液位不能高于高报警液位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[3.50000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="3.5"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_target_2" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[2#NaClO罐稀释目标液位,单位:米，此液位不能高于高报警液位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[3.52999997e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="3.53"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_target_3" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[3#NaClO罐稀释目标液位,单位:米，此液位不能高于高报警液位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[4.21000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="4.21"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_target_4" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[4#NaClO罐稀释目标液位,单位:米，此液位不能高于高报警液位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[4.17000008e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="4.17"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_target_5" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[5#NaClO罐稀释目标液位,单位:米，此液位不能高于高报警液位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[2.59999990e-001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.26"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_target_6" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[6#NaClO罐稀释目标液位,单位:米，此液位不能高于高报警液位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[3.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="3.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_target_7" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[7#NaClO罐稀释目标液位,单位:米，此液位不能高于高报警液位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_target_8" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[8#NaClO罐稀释目标液位,单位:米，此液位不能高于高报警液位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dilution_timer" TagType="Base" DataType="TIMER" Dimensions="10" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[[0,1800000,0],[1539176,1800000,0],[1729506,1800000,0],[1517180,1800000,0],[3915058,1800000,0],[0,1800000,0],[1192102
+		,1800000,0],[0,1800000,0],[0,1800000,0],[0,1800000,0]]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="TIMER" Dimensions="10">
+<Element Index="[0]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[1]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[2]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[3]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[4]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[5]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[6]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[7]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[8]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+<Element Index="[9]">
+<Structure DataType="TIMER">
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="1800000"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+</Structure>
+</Element>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_high_level_alarm_setting" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[4.50000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="4.5"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_start_dilution_level" TagType="Base" DataType="REAL" Dimensions="10" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[0.00000000e+000,2.08414531e+000,2.06767058e+000,2.11161470e+000,2.09493899e+000,0.00000000e+000
+		,1.30885215e-002,0.00000000e+000,0.00000000e+000,0.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="REAL" Dimensions="10" Radix="Float">
+<Element Index="[0]" Value="0.0"/>
+<Element Index="[1]" Value="2.0841453"/>
+<Element Index="[2]" Value="2.0676706"/>
+<Element Index="[3]" Value="2.1116147"/>
+<Element Index="[4]" Value="2.094939"/>
+<Element Index="[5]" Value="0.0"/>
+<Element Index="[6]" Value="0.013088522"/>
+<Element Index="[7]" Value="0.0"/>
+<Element Index="[8]" Value="0.0"/>
+<Element Index="[9]" Value="0.0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_tank_level_8LT09" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[1#NaClO储罐液位,单位:米]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[3.50153828e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="3.5015383"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_tank_level_8LT10" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[2#NaClO储罐液位,单位:米]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[3.53846431e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="3.5384643"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_tank_level_8LT11" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[3#NaClO储罐液位,单位:米]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[6.71498060e-001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.67149806"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_tank_level_8LT12" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[4#NaClO储罐液位,单位:米]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[6.11268520e-001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.6112685"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_tank_level_8LT13" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[5#NaClO储罐液位,单位:米]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[5.37926733e-001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.53792673"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_tank_level_8LT14" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[6#NaClO储罐液位,单位:米]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[6.64858937e-001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.66485894"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_tank_level_8LT15" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[7#NaClO储罐液位,单位:米]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[5.61099231e-001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.56109923"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_tank_level_8LT16" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[8#NaClO储罐液位,单位:米]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[7.80181587e-002]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.07801816"/>
+</Data>
+</Tag>
+<Tag Name="start_dilution_NaClO" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO11_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO12_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO13_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO14_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO15_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO16_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO17_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO18_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO19_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO20_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO21_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO22_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO23_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO24_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO25_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO26_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO27_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO28_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO29_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO30_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO31_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO32_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO33_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO34_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO37_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO38_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO39_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO40_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO41_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO42_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO43_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+<Tag Name="VE_NaClO44_close" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[0-未到位，1-关到位]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</Data>
+</Tag>
+</Tags>
+<Programs Use="Context">
+<Program Use="Context" Name="NaClO">
+<Routines Use="Context">
+<Routine Use="Target" Name="dilution_NaClO" Type="RLL">
+<Description>
+<![CDATA[NaClO稀释程序]]>
+</Description>
+<RLLContent>
+<Rung Number="0" Type="N">
+<Comment>
+<![CDATA[1号储罐稀释操作]]>
+</Comment>
+<Text>
+<![CDATA[NaClO_dilution_operation(NaClO_dilution_operation[1],start_dilution_NaClO[1],NaClO_dilution_one_shot[1],NaClO_tank_level_8LT09,NaClO_dilution_target_1,NaClO_high_level_alarm_setting,NaClO_dilution_status_tank_1[0],NaClO_dilution_status_tank_1[1],NaClO_dilution_status_tank_1[2],NaClO_dilution_status_tank_1[3],NaClO_dilution_status_tank_1[4],NaClO_dilution_status_tank_1[5],NaClO_dilution_status_tank_1[6],NaClO_dilution_status_tank_1[7],NaClO_start_dilution_level[1],NaClO_dilution_middle_level[1],dilution_factor[0],VE_NaClO27_close,VE_NaClO11_close,VE_NaClO19_close,VE_NaClO37_close,NaClO_dilution_timer[1]);]]>
+</Text>
+</Rung>
+<Rung Number="1" Type="N">
+<Comment>
+<![CDATA[2号储罐稀释操作]]>
+</Comment>
+<Text>
+<![CDATA[NaClO_dilution_operation(NaClO_dilution_operation[2],start_dilution_NaClO[2],NaClO_dilution_one_shot[2],NaClO_tank_level_8LT10,NaClO_dilution_target_2,NaClO_high_level_alarm_setting,NaClO_dilution_status_tank_2[0],NaClO_dilution_status_tank_2[1],NaClO_dilution_status_tank_2[2],NaClO_dilution_status_tank_2[3],NaClO_dilution_status_tank_2[4],NaClO_dilution_status_tank_2[5],NaClO_dilution_status_tank_2[6],NaClO_dilution_status_tank_2[7],NaClO_start_dilution_level[2],NaClO_dilution_middle_level[2],dilution_factor[0],VE_NaClO28_close,VE_NaClO12_close,VE_NaClO20_close,VE_NaClO38_close,NaClO_dilution_timer[2]);]]>
+</Text>
+</Rung>
+<Rung Number="2" Type="N">
+<Comment>
+<![CDATA[3号储罐稀释操作]]>
+</Comment>
+<Text>
+<![CDATA[NaClO_dilution_operation(NaClO_dilution_operation[3],start_dilution_NaClO[3],NaClO_dilution_one_shot[3],NaClO_tank_level_8LT11,NaClO_dilution_target_3,NaClO_high_level_alarm_setting,NaClO_dilution_status_tank_3[0],NaClO_dilution_status_tank_3[1],NaClO_dilution_status_tank_3[2],NaClO_dilution_status_tank_3[3],NaClO_dilution_status_tank_3[4],NaClO_dilution_status_tank_3[5],NaClO_dilution_status_tank_3[6],NaClO_dilution_status_tank_3[7],NaClO_start_dilution_level[3],NaClO_dilution_middle_level[3],dilution_factor[0],VE_NaClO29_close,VE_NaClO13_close,VE_NaClO21_close,VE_NaClO39_close,NaClO_dilution_timer[3]);]]>
+</Text>
+</Rung>
+<Rung Number="3" Type="N">
+<Comment>
+<![CDATA[4号储罐稀释操作]]>
+</Comment>
+<Text>
+<![CDATA[NaClO_dilution_operation(NaClO_dilution_operation[4],start_dilution_NaClO[4],NaClO_dilution_one_shot[4],NaClO_tank_level_8LT12,NaClO_dilution_target_4,NaClO_high_level_alarm_setting,NaClO_dilution_status_tank_4[0],NaClO_dilution_status_tank_4[1],NaClO_dilution_status_tank_4[2],NaClO_dilution_status_tank_4[3],NaClO_dilution_status_tank_4[4],NaClO_dilution_status_tank_4[5],NaClO_dilution_status_tank_4[6],NaClO_dilution_status_tank_4[7],NaClO_start_dilution_level[4],NaClO_dilution_middle_level[4],dilution_factor[0],VE_NaClO30_close,VE_NaClO14_close,VE_NaClO22_close,VE_NaClO40_close,NaClO_dilution_timer[4]);]]>
+</Text>
+</Rung>
+<Rung Number="4" Type="N">
+<Comment>
+<![CDATA[5号储罐稀释操作]]>
+</Comment>
+<Text>
+<![CDATA[NaClO_dilution_operation(NaClO_dilution_operation[5],start_dilution_NaClO[5],NaClO_dilution_one_shot[5],NaClO_tank_level_8LT13,NaClO_dilution_target_5,NaClO_high_level_alarm_setting,NaClO_dilution_status_tank_5[0],NaClO_dilution_status_tank_5[1],NaClO_dilution_status_tank_5[2],NaClO_dilution_status_tank_5[3],NaClO_dilution_status_tank_5[4],NaClO_dilution_status_tank_5[5],NaClO_dilution_status_tank_5[6],NaClO_dilution_status_tank_5[7],NaClO_start_dilution_level[5],NaClO_dilution_middle_level[5],dilution_factor[0],VE_NaClO31_close,VE_NaClO15_close,VE_NaClO23_close,VE_NaClO41_close,NaClO_dilution_timer[5]);]]>
+</Text>
+</Rung>
+<Rung Number="5" Type="N">
+<Comment>
+<![CDATA[6号储罐稀释操作]]>
+</Comment>
+<Text>
+<![CDATA[NaClO_dilution_operation(NaClO_dilution_operation[6],start_dilution_NaClO[6],NaClO_dilution_one_shot[6],NaClO_tank_level_8LT14,NaClO_dilution_target_6,NaClO_high_level_alarm_setting,NaClO_dilution_status_tank_6[0],NaClO_dilution_status_tank_6[1],NaClO_dilution_status_tank_6[2],NaClO_dilution_status_tank_6[3],NaClO_dilution_status_tank_6[4],NaClO_dilution_status_tank_6[5],NaClO_dilution_status_tank_6[6],NaClO_dilution_status_tank_6[7],NaClO_start_dilution_level[6],NaClO_dilution_middle_level[6],dilution_factor[0],VE_NaClO32_close,VE_NaClO16_close,VE_NaClO24_close,VE_NaClO42_close,NaClO_dilution_timer[6]);]]>
+</Text>
+</Rung>
+<Rung Number="6" Type="N">
+<Comment>
+<![CDATA[7号储罐稀释操作]]>
+</Comment>
+<Text>
+<![CDATA[NaClO_dilution_operation(NaClO_dilution_operation[7],start_dilution_NaClO[7],NaClO_dilution_one_shot[7],NaClO_tank_level_8LT15,NaClO_dilution_target_7,NaClO_high_level_alarm_setting,NaClO_dilution_status_tank_7[0],NaClO_dilution_status_tank_7[1],NaClO_dilution_status_tank_7[2],NaClO_dilution_status_tank_7[3],NaClO_dilution_status_tank_7[4],NaClO_dilution_status_tank_7[5],NaClO_dilution_status_tank_7[6],NaClO_dilution_status_tank_7[7],NaClO_start_dilution_level[7],NaClO_dilution_middle_level[7],dilution_factor[0],VE_NaClO33_close,VE_NaClO17_close,VE_NaClO25_close,VE_NaClO43_close,NaClO_dilution_timer[7]);]]>
+</Text>
+</Rung>
+<Rung Number="7" Type="N">
+<Comment>
+<![CDATA[8号储罐稀释操作]]>
+</Comment>
+<Text>
+<![CDATA[NaClO_dilution_operation(NaClO_dilution_operation[8],start_dilution_NaClO[8],NaClO_dilution_one_shot[8],NaClO_tank_level_8LT16,NaClO_dilution_target_8,NaClO_high_level_alarm_setting,NaClO_dilution_status_tank_8[0],NaClO_dilution_status_tank_8[1],NaClO_dilution_status_tank_8[2],NaClO_dilution_status_tank_8[3],NaClO_dilution_status_tank_8[4],NaClO_dilution_status_tank_8[5],NaClO_dilution_status_tank_8[6],NaClO_dilution_status_tank_8[7],NaClO_start_dilution_level[8],NaClO_dilution_middle_level[8],dilution_factor[0],VE_NaClO34_close,VE_NaClO18_close,VE_NaClO26_close,VE_NaClO44_close,NaClO_dilution_timer[8]);]]>
+</Text>
+</Rung>
+<Rung Number="8" Type="N">
+<Comment>
+<![CDATA[只要有储罐处于稀释工序中，就要打开稀释水增压泵]]>
+</Comment>
+<Text>
+<![CDATA[[XIC(NaClO_dilution_status_tank_1[4]) ,XIC(NaClO_dilution_status_tank_2[4]) ,XIC(NaClO_dilution_status_tank_3[4]) ,XIC(NaClO_dilution_status_tank_4[4]) ,XIC(NaClO_dilution_status_tank_5[4]) ,XIC(NaClO_dilution_status_tank_6[4]) ,XIC(NaClO_dilution_status_tank_7[4]) ,XIC(NaClO_dilution_status_tank_8[4]) ]OTL(RemoteIO1:2:O.Data.23);]]>
+</Text>
+</Rung>
+<Rung Number="9" Type="N">
+<Comment>
+<![CDATA[没有储罐处于稀释工序中时，停止稀释水增压泵]]>
+</Comment>
+<Text>
+<![CDATA[[XIC(NaClO_dilution_status_tank_1[5]) ,XIC(NaClO_dilution_status_tank_2[5]) ,XIC(NaClO_dilution_status_tank_3[5]) ,XIC(NaClO_dilution_status_tank_4[5]) ,XIC(NaClO_dilution_status_tank_5[5]) ,XIC(NaClO_dilution_status_tank_6[5]) ,XIC(NaClO_dilution_status_tank_7[5]) ,XIC(NaClO_dilution_status_tank_8[5]) ,XIO(NaClO_dilution_status_tank_1[0]) XIO(NaClO_dilution_status_tank_2[0]) XIO(NaClO_dilution_status_tank_3[0]) XIO(NaClO_dilution_status_tank_4[0]) XIO(NaClO_dilution_status_tank_5[0]) XIO(NaClO_dilution_status_tank_6[0]) XIO(NaClO_dilution_status_tank_7[0]) XIO(NaClO_dilution_status_tank_8[0]) ]OTU(RemoteIO1:2:O.Data.23);]]>
+</Text>
+</Rung>
+</RLLContent>
+</Routine>
+</Routines>
+</Program>
+</Programs>
+</Controller>
+</RSLogix5000Content>

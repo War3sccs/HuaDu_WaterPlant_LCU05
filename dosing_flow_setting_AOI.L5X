@@ -1,0 +1,14 @@
+﻿(*本程序用于计算投加流量*)
+if auto_manual_switch then
+    (*自动控制时，投加流量由计算公式确定*)
+    (*计算公式：*)
+    (*1m3=1000L;1mg=1/(1000*1000)kg*)
+    (*纯物质投加量(kg/h)=源水流量(m3/h)*1000*溶液投率(mg/L)/(1000*1000)=源水流量(m3/h)*溶液投率(mg/L)/1000*)
+    (*纯物质投加量(kg/h)=投加流量(L/h)*溶液浓度%*)
+    (*投加流量(L/h)=纯物质投加量(kg/h)/溶液浓度%=源水流量(m3/h)*溶液投率(mg/L)/1000/溶液浓度%*)
+    flow_setting := source_water_flow * dosing_rate_mg_L / 1000.0 / concentration; 
+else
+    (*手动控制时，投加流量由触摸屏控制*)
+    flow_setting := manual_flow_setting;
+end_if;
+

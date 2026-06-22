@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="34.00" TargetName="test" TargetType="Routine" TargetSubType="ST" ContainsContext="true" ExportDate="Fri Jan 27 14:58:49 2023" ExportOptions="References NoRawData L5KData DecoratedData Context Dependencies ForceProtectedEncoding AllProjDocTrans">
+<Controller Use="Context" Name="HuaDu_WaterPlant_ChemicalDosingSystem">
+<Programs Use="Context">
+<Program Use="Context" Name="MainProgram">
+<Routines Use="Context">
+<Routine Use="Target" Name="test" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[D2SD ]]>
+</Line>
+<Line Number="1">
+<![CDATA[D2SD]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</Program>
+</Programs>
+</Controller>
+</RSLogix5000Content>

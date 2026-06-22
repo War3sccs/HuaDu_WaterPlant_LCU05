@@ -1,0 +1,1943 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--&#x8BA1;&#x7B97;&#x5404;&#x6570;&#x5B57;&#x6CF5;&#x6295;&#x52A0;&#x6D41;&#x91CF;&#xFF1A;
+1&#x3001;&#x624B;&#x52A8;&#x8BBE;&#x7F6E;&#x65F6;&#xFF0C;&#x4EE5;&#x89E6;&#x6478;&#x5C4F;&#x8BBE;&#x7F6E;&#x6D41;&#x91CF;&#x4E3A;&#x51C6;&#xFF1B;
+2&#x3001;&#x81EA;&#x52A8;&#x63A7;&#x5236;&#x65F6;&#xFF0C;&#x4EE5;&#x81EA;&#x52A8;&#x8BA1;&#x7B97;&#x516C;&#x5F0F;&#x8BA1;&#x7B97;&#x6295;&#x52A0;&#x6D41;&#x91CF;&#x4E3A;&#x51C6;&#x3002;
+&#x5F97;&#x51FA;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;&#x540E;&#xFF0C;&#x5C06;&#x6D41;&#x91CF;&#x4F20;&#x9001;&#x5230;&#x76F8;&#x5173;AO&#x6A21;&#x5757;-->
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="34.00" TargetName="dosing_flow_set_NaClO" TargetType="Routine" TargetSubType="ST" ContainsContext="true" ExportDate="Tue Nov 26 09:23:41 2024" ExportOptions="References NoRawData L5KData DecoratedData Context Dependencies ForceProtectedEncoding AllProjDocTrans">
+<Controller Use="Context" Name="HuaDu_WaterPlant_ChemicalDosingSystem">
+<DataTypes Use="Context">
+</DataTypes>
+<AddOnInstructionDefinitions Use="Context">
+<AddOnInstructionDefinition Name="dosing_flow_setting" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2024-03-22T01:28:55.217Z" CreatedBy="DESKTOP-EB2DFQ8\wymwym" EditedDate="2024-09-02T13:25:02.941Z" EditedBy="PC-XINGUANG\wymwym" SoftwareRevision="v34.00">
+<Description>
+<![CDATA[计算投加流量：
+1、手动设置时，以触摸屏设置流量为准；
+2、自动控制时，以自动计算公式计算投加流量为准。]]>
+</Description>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="auto_manual_switch" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[0-手动，1-自动]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="dosing_rate_mg_L" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[mg/L]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="manual_flow_setting" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="source_water_flow" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="flow_setting" TagType="Base" DataType="REAL" Usage="Output" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="concentration" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[0-100%]]>
+</Description>
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="density" TagType="Base" DataType="REAL" Usage="Input" Radix="Float" Required="true" Visible="true" ExternalAccess="Read/Write">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="quantity" TagType="Base" DataType="REAL" Usage="Output" Radix="Float" Required="true" Visible="true" ExternalAccess="Read Only">
+<DefaultData Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags/>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<Description>
+<![CDATA[计算投加流量：
+1、手动设置时，以触摸屏设置流量为准；
+2、自动控制时，以自动计算公式计算投加流量为准。]]>
+</Description>
+<STContent>
+<Line Number="0">
+<![CDATA[(*本程序用于计算投加流量*)]]>
+</Line>
+<Line Number="1">
+<![CDATA[if auto_manual_switch then]]>
+</Line>
+<Line Number="2">
+<![CDATA[    (*自动控制时，投加流量由计算公式确定*)]]>
+</Line>
+<Line Number="3">
+<![CDATA[    (*计算公式：*)]]>
+</Line>
+<Line Number="4">
+<![CDATA[    (*1m3=1000L;1mg=1/(1000*1000)kg*)]]>
+</Line>
+<Line Number="5">
+<![CDATA[    (*用量(kg/h)=药耗(mg/L)*处理水量(m3/h)/(百分比浓度%*1000*)]]>
+</Line>
+<Line Number="6">
+<![CDATA[    (*投加流量(L/h)=药剂密度(kg/m3)*用量(kg/h)*)]]>
+</Line>
+<Line Number="7">
+<![CDATA[    quantity := dosing_rate_mg_L * source_water_flow / (concentration/100.0*1000.0);]]>
+</Line>
+<Line Number="8">
+<![CDATA[    flow_setting := density * quantity;]]>
+</Line>
+<Line Number="9">
+<![CDATA[else]]>
+</Line>
+<Line Number="10">
+<![CDATA[    (*手动控制时，投加流量由触摸屏控制*)]]>
+</Line>
+<Line Number="11">
+<![CDATA[    flow_setting := manual_flow_setting;]]>
+</Line>
+<Line Number="12">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="13">
+<![CDATA[]]>
+</Line>
+<Line Number="14">
+<![CDATA[]]>
+</Line>
+<Line Number="15">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
+</AddOnInstructionDefinitions>
+<Tags Use="Context">
+<Tag Name="dosing_flow_setting_10" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,7.40038910e+001,1.09116162e+004,7.40038910e+001,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="74.00389"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="10911.616"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="74.00389"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_11" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,9.00000000e+001,2.00000000e+002,9.00000000e+001,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="90.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="200.0"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="90.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_12" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,0.00000000e+000,9.00000000e+001,0.00000000e+000,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="90.0"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_13" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_14" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_15" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,8.90000000e+001,0.00000000e+000,8.90000000e+001,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="89.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="89.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_16" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,1.00000000e+002,0.00000000e+000,1.00000000e+002,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="100.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="100.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_17" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_18" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="dosing_flow_setting_9" TagType="Base" DataType="dosing_flow_setting" Constant="false" ExternalAccess="Read/Write">
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,8.00000000e+001,1.09116162e+004,8.00000000e+001,0.00000000e+000,1.14999998e+000
+		,1.#QNAN000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="dosing_flow_setting">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="auto_manual_switch" DataType="BOOL" Value="0"/>
+<DataValueMember Name="dosing_rate_mg_L" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="manual_flow_setting" DataType="REAL" Radix="Float" Value="80.0"/>
+<DataValueMember Name="source_water_flow" DataType="REAL" Radix="Float" Value="10911.616"/>
+<DataValueMember Name="flow_setting" DataType="REAL" Radix="Float" Value="80.0"/>
+<DataValueMember Name="concentration" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="density" DataType="REAL" Radix="Float" Value="1.15"/>
+<DataValueMember Name="quantity" DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_1" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[1#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[8.00000000e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="80.0"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_10" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[10#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_2" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[2#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[7.40038910e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="74.00389"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_3" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[3#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[2.00000000e+002]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="200.0"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_4" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[4#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_5" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[5#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_6" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[6#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_7" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[7#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[8.90000000e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="89.0"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_8" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[8#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1.00000000e+002]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="100.0"/>
+</Data>
+</Tag>
+<Tag Name="flow_calculate_NaClO_9" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[9#NaClO计算投加流量，L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_concentration" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[NaClO溶液浓度%]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_control_auto_manual" TagType="Base" DataType="BOOL" Dimensions="32" Radix="Decimal" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[NaClO投加控制方式：0-手动，1-自动]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0,2#0
+		,2#0,2#0,2#0,2#0,2#0]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="BOOL" Dimensions="32" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+</Array>
+</Data>
+</Tag>
+<Tag Name="NaClO_density" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[NaClO密度,单位:kg/m3]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1.14999998e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="1.15"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dosing_mg_L_clear_water" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[混合槽投加点1投率,单位:mg/L]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dosing_mg_L_filter_out" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[混合槽投加点1投率,单位:mg/L]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dosing_mg_L_mixing_tank_1" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[混合槽投加点1投率,单位:mg/L]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dosing_mg_L_mixing_tank_2" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[混合槽投加点1投率,单位:mg/L]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_dosing_mg_L_rinsing_pipe" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[混合槽投加点1投率,单位:mg/L]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="NaClO_quantity" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[NaClO用量,单位：kg/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1.#QNAN000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="1.#QNAN"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO10_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[10#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO10_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[10#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO10_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[10#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO1_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[1#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO1_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[1#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[7.90875473e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="79.08755"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO1_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[1#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[8.00000000e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="80.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO2_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[2#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO2_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[2#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[3.79377417e-002]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.03793774"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO2_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[2#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[7.40038910e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="74.00389"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO3_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[3#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO3_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[3#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO3_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[3#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[9.00000000e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="90.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO4_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[4#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO4_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[4#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO4_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[4#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO5_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[5#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO5_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[5#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO5_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[5#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO6_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[6#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO6_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[6#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO6_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[6#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO7_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[7#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO7_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[7#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO7_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[7#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[8.90000000e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="89.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO8_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[8#NaClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO8_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[8#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[9.86807709e+001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="98.68077"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO8_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[8#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1.00000000e+002]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="100.0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO9_err" TagType="Base" DataType="BOOL" Radix="Decimal" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[9#N0aClO数字泵故障状态:0-正常，1-故障]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO9_flow_read" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[9#NaClO数字泵反馈流量,单位：L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[1.98443562e-001]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.19844356"/>
+</Data>
+</Tag>
+<Tag Name="P_NaClO9_flow_set" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[9#NaClO数字泵流量控制,单位:L/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="SCL_LP1010_AO_10" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP1010计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[1,0.00000000e+000,1.02000000e+003,0.00000000e+000,3.08400000e+004,0.00000000e+000,1,0.00000000e+000
+		,0,0.00000000e+000,1.02000000e+003,9.80392215e-004,0.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="1020.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30840.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP1010_AO_7" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP1010计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[1,8.90000000e+001,1.02000000e+003,0.00000000e+000,3.08400000e+004,0.00000000e+000,1,2.69094141e+003
+		,0,0.00000000e+000,1.02000000e+003,9.80392215e-004,2.69094141e+003]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="89.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="1020.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30840.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="2690.9414"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP1010_AO_8" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP1010计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[1,1.00000000e+002,1.02000000e+003,0.00000000e+000,3.09200000e+004,8.00000000e+001,1,3.10352954e+003
+		,0,0.00000000e+000,1.02000000e+003,9.80392215e-004,3.10352954e+003]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="100.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="1020.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30920.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="80.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="3103.5295"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP1010_AO_9" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP1010计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[1,0.00000000e+000,1.02000000e+003,0.00000000e+000,3.08400000e+004,0.00000000e+000,1,0.00000000e+000
+		,0,0.00000000e+000,1.02000000e+003,9.80392215e-004,0.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="1020.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30840.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP400_AO_1" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP400计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[3,8.00000000e+001,3.90000000e+002,0.00000000e+000,3.09400000e+004,1.00000000e+002,1,6.42615430e+003
+		,0,0.00000000e+000,3.90000000e+002,2.56410264e-003,6.42615430e+003]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="80.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="390.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30940.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="100.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="6426.1543"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP400_AO_2" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP400计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[3,7.40038910e+001,3.90000000e+002,0.00000000e+000,3.08400000e+004,0.00000000e+000,1,5.85200049e+003
+		,0,0.00000000e+000,3.90000000e+002,2.56410264e-003,5.85200049e+003]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="74.00389"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="390.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30840.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="5852.0005"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP400_AO_3" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP400计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[3,2.00000000e+002,3.90000000e+002,0.00000000e+000,3.08400000e+004,0.00000000e+000,1,1.58153857e+004
+		,0,0.00000000e+000,3.90000000e+002,2.56410264e-003,1.58153857e+004]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="200.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="390.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30840.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="15815.386"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP400_AO_4" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP400计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,3.90000000e+002,0.00000000e+000,3.08400000e+004,0.00000000e+000,1,0.00000000e+000
+		,0,0.00000000e+000,3.90000000e+002,2.56410264e-003,0.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="390.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30840.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP400_AO_5" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP400计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,3.90000000e+002,0.00000000e+000,3.08400000e+004,0.00000000e+000,1,0.00000000e+000
+		,0,0.00000000e+000,3.90000000e+002,2.56410264e-003,0.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="390.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30840.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="SCL_LP400_AO_6" TagType="Base" DataType="SCALE" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[LP400计量泵，模拟量输入]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[[3,0.00000000e+000,3.90000000e+002,0.00000000e+000,3.08400000e+004,0.00000000e+000,1,0.00000000e+000
+		,0,0.00000000e+000,3.90000000e+002,2.56410264e-003,0.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Structure DataType="SCALE">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="In" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InRawMax" DataType="REAL" Radix="Float" Value="390.0"/>
+<DataValueMember Name="InRawMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="InEUMax" DataType="REAL" Radix="Float" Value="30840.0"/>
+<DataValueMember Name="InEUMin" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="Limiting" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="1"/>
+<DataValueMember Name="Out" DataType="REAL" Radix="Float" Value="0.0"/>
+<DataValueMember Name="MaxAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MinAlarm" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InRawRangeInv" DataType="BOOL" Value="0"/>
+</Structure>
+</Data>
+</Tag>
+<Tag Name="source_water_flow" TagType="Base" DataType="REAL" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[待处理源水流量，单位：m3/h]]>
+</Description>
+<Data Format="L5K">
+<![CDATA[0.00000000e+000]]>
+</Data>
+<Data Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</Data>
+</Tag>
+<Tag Name="water_data_LCU05" TagType="Base" DataType="REAL" Dimensions="20" Radix="Float" Constant="false" ExternalAccess="Read/Write">
+<Comments>
+<Comment Operand="[0]">
+<![CDATA[水厂进水温度,Temp_In_Plant.PV,]]>
+</Comment>
+<Comment Operand="[1]">
+<![CDATA[水厂进水浊度,Turb_In_Plant.PV,单位：NTU]]>
+</Comment>
+<Comment Operand="[2]">
+<![CDATA[水厂进水pH，PH_In_Plant]]>
+</Comment>
+<Comment Operand="[3]">
+<![CDATA[絮凝沉淀池A进水流量，Flow1.current，单位:m3/h]]>
+</Comment>
+<Comment Operand="[4]">
+<![CDATA[絮凝沉淀池B进水流量，Flow2.current，单位:m3/h]]>
+</Comment>
+<Comment Operand="[5]">
+<![CDATA[絮凝沉淀池A2出水余氯，CL_Out_SediT[2].PV,单位:mg/L]]>
+</Comment>
+<Comment Operand="[6]">
+<![CDATA[絮凝沉淀池B1出水余氯，CL_Out_SediT[3].PV,单位:mg/L]]>
+</Comment>
+<Comment Operand="[7]">
+<![CDATA[滤池出水余氯，单位:mg/L]]>
+</Comment>
+<Comment Operand="[8]">
+<![CDATA[水厂出水余氯1,CL_Out_Plant_1,单位:mg/L]]>
+</Comment>
+<Comment Operand="[9]">
+<![CDATA[水厂出水余氯2,CL_Out_Plant_2,单位:mg/L]]>
+</Comment>
+<Comment Operand="[10]">
+<![CDATA[清水池液位，Level_C-Well,单位:m]]>
+</Comment>
+</Comments>
+<Data Format="L5K">
+<![CDATA[[3.11284041e+000,2.68320346e+000,7.74085617e+000,1.09116162e+004,9.00000000e+001,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+		,0.00000000e+000,0.00000000e+000]]]>
+</Data>
+<Data Format="Decorated">
+<Array DataType="REAL" Dimensions="20" Radix="Float">
+<Element Index="[0]" Value="3.1128404"/>
+<Element Index="[1]" Value="2.6832035"/>
+<Element Index="[2]" Value="7.740856"/>
+<Element Index="[3]" Value="10911.616"/>
+<Element Index="[4]" Value="90.0"/>
+<Element Index="[5]" Value="0.0"/>
+<Element Index="[6]" Value="0.0"/>
+<Element Index="[7]" Value="0.0"/>
+<Element Index="[8]" Value="0.0"/>
+<Element Index="[9]" Value="0.0"/>
+<Element Index="[10]" Value="0.0"/>
+<Element Index="[11]" Value="0.0"/>
+<Element Index="[12]" Value="0.0"/>
+<Element Index="[13]" Value="0.0"/>
+<Element Index="[14]" Value="0.0"/>
+<Element Index="[15]" Value="0.0"/>
+<Element Index="[16]" Value="0.0"/>
+<Element Index="[17]" Value="0.0"/>
+<Element Index="[18]" Value="0.0"/>
+<Element Index="[19]" Value="0.0"/>
+</Array>
+</Data>
+</Tag>
+</Tags>
+<Programs Use="Context">
+<Program Use="Context" Name="NaClO">
+<Routines Use="Context">
+<Routine Use="Target" Name="dosing_flow_set_NaClO" Type="ST">
+<Description>
+<![CDATA[计算各数字泵投加流量：
+1、手动设置时，以触摸屏设置流量为准；
+2、自动控制时，以自动计算公式计算投加流量为准。
+得出计算结果后，将流量传送到相关AO模块]]>
+</Description>
+<STContent>
+<Line Number="0">
+<![CDATA[(*1-6号数字泵流量范围:0.0-390.0L/h*)]]>
+</Line>
+<Line Number="1">
+<![CDATA[(*1#数字泵流量计算*)]]>
+</Line>
+<Line Number="2">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="3">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="4">
+<![CDATA[    dosing_flow_setting_9,]]>
+</Line>
+<Line Number="5">
+<![CDATA[    NaClO_control_auto_manual[1],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="6">
+<![CDATA[    NaClO_dosing_mg_L_mixing_tank_1,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="7">
+<![CDATA[    P_NaClO1_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="8">
+<![CDATA[    water_data_LCU05[3],(*源水流量m3/h*)]]>
+</Line>
+<Line Number="9">
+<![CDATA[    flow_calculate_NaClO_1,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="10">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="11">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="12">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="13">
+<![CDATA[    );]]>
+</Line>
+<Line Number="14">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="15">
+<![CDATA[SCL(SCL_LP400_AO_1);]]>
+</Line>
+<Line Number="16">
+<![CDATA[SCL_LP400_AO_1.In:=flow_calculate_NaClO_1;]]>
+</Line>
+<Line Number="17">
+<![CDATA[]]>
+</Line>
+<Line Number="18">
+<![CDATA[(*2#数字泵流量计算*)]]>
+</Line>
+<Line Number="19">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="20">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="21">
+<![CDATA[    dosing_flow_setting_10,]]>
+</Line>
+<Line Number="22">
+<![CDATA[    NaClO_control_auto_manual[1],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="23">
+<![CDATA[    NaClO_dosing_mg_L_mixing_tank_1,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="24">
+<![CDATA[    P_NaClO2_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="25">
+<![CDATA[    water_data_LCU05[3],(*源水流量m3/h*)]]>
+</Line>
+<Line Number="26">
+<![CDATA[    flow_calculate_NaClO_2,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="27">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="28">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="29">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="30">
+<![CDATA[    );]]>
+</Line>
+<Line Number="31">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="32">
+<![CDATA[SCL(SCL_LP400_AO_2);]]>
+</Line>
+<Line Number="33">
+<![CDATA[SCL_LP400_AO_2.In:=flow_calculate_NaClO_2;]]>
+</Line>
+<Line Number="34">
+<![CDATA[]]>
+</Line>
+<Line Number="35">
+<![CDATA[(*3#数字泵流量计算*)]]>
+</Line>
+<Line Number="36">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="37">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="38">
+<![CDATA[    dosing_flow_setting_11,]]>
+</Line>
+<Line Number="39">
+<![CDATA[    NaClO_control_auto_manual[2],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="40">
+<![CDATA[    NaClO_dosing_mg_L_mixing_tank_2,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="41">
+<![CDATA[    P_NaClO3_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="42">
+<![CDATA[    flow_calculate_NaClO_3,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="43">
+<![CDATA[    water_data_LCU05[4],(*源水流量m3/h*)]]>
+</Line>
+<Line Number="44">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="45">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="46">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="47">
+<![CDATA[    );]]>
+</Line>
+<Line Number="48">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="49">
+<![CDATA[SCL(SCL_LP400_AO_3);]]>
+</Line>
+<Line Number="50">
+<![CDATA[SCL_LP400_AO_3.In:=flow_calculate_NaClO_3;]]>
+</Line>
+<Line Number="51">
+<![CDATA[]]>
+</Line>
+<Line Number="52">
+<![CDATA[(*4#数字泵流量计算*)]]>
+</Line>
+<Line Number="53">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="54">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="55">
+<![CDATA[    dosing_flow_setting_12,]]>
+</Line>
+<Line Number="56">
+<![CDATA[    NaClO_control_auto_manual[2],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="57">
+<![CDATA[    NaClO_dosing_mg_L_mixing_tank_2,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="58">
+<![CDATA[    P_NaClO4_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="59">
+<![CDATA[    water_data_LCU05[4],(*源水流量m3/h*)]]>
+</Line>
+<Line Number="60">
+<![CDATA[    flow_calculate_NaClO_4,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="61">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="62">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="63">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="64">
+<![CDATA[    );]]>
+</Line>
+<Line Number="65">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="66">
+<![CDATA[SCL(SCL_LP400_AO_4);]]>
+</Line>
+<Line Number="67">
+<![CDATA[SCL_LP400_AO_4.In:=flow_calculate_NaClO_4;]]>
+</Line>
+<Line Number="68">
+<![CDATA[]]>
+</Line>
+<Line Number="69">
+<![CDATA[(*5#数字泵流量计算*)]]>
+</Line>
+<Line Number="70">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="71">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="72">
+<![CDATA[    dosing_flow_setting_13,]]>
+</Line>
+<Line Number="73">
+<![CDATA[    NaClO_control_auto_manual[3],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="74">
+<![CDATA[    NaClO_dosing_mg_L_rinsing_pipe,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="75">
+<![CDATA[    P_NaClO5_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="76">
+<![CDATA[    source_water_flow,(*源水流量m3/h*)]]>
+</Line>
+<Line Number="77">
+<![CDATA[    flow_calculate_NaClO_5,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="78">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="79">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="80">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="81">
+<![CDATA[    );]]>
+</Line>
+<Line Number="82">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="83">
+<![CDATA[SCL(SCL_LP400_AO_5);]]>
+</Line>
+<Line Number="84">
+<![CDATA[SCL_LP400_AO_5.In:=flow_calculate_NaClO_5;]]>
+</Line>
+<Line Number="85">
+<![CDATA[]]>
+</Line>
+<Line Number="86">
+<![CDATA[(*6#数字泵流量计算*)]]>
+</Line>
+<Line Number="87">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="88">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="89">
+<![CDATA[    dosing_flow_setting_14,]]>
+</Line>
+<Line Number="90">
+<![CDATA[    NaClO_control_auto_manual[3],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="91">
+<![CDATA[    NaClO_dosing_mg_L_rinsing_pipe,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="92">
+<![CDATA[    P_NaClO6_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="93">
+<![CDATA[    source_water_flow,(*源水流量m3/h*)]]>
+</Line>
+<Line Number="94">
+<![CDATA[    flow_calculate_NaClO_6,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="95">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="96">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="97">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="98">
+<![CDATA[    );]]>
+</Line>
+<Line Number="99">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="100">
+<![CDATA[SCL(SCL_LP400_AO_6);]]>
+</Line>
+<Line Number="101">
+<![CDATA[SCL_LP400_AO_6.In:=flow_calculate_NaClO_6;]]>
+</Line>
+<Line Number="102">
+<![CDATA[]]>
+</Line>
+<Line Number="103">
+<![CDATA[(*7-10号数字泵流量范围:0.0-1020.0L/h*)]]>
+</Line>
+<Line Number="104">
+<![CDATA[(*7#数字泵流量计算*)]]>
+</Line>
+<Line Number="105">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="106">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="107">
+<![CDATA[    dosing_flow_setting_15,]]>
+</Line>
+<Line Number="108">
+<![CDATA[    NaClO_control_auto_manual[4],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="109">
+<![CDATA[    NaClO_dosing_mg_L_filter_out,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="110">
+<![CDATA[    P_NaClO7_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="111">
+<![CDATA[    source_water_flow,(*源水流量m3/h*)]]>
+</Line>
+<Line Number="112">
+<![CDATA[    flow_calculate_NaClO_7,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="113">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="114">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="115">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="116">
+<![CDATA[    );]]>
+</Line>
+<Line Number="117">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="118">
+<![CDATA[SCL(SCL_LP1010_AO_7);]]>
+</Line>
+<Line Number="119">
+<![CDATA[SCL_LP1010_AO_7.In:=flow_calculate_NaClO_7;]]>
+</Line>
+<Line Number="120">
+<![CDATA[]]>
+</Line>
+<Line Number="121">
+<![CDATA[(*8#数字泵流量计算*)]]>
+</Line>
+<Line Number="122">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="123">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="124">
+<![CDATA[    dosing_flow_setting_16,]]>
+</Line>
+<Line Number="125">
+<![CDATA[    NaClO_control_auto_manual[4],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="126">
+<![CDATA[    NaClO_dosing_mg_L_filter_out,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="127">
+<![CDATA[    P_NaClO8_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="128">
+<![CDATA[    source_water_flow,(*源水流量m3/h*)]]>
+</Line>
+<Line Number="129">
+<![CDATA[    flow_calculate_NaClO_8,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="130">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="131">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="132">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="133">
+<![CDATA[    );]]>
+</Line>
+<Line Number="134">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="135">
+<![CDATA[SCL(SCL_LP1010_AO_8);]]>
+</Line>
+<Line Number="136">
+<![CDATA[SCL_LP1010_AO_8.In:=flow_calculate_NaClO_8;]]>
+</Line>
+<Line Number="137">
+<![CDATA[]]>
+</Line>
+<Line Number="138">
+<![CDATA[(*9#数字泵流量计算*)]]>
+</Line>
+<Line Number="139">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="140">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="141">
+<![CDATA[    dosing_flow_setting_17,]]>
+</Line>
+<Line Number="142">
+<![CDATA[    NaClO_control_auto_manual[5],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="143">
+<![CDATA[    NaClO_dosing_mg_L_clear_water,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="144">
+<![CDATA[    P_NaClO9_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="145">
+<![CDATA[    source_water_flow,(*源水流量m3/h*)]]>
+</Line>
+<Line Number="146">
+<![CDATA[    flow_calculate_NaClO_9,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="147">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="148">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="149">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="150">
+<![CDATA[    );]]>
+</Line>
+<Line Number="151">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="152">
+<![CDATA[SCL(SCL_LP1010_AO_9);]]>
+</Line>
+<Line Number="153">
+<![CDATA[SCL_LP1010_AO_9.In:=flow_calculate_NaClO_9;]]>
+</Line>
+<Line Number="154">
+<![CDATA[]]>
+</Line>
+<Line Number="155">
+<![CDATA[(*10#数字泵流量计算*)]]>
+</Line>
+<Line Number="156">
+<![CDATA[(*计算流量*)]]>
+</Line>
+<Line Number="157">
+<![CDATA[dosing_flow_setting(]]>
+</Line>
+<Line Number="158">
+<![CDATA[    dosing_flow_setting_18,]]>
+</Line>
+<Line Number="159">
+<![CDATA[    NaClO_control_auto_manual[5],(*控制状态：手动-0，自动-1*)]]>
+</Line>
+<Line Number="160">
+<![CDATA[    NaClO_dosing_mg_L_clear_water,(*NaClO溶液投加率，原设计最大1mg/L*)]]>
+</Line>
+<Line Number="161">
+<![CDATA[    P_NaClO10_flow_set,(*手动控制状态时，手动指定的投加流量L/h*)]]>
+</Line>
+<Line Number="162">
+<![CDATA[    source_water_flow,(*源水流量m3/h*)]]>
+</Line>
+<Line Number="163">
+<![CDATA[    flow_calculate_NaClO_10,(*计算出来的投加量：手动时手动指定，自动时由计算得出*)]]>
+</Line>
+<Line Number="164">
+<![CDATA[    NaClO_concentration, (*NaClO溶液浓度*)]]>
+</Line>
+<Line Number="165">
+<![CDATA[    NaClO_density,(*PAC密度*)]]>
+</Line>
+<Line Number="166">
+<![CDATA[    NaClO_quantity(*PAC用量kg/h*)]]>
+</Line>
+<Line Number="167">
+<![CDATA[    );]]>
+</Line>
+<Line Number="168">
+<![CDATA[(*AO模块4-20mA输出*)]]>
+</Line>
+<Line Number="169">
+<![CDATA[SCL(SCL_LP1010_AO_10);]]>
+</Line>
+<Line Number="170">
+<![CDATA[SCL_LP1010_AO_10.In:=flow_calculate_NaClO_10;]]>
+</Line>
+<Line Number="171">
+<![CDATA[]]>
+</Line>
+<Line Number="172">
+<![CDATA[]]>
+</Line>
+<Line Number="173">
+<![CDATA[(*数字泵故障时，流量切换*)]]>
+</Line>
+<Line Number="174">
+<![CDATA[if P_NaClO1_err and not P_NaClO2_err then]]>
+</Line>
+<Line Number="175">
+<![CDATA[	P_NaClO2_flow_set:=P_NaClO1_flow_read+P_NaClO2_flow_read;]]>
+</Line>
+<Line Number="176">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="177">
+<![CDATA[if not P_NaClO1_err and P_NaClO2_err then]]>
+</Line>
+<Line Number="178">
+<![CDATA[	P_NaClO1_flow_set:=P_NaClO1_flow_read+P_NaClO2_flow_read;]]>
+</Line>
+<Line Number="179">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="180">
+<![CDATA[]]>
+</Line>
+<Line Number="181">
+<![CDATA[if P_NaClO3_err and not P_NaClO4_err then]]>
+</Line>
+<Line Number="182">
+<![CDATA[	P_NaClO4_flow_set:=P_NaClO3_flow_read+P_NaClO4_flow_read;]]>
+</Line>
+<Line Number="183">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="184">
+<![CDATA[if not P_NaClO3_err and P_NaClO4_err then]]>
+</Line>
+<Line Number="185">
+<![CDATA[	P_NaClO3_flow_set:=P_NaClO3_flow_read+P_NaClO4_flow_read;]]>
+</Line>
+<Line Number="186">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="187">
+<![CDATA[]]>
+</Line>
+<Line Number="188">
+<![CDATA[if P_NaClO5_err and not P_NaClO6_err then]]>
+</Line>
+<Line Number="189">
+<![CDATA[	P_NaClO6_flow_set:=P_NaClO5_flow_read+P_NaClO6_flow_read;]]>
+</Line>
+<Line Number="190">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="191">
+<![CDATA[if not P_NaClO5_err and P_NaClO6_err then]]>
+</Line>
+<Line Number="192">
+<![CDATA[	P_NaClO5_flow_set:=P_NaClO5_flow_read+P_NaClO6_flow_read;]]>
+</Line>
+<Line Number="193">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="194">
+<![CDATA[]]>
+</Line>
+<Line Number="195">
+<![CDATA[if P_NaClO7_err and not P_NaClO8_err then]]>
+</Line>
+<Line Number="196">
+<![CDATA[	P_NaClO8_flow_set:=P_NaClO7_flow_read+P_NaClO8_flow_read;]]>
+</Line>
+<Line Number="197">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="198">
+<![CDATA[if not P_NaClO7_err and P_NaClO8_err then]]>
+</Line>
+<Line Number="199">
+<![CDATA[	P_NaClO7_flow_set:=P_NaClO7_flow_read+P_NaClO8_flow_read;]]>
+</Line>
+<Line Number="200">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="201">
+<![CDATA[]]>
+</Line>
+<Line Number="202">
+<![CDATA[if P_NaClO9_err and not P_NaClO10_err then]]>
+</Line>
+<Line Number="203">
+<![CDATA[	P_NaClO10_flow_set:=P_NaClO9_flow_read+P_NaClO10_flow_read;]]>
+</Line>
+<Line Number="204">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="205">
+<![CDATA[if not P_NaClO9_err and P_NaClO10_err then]]>
+</Line>
+<Line Number="206">
+<![CDATA[	P_NaClO9_flow_set:=P_NaClO9_flow_read+P_NaClO10_flow_read;]]>
+</Line>
+<Line Number="207">
+<![CDATA[end_if;]]>
+</Line>
+<Line Number="208">
+<![CDATA[]]>
+</Line>
+<Line Number="209">
+<![CDATA[]]>
+</Line>
+<Line Number="210">
+<![CDATA[]]>
+</Line>
+<Line Number="211">
+<![CDATA[]]>
+</Line>
+<Line Number="212">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</Program>
+</Programs>
+</Controller>
+</RSLogix5000Content>
