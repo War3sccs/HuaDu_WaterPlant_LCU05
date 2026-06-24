@@ -246,7 +246,6 @@ else
     (*手动控制时数字泵流量在此设置，自动控制时由YaoHao程序设置*)
     if (not PAC_control_auto_manual[1])
     and (not PAC_control_auto_manual[11])
-    and (not PAC_control_auto_manual[21])
     then
         P_PAC1_flow_set:=P_PAC_flow_set_local[1];
         P_PAC2_flow_set:=P_PAC_flow_set_local[2];
@@ -277,7 +276,6 @@ else
     (*手动控制时数字泵流量在此设置，自动控制时由YaoHao程序设置*)
     if (not PAC_control_auto_manual[2])
     and (not PAC_control_auto_manual[12])
-    and (not PAC_control_auto_manual[22])
     then
         P_PAC3_flow_set:=P_PAC_flow_set_local[3];
         P_PAC4_flow_set:=P_PAC_flow_set_local[4];

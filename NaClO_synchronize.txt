@@ -539,9 +539,7 @@ else
 	P_NaClO1_actuate:=P_NaClO_actuate_local[1];
 	P_NaClO2_actuate:=P_NaClO_actuate_local[2];
     (*投加流量设置*)
-    if (not NaClO_control_auto_manual[1]) 
-    and (NaClO_control_auto_manual[21])
-    then
+    if (not NaClO_control_auto_manual[1]) then
         P_NaClO1_flow_set:=P_NaClO_flow_set_local[1];
         P_NaClO2_flow_set:=P_NaClO_flow_set_local[2];
     else
@@ -569,9 +567,7 @@ else
 	P_NaClO3_actuate:=P_NaClO_actuate_local[3];
 	P_NaClO4_actuate:=P_NaClO_actuate_local[4];
     (*投加流量设置*)
-    if (not NaClO_control_auto_manual[2]) 
-    and (NaClO_control_auto_manual[22])
-    then
+    if (not NaClO_control_auto_manual[2]) then
         P_NaClO3_flow_set:=P_NaClO_flow_set_local[3];
         P_NaClO4_flow_set:=P_NaClO_flow_set_local[4];
     else
@@ -599,9 +595,7 @@ else
 	P_NaClO5_actuate:=P_NaClO_actuate_local[5];
 	P_NaClO6_actuate:=P_NaClO_actuate_local[6];
     (*投加流量设置*)
-    if (not NaClO_control_auto_manual[3]) 
-    and (NaClO_control_auto_manual[23])
-    then
+    if (not NaClO_control_auto_manual[3]) then
         P_NaClO5_flow_set:=P_NaClO_flow_set_local[5];
         P_NaClO6_flow_set:=P_NaClO_flow_set_local[6];
     else
@@ -629,9 +623,7 @@ else
 	P_NaClO7_actuate:=P_NaClO_actuate_local[7];
 	P_NaClO8_actuate:=P_NaClO_actuate_local[8];
     (*投加流量设置*)
-    if (not NaClO_control_auto_manual[4]) 
-    and (NaClO_control_auto_manual[24])
-    then
+    if (not NaClO_control_auto_manual[4]) then
         P_NaClO7_flow_set:=P_NaClO_flow_set_local[7];
         P_NaClO8_flow_set:=P_NaClO_flow_set_local[8];
     else
@@ -659,9 +651,7 @@ else
 	P_NaClO9_actuate:=P_NaClO_actuate_local[9];
 	P_NaClO10_actuate:=P_NaClO_actuate_local[10];
     (*投加流量设置*)
-    if (not NaClO_control_auto_manual[5]) 
-    and (NaClO_control_auto_manual[25])
-    then
+    if (not NaClO_control_auto_manual[5]) then
         P_NaClO9_flow_set:=P_NaClO_flow_set_local[9];
         P_NaClO10_flow_set:=P_NaClO_flow_set_local[10];
     else
@@ -777,6 +767,7 @@ else
     VE_NaClO_34_actuate:=VE_NaClO_actuate_local[34];
     VE_NaClO_44_actuate:=VE_NaClO_actuate_local[44];
 end_if;
+
 
 
 
